@@ -219,7 +219,9 @@ def begin(id):
           
           
 def xod(id):
-  pass
+  rolelist=['gunner', 'volk']
+  for ids in games[id]['players']:
+        pass
           
           
           
