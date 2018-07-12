@@ -24,7 +24,7 @@ skills=[]
 
 client1=os.environ['database']
 client=MongoClient(client1)
-db=client.cookiewars
+db=client.mafia
 users=db.users
 
 
@@ -41,26 +41,7 @@ def medit(message_text,chat_id, message_id,reply_markup=None,parse_mode='Markdow
 def start(m):
     x=user.find_one({'id':m.from_user.id})
     if x==None:      
-        user.insert_one({'id':m.from_user.id,
-                         'name':m.from_user.first_name,
-                         'win':0,
-                         'loose':0,
-                         'games':0,
-                         'red':0,
-                         'blue':0,
-                         'yellow':0,
-                         'agent':0,
-                         'killer':0,
-                         'glavar':0,
-                         'prohojii':0,
-                         'primanka':0,
-                         'mirotvorets':0,
-                         'gangster':0,
-                         'podrivnik':0,
-                         'redprimanka':0,
-                         'telohranitel':0,
-                         'alive':0
-                        })
+        user.insert_one(createuser(m.from_user.id))
         print('Юзер создал аккаунт! Его имя: '+m.from_user.first_name)
     x=m.text.split('/start')
     if len(x)==2:
@@ -265,7 +246,25 @@ def forcem(m):
 
 
  
-     
+def creategame(id):
+    return {id:{
+        'players':{},
+        'id':id,
+        'todel':[],
+        'toedit':[],
+        'play':0,
+        'timebeforestart':300,
+        'users':None,
+        'userlist':'Игроки:\n\n'
+    }
+           }
+
+
+def createuser(id):
+    return{'id':id,
+           'role':None,
+           'die':0
+          }
   
   
 if True:
