@@ -131,9 +131,13 @@ def roletoname(x):
 
 def fight(x,y, id):
     if x['id']!=y['id']:
-        pass
+        fight2(x['role'], y['role'], id)
     else:
         bot.send_message(id, 'Нельзя сражаться с самим собой!')
+
+
+def fight2(x, y, id):
+    pass
 
 
 @bot.message_handler(commands=['name'])
