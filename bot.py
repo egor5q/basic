@@ -134,8 +134,16 @@ def fight(x,y, id):
         result=fight2(x['role'], y['role'], id)
         if result[1]=='x':
             winner=x
+            looser=y
         else:
             winner=y
+            looser=x
+        zzz=random.choice(rolelist)
+        users.update_one({'id':looser['id']}, {'$set':{'role':zzz}})
+        try:
+           bot.send_message(looser['id'], 'Вы погибли! Ваша новая роль: '+roletoname(zzz)+'.')
+        excet:
+           pass
         bot.send_message(id, result[0]+'Победа '+winner['name']+'!')
     else:
         bot.send_message(id, 'Нельзя сражаться с самим собой!')
@@ -168,12 +176,352 @@ def fight2(x, y, id):
             a=random.randint(1,100)
             if a<=70:
                 winner='x'
-                text='Всё-таки волк сильнее берсерка.\n'
+                text='\n'
             else:
                 winner='y'
                 text='\n'
             returned.append(winner)
-            
+        elif y=='nindza':
+            returned.append(text)
+            a=random.randint(1,100)
+            if a<=50:
+                winner='x'
+                text='\n'
+            else:
+                winner='y'
+                text='\n'
+            returned.append(winner)
+        elif y=='cat':
+            returned.append(text)
+            a=random.randint(1,100)
+            if a<=70:
+                winner='x'
+                text='\n'
+            else:
+                winner='y'
+                text='\n'
+            returned.append(winner) 
+        elif y=='killer':
+            returned.append(text)
+            a=random.randint(1,100)
+            if a<=70:
+                winner='x'
+                text='\n'
+            else:
+                winner='y'
+                text='\n'
+            returned.append(winner)
+           
+           
+    elif x=='gunner':
+        if y=='wolf':
+            text='Волк нарвался на стрелка, но ему повезло - тот оказался неумелым, и сожрать его было несложно.\n'
+            returned.append(text)
+            a=random.randint(1,100)
+            if a<=50:
+                winner='x'
+            else:
+                winner='y'
+            returned.append(winner)
+        elif y=='gunner':
+            returned.append(text)
+            a=random.randint(1,100)
+            if a<=15:
+                winner='x'
+                text='Волк нарвался на стрелка, но ему повезло - тот оказался неумелым, и сожрать его было несложно.\n'
+            else:
+                winner='y'
+                text='Встретились волк и стрелок. Неудачно получилось... Для волка, естественно. Точный выстрел в голову - и волк мертв.\n'
+            returned.append(winner)
+        elif y=='berserk':
+            returned.append(text)
+            a=random.randint(1,100)
+            if a<=70:
+                winner='x'
+                text='\n'
+            else:
+                winner='y'
+                text='\n'
+            returned.append(winner)
+        elif y=='nindza':
+            returned.append(text)
+            a=random.randint(1,100)
+            if a<=50:
+                winner='x'
+                text='\n'
+            else:
+                winner='y'
+                text='\n'
+            returned.append(winner)
+        elif y=='cat':
+            returned.append(text)
+            a=random.randint(1,100)
+            if a<=70:
+                winner='x'
+                text='\n'
+            else:
+                winner='y'
+                text='\n'
+            returned.append(winner) 
+        elif y=='killer':
+            returned.append(text)
+            a=random.randint(1,100)
+            if a<=70:
+                winner='x'
+                text='\n'
+            else:
+                winner='y'
+                text='\n'
+            returned.append(winner)
+        
+        
+    elif x=='berserk':
+        if y=='wolf':
+            text='Волк нарвался на стрелка, но ему повезло - тот оказался неумелым, и сожрать его было несложно.\n'
+            returned.append(text)
+            a=random.randint(1,100)
+            if a<=50:
+                winner='x'
+            else:
+                winner='y'
+            returned.append(winner)
+        elif y=='gunner':
+            returned.append(text)
+            a=random.randint(1,100)
+            if a<=15:
+                winner='x'
+                text='Волк нарвался на стрелка, но ему повезло - тот оказался неумелым, и сожрать его было несложно.\n'
+            else:
+                winner='y'
+                text='Встретились волк и стрелок. Неудачно получилось... Для волка, естественно. Точный выстрел в голову - и волк мертв.\n'
+            returned.append(winner)
+        elif y=='berserk':
+            returned.append(text)
+            a=random.randint(1,100)
+            if a<=70:
+                winner='x'
+                text='\n'
+            else:
+                winner='y'
+                text='\n'
+            returned.append(winner)
+        elif y=='nindza':
+            returned.append(text)
+            a=random.randint(1,100)
+            if a<=50:
+                winner='x'
+                text='\n'
+            else:
+                winner='y'
+                text='\n'
+            returned.append(winner)
+        elif y=='cat':
+            returned.append(text)
+            a=random.randint(1,100)
+            if a<=70:
+                winner='x'
+                text='\n'
+            else:
+                winner='y'
+                text='\n'
+            returned.append(winner) 
+        elif y=='killer':
+            returned.append(text)
+            a=random.randint(1,100)
+            if a<=70:
+                winner='x'
+                text='\n'
+            else:
+                winner='y'
+                text='\n'
+            returned.append(winner)
+           
+           
+    elif x=='nindza':
+        if y=='wolf':
+            text='Волк нарвался на стрелка, но ему повезло - тот оказался неумелым, и сожрать его было несложно.\n'
+            returned.append(text)
+            a=random.randint(1,100)
+            if a<=50:
+                winner='x'
+            else:
+                winner='y'
+            returned.append(winner)
+        elif y=='gunner':
+            returned.append(text)
+            a=random.randint(1,100)
+            if a<=15:
+                winner='x'
+                text='Волк нарвался на стрелка, но ему повезло - тот оказался неумелым, и сожрать его было несложно.\n'
+            else:
+                winner='y'
+                text='Встретились волк и стрелок. Неудачно получилось... Для волка, естественно. Точный выстрел в голову - и волк мертв.\n'
+            returned.append(winner)
+        elif y=='berserk':
+            returned.append(text)
+            a=random.randint(1,100)
+            if a<=70:
+                winner='x'
+                text='\n'
+            else:
+                winner='y'
+                text='\n'
+            returned.append(winner)
+        elif y=='nindza':
+            returned.append(text)
+            a=random.randint(1,100)
+            if a<=50:
+                winner='x'
+                text='\n'
+            else:
+                winner='y'
+                text='\n'
+            returned.append(winner)
+        elif y=='cat':
+            returned.append(text)
+            a=random.randint(1,100)
+            if a<=70:
+                winner='x'
+                text='\n'
+            else:
+                winner='y'
+                text='\n'
+            returned.append(winner) 
+        elif y=='killer':
+            returned.append(text)
+            a=random.randint(1,100)
+            if a<=70:
+                winner='x'
+                text='\n'
+            else:
+                winner='y'
+                text='\n'
+            returned.append(winner)
+           
+           
+    elif x=='cat':
+        if y=='wolf':
+            text='Волк нарвался на стрелка, но ему повезло - тот оказался неумелым, и сожрать его было несложно.\n'
+            returned.append(text)
+            a=random.randint(1,100)
+            if a<=50:
+                winner='x'
+            else:
+                winner='y'
+            returned.append(winner)
+        elif y=='gunner':
+            returned.append(text)
+            a=random.randint(1,100)
+            if a<=15:
+                winner='x'
+                text='Волк нарвался на стрелка, но ему повезло - тот оказался неумелым, и сожрать его было несложно.\n'
+            else:
+                winner='y'
+                text='Встретились волк и стрелок. Неудачно получилось... Для волка, естественно. Точный выстрел в голову - и волк мертв.\n'
+            returned.append(winner)
+        elif y=='berserk':
+            returned.append(text)
+            a=random.randint(1,100)
+            if a<=70:
+                winner='x'
+                text='\n'
+            else:
+                winner='y'
+                text='\n'
+            returned.append(winner)
+        elif y=='nindza':
+            returned.append(text)
+            a=random.randint(1,100)
+            if a<=50:
+                winner='x'
+                text='\n'
+            else:
+                winner='y'
+                text='\n'
+            returned.append(winner)
+        elif y=='cat':
+            returned.append(text)
+            a=random.randint(1,100)
+            if a<=70:
+                winner='x'
+                text='\n'
+            else:
+                winner='y'
+                text='\n'
+            returned.append(winner) 
+        elif y=='killer':
+            returned.append(text)
+            a=random.randint(1,100)
+            if a<=70:
+                winner='x'
+                text='\n'
+            else:
+                winner='y'
+                text='\n'
+            returned.append(winner)
+           
+           
+    elif x=='killer':
+        if y=='wolf':
+            text='Волк нарвался на стрелка, но ему повезло - тот оказался неумелым, и сожрать его было несложно.\n'
+            returned.append(text)
+            a=random.randint(1,100)
+            if a<=50:
+                winner='x'
+            else:
+                winner='y'
+            returned.append(winner)
+        elif y=='gunner':
+            returned.append(text)
+            a=random.randint(1,100)
+            if a<=15:
+                winner='x'
+                text='Волк нарвался на стрелка, но ему повезло - тот оказался неумелым, и сожрать его было несложно.\n'
+            else:
+                winner='y'
+                text='Встретились волк и стрелок. Неудачно получилось... Для волка, естественно. Точный выстрел в голову - и волк мертв.\n'
+            returned.append(winner)
+        elif y=='berserk':
+            returned.append(text)
+            a=random.randint(1,100)
+            if a<=70:
+                winner='x'
+                text='\n'
+            else:
+                winner='y'
+                text='\n'
+            returned.append(winner)
+        elif y=='nindza':
+            returned.append(text)
+            a=random.randint(1,100)
+            if a<=50:
+                winner='x'
+                text='\n'
+            else:
+                winner='y'
+                text='\n'
+            returned.append(winner)
+        elif y=='cat':
+            returned.append(text)
+            a=random.randint(1,100)
+            if a<=70:
+                winner='x'
+                text='\n'
+            else:
+                winner='y'
+                text='\n'
+            returned.append(winner) 
+        elif y=='killer':
+            returned.append(text)
+            a=random.randint(1,100)
+            if a<=70:
+                winner='x'
+                text='\n'
+            else:
+                winner='y'
+                text='\n'
+            returned.append(winner)
+
     return returned
 
 
