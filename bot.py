@@ -91,8 +91,6 @@ def fighttt(m):
             bot.send_message(m.chat.id, 'Такого юзера не существует в данном чате!')
         if y!=None and x!=None:
             fight(x, y, m.chat.id)
-        else:
-            bot.send_message(m.chat.id, 'Такого юзера не существует в данном чате!')
       else:
            bot.send_message(m.chat.id, 'Используйте формат:\n/fight *имя_бойца*', parse_mode='markdown')
     else:
