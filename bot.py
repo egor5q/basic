@@ -86,7 +86,7 @@ def fighttt(m):
                 x=None
                 y=None
         if y!=None and x!=None:
-            fight(x, y)
+            fight(x, y, m.chat.id)
         else:
             bot.send_message(m.chat.id, 'Такого юзера не существует в данном чате!')
             
@@ -123,11 +123,11 @@ def roletoname(x):
         role='Убийца'
     return role
 
-def fight(x,y):
+def fight(x,y, id):
     if x['id']!=y['id']:
         pass
     else:
-        bot.send_message(m.chat.id, 'Нельзя сражаться с самим собой!')
+        bot.send_message(id, 'Нельзя сражаться с самим собой!')
 
 
 @bot.message_handler(commands=['name'])
