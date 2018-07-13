@@ -142,7 +142,7 @@ def fight(x,y, id):
         users.update_one({'id':looser['id']}, {'$set':{'role':zzz}})
         try:
            bot.send_message(looser['id'], 'Вы погибли! Ваша новая роль: '+roletoname(zzz)+'.')
-        excet:
+        except:
            pass
         bot.send_message(id, result[0]+'Победа '+winner['name']+'!')
     else:
