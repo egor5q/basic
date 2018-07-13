@@ -143,7 +143,7 @@ def name(m):
                 bot.send_message(m.chat.id, 'Такое имя уже занято!')
           else:
             bot.send_message(m.chat.id, 'В нике можно использовать только русские и английские символы!')
-     else:
+        else:
             bot.send_message(m.chat.id, 'Длина ника не должна превышать 25 символов!')
     else:
        bot.send_message(m.chat.id, 'Для переименования используйте формат:\n/name *имя*, где *имя* - имя вашего персонажа.', parse_mode='markdown')
