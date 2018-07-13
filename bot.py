@@ -75,7 +75,8 @@ def addme(m):
 def fighttt(m):
     name=users.find_one({'id':m.from_user.id})
     x=m.text.split(' ')
-    if len(x)==2:
+    if name['name']!=None:
+      if len(x)==2:
         y=users.find_one({'name':x[1]})
         x=users.find_one({'name':name['name']})
         z=chats.find_one({'id':m.chat.id})
@@ -92,6 +93,8 @@ def fighttt(m):
             fight(x, y, m.chat.id)
         else:
             bot.send_message(m.chat.id, 'Такого юзера не существует в данном чате!')
+    else:
+           bot.send_message(m.chat.id, 'Сначала дайте персонажу имя! (/name)')
             
             
 @bot.message_handler(commands=['users'])
