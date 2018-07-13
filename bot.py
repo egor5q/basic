@@ -80,11 +80,14 @@ def fighttt(m):
         x=users.find_one({'name':name['name']})
         z=chats.find_one({'id':m.chat.id})
         if z!=None:
+          if x!=None and y!=None:
             if x['id'] in z['users'] and y['id'] in z['users']:
                 pass
             else:
                 x=None
                 y=None
+          else:
+            bot.send_message(m.chat.id, 'Такого юзера не существует в данном чате!')
         if y!=None and x!=None:
             fight(x, y, m.chat.id)
         else:
