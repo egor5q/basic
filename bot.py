@@ -72,7 +72,7 @@ def addme(m):
 
 
 @bot.message_handler(commands=['fight'])
-def fight(m):
+def fighttt(m):
     name=users.find_one({'id':m.from_user.id})
     x=m.text.split(' ')
     if len(x)==2:
@@ -122,6 +122,12 @@ def roletoname(x):
     if x=='killer':
         role='Убийца'
     return role
+
+def fight(x,y):
+    if x['id']!=y['id']:
+        pass
+    else:
+        bot.send_message(m.chat.id, 'Нельзя сражаться с самим собой!')
 
 
 @bot.message_handler(commands=['name'])
