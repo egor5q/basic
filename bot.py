@@ -162,7 +162,6 @@ def fight2(x, y, id):
                 winner='y'
             returned.append(winner)
         elif y=='gunner':
-            returned.append(text)
             a=random.randint(1,100)
             if a<=15:
                 winner='x'
@@ -170,9 +169,9 @@ def fight2(x, y, id):
             else:
                 winner='y'
                 text='Встретились волк и стрелок. Неудачно получилось... Для волка, естественно. Точный выстрел в голову - и волк мертв.\n'
+            returned.append(text)
             returned.append(winner)
         elif y=='berserk':
-            returned.append(text)
             a=random.randint(1,100)
             if a<=70:
                 winner='x'
@@ -180,9 +179,9 @@ def fight2(x, y, id):
             else:
                 winner='y'
                 text='\n'
+            returned.append(text)
             returned.append(winner)
         elif y=='nindza':
-            returned.append(text)
             a=random.randint(1,100)
             if a<=50:
                 winner='x'
@@ -190,9 +189,9 @@ def fight2(x, y, id):
             else:
                 winner='y'
                 text='\n'
+            returned.append(text)
             returned.append(winner)
         elif y=='cat':
-            returned.append(text)
             a=random.randint(1,100)
             if a<=70:
                 winner='x'
@@ -200,9 +199,9 @@ def fight2(x, y, id):
             else:
                 winner='y'
                 text='\n'
+            returned.append(text)
             returned.append(winner) 
         elif y=='killer':
-            returned.append(text)
             a=random.randint(1,100)
             if a<=70:
                 winner='x'
@@ -210,21 +209,21 @@ def fight2(x, y, id):
             else:
                 winner='y'
                 text='\n'
+            returned.append(text)
             returned.append(winner)
            
            
     elif x=='gunner':
         if y=='wolf':
             text='Волк нарвался на стрелка, но ему повезло - тот оказался неумелым, и сожрать его было несложно.\n'
-            returned.append(text)
             a=random.randint(1,100)
             if a<=50:
                 winner='x'
             else:
                 winner='y'
+            returned.append(text)
             returned.append(winner)
         elif y=='gunner':
-            returned.append(text)
             a=random.randint(1,100)
             if a<=15:
                 winner='x'
@@ -232,9 +231,9 @@ def fight2(x, y, id):
             else:
                 winner='y'
                 text='Встретились волк и стрелок. Неудачно получилось... Для волка, естественно. Точный выстрел в голову - и волк мертв.\n'
+            returned.append(text)
             returned.append(winner)
         elif y=='berserk':
-            returned.append(text)
             a=random.randint(1,100)
             if a<=70:
                 winner='x'
@@ -242,9 +241,9 @@ def fight2(x, y, id):
             else:
                 winner='y'
                 text='\n'
+            returned.append(text)
             returned.append(winner)
         elif y=='nindza':
-            returned.append(text)
             a=random.randint(1,100)
             if a<=50:
                 winner='x'
@@ -252,9 +251,9 @@ def fight2(x, y, id):
             else:
                 winner='y'
                 text='\n'
+            returned.append(text)
             returned.append(winner)
         elif y=='cat':
-            returned.append(text)
             a=random.randint(1,100)
             if a<=70:
                 winner='x'
@@ -262,9 +261,9 @@ def fight2(x, y, id):
             else:
                 winner='y'
                 text='\n'
+            returned.append(text)
             returned.append(winner) 
         elif y=='killer':
-            returned.append(text)
             a=random.randint(1,100)
             if a<=70:
                 winner='x'
@@ -272,6 +271,7 @@ def fight2(x, y, id):
             else:
                 winner='y'
                 text='\n'
+            returned.append(text)
             returned.append(winner)
         
         
@@ -286,7 +286,6 @@ def fight2(x, y, id):
                 winner='y'
             returned.append(winner)
         elif y=='gunner':
-            returned.append(text)
             a=random.randint(1,100)
             if a<=15:
                 winner='x'
@@ -294,9 +293,9 @@ def fight2(x, y, id):
             else:
                 winner='y'
                 text='Встретились волк и стрелок. Неудачно получилось... Для волка, естественно. Точный выстрел в голову - и волк мертв.\n'
+            returned.append(text)
             returned.append(winner)
         elif y=='berserk':
-            returned.append(text)
             a=random.randint(1,100)
             if a<=70:
                 winner='x'
@@ -304,9 +303,9 @@ def fight2(x, y, id):
             else:
                 winner='y'
                 text='\n'
+            returned.append(text)
             returned.append(winner)
         elif y=='nindza':
-            returned.append(text)
             a=random.randint(1,100)
             if a<=50:
                 winner='x'
@@ -314,9 +313,9 @@ def fight2(x, y, id):
             else:
                 winner='y'
                 text='\n'
+            returned.append(text)
             returned.append(winner)
         elif y=='cat':
-            returned.append(text)
             a=random.randint(1,100)
             if a<=70:
                 winner='x'
@@ -324,9 +323,9 @@ def fight2(x, y, id):
             else:
                 winner='y'
                 text='\n'
+            returned.append(text)
             returned.append(winner) 
         elif y=='killer':
-            returned.append(text)
             a=random.randint(1,100)
             if a<=70:
                 winner='x'
@@ -334,21 +333,21 @@ def fight2(x, y, id):
             else:
                 winner='y'
                 text='\n'
+            returned.append(text)
             returned.append(winner)
            
            
     elif x=='nindza':
         if y=='wolf':
             text='Волк нарвался на стрелка, но ему повезло - тот оказался неумелым, и сожрать его было несложно.\n'
-            returned.append(text)
             a=random.randint(1,100)
             if a<=50:
                 winner='x'
             else:
                 winner='y'
+            returned.append(text)
             returned.append(winner)
         elif y=='gunner':
-            returned.append(text)
             a=random.randint(1,100)
             if a<=15:
                 winner='x'
@@ -356,9 +355,9 @@ def fight2(x, y, id):
             else:
                 winner='y'
                 text='Встретились волк и стрелок. Неудачно получилось... Для волка, естественно. Точный выстрел в голову - и волк мертв.\n'
+            returned.append(text)
             returned.append(winner)
         elif y=='berserk':
-            returned.append(text)
             a=random.randint(1,100)
             if a<=70:
                 winner='x'
@@ -366,9 +365,9 @@ def fight2(x, y, id):
             else:
                 winner='y'
                 text='\n'
+            returned.append(text)
             returned.append(winner)
         elif y=='nindza':
-            returned.append(text)
             a=random.randint(1,100)
             if a<=50:
                 winner='x'
@@ -376,9 +375,9 @@ def fight2(x, y, id):
             else:
                 winner='y'
                 text='\n'
+            returned.append(text)
             returned.append(winner)
         elif y=='cat':
-            returned.append(text)
             a=random.randint(1,100)
             if a<=70:
                 winner='x'
@@ -386,9 +385,9 @@ def fight2(x, y, id):
             else:
                 winner='y'
                 text='\n'
+            returned.append(text)
             returned.append(winner) 
         elif y=='killer':
-            returned.append(text)
             a=random.randint(1,100)
             if a<=70:
                 winner='x'
@@ -396,18 +395,19 @@ def fight2(x, y, id):
             else:
                 winner='y'
                 text='\n'
+            returned.append(text)
             returned.append(winner)
            
            
     elif x=='cat':
         if y=='wolf':
             text='Волк нарвался на стрелка, но ему повезло - тот оказался неумелым, и сожрать его было несложно.\n'
-            returned.append(text)
             a=random.randint(1,100)
             if a<=50:
                 winner='x'
             else:
                 winner='y'
+            returned.append(text)
             returned.append(winner)
         elif y=='gunner':
             a=random.randint(1,100)
@@ -464,15 +464,14 @@ def fight2(x, y, id):
     elif x=='killer':
         if y=='wolf':
             text='Волк нарвался на стрелка, но ему повезло - тот оказался неумелым, и сожрать его было несложно.\n'
-            returned.append(text)
             a=random.randint(1,100)
             if a<=50:
                 winner='x'
             else:
                 winner='y'
+            returned.append(text)
             returned.append(winner)
         elif y=='gunner':
-            returned.append(text)
             a=random.randint(1,100)
             if a<=15:
                 winner='x'
@@ -480,9 +479,9 @@ def fight2(x, y, id):
             else:
                 winner='y'
                 text='Встретились волк и стрелок. Неудачно получилось... Для волка, естественно. Точный выстрел в голову - и волк мертв.\n'
+            returned.append(text)
             returned.append(winner)
         elif y=='berserk':
-            returned.append(text)
             a=random.randint(1,100)
             if a<=70:
                 winner='x'
@@ -490,9 +489,9 @@ def fight2(x, y, id):
             else:
                 winner='y'
                 text='\n'
+            returned.append(text)
             returned.append(winner)
         elif y=='nindza':
-            returned.append(text)
             a=random.randint(1,100)
             if a<=50:
                 winner='x'
@@ -500,9 +499,9 @@ def fight2(x, y, id):
             else:
                 winner='y'
                 text='\n'
+            returned.append(text)
             returned.append(winner)
         elif y=='cat':
-            returned.append(text)
             a=random.randint(1,100)
             if a<=70:
                 winner='x'
@@ -510,9 +509,9 @@ def fight2(x, y, id):
             else:
                 winner='y'
                 text='\n'
+            returned.append(text)
             returned.append(winner) 
         elif y=='killer':
-            returned.append(text)
             a=random.randint(1,100)
             if a<=70:
                 winner='x'
@@ -520,6 +519,7 @@ def fight2(x, y, id):
             else:
                 winner='y'
                 text='\n'
+            returned.append(text)
             returned.append(winner)
 
     return returned
