@@ -30,7 +30,8 @@ chats=db.chats
 
 rolelist=['wolf', 'gunner', 'berserk', 'nindza', 'cat', 'killer']
 
-
+symbollist=['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
+           'а','б','в','г','д','е','ё','ж','з','и','й','к','л','м','н','о','п','р','с','т','у','ф','х','ц','ч','ш','щ','ъ','ы','ь','э','ю','я']
 
 
 def medit(message_text,chat_id, message_id,reply_markup=None,parse_mode='Markdown'):
@@ -42,9 +43,6 @@ def medit(message_text,chat_id, message_id,reply_markup=None,parse_mode='Markdow
     
 @bot.message_handler(commands=['start'])
 def start(m):
-  x=m.text.split('/start')
-  print(x)
-  
   if users.find_one({'id':m.from_user.id})==None:
         try:
             bot.send_message(m.from_user.id, 'Вы создали персонажа! Теперь дайте ему имя командой /name.')
@@ -75,8 +73,35 @@ def addme(m):
 
 @bot.message_handler(commands=['fight'])
 def fight(m):
-    pass
-        
+    name=users.find_one({'id':m.from_user.id})
+    x=m.text.split(' ')
+    if len(x)==2:
+        y=users.find_one({'name':x[1]})
+        x=users.find_one({'name':name['name']})
+        z=chats.find_one({'id':m.chat.id})
+        if z!=None:
+            if x['id'] in z['users'] and y['id'] in z['users']:
+                pass
+            else:
+                x=None
+                y=None
+        if y!=None and x!=None:
+            fight(x, y)
+        else:
+            bot.send_message(m.chat.id, 'Такого юзера не существует в данном чате!')
+            
+            
+@bot.message_handler(commands=['users'])
+def users(m):
+    x=chats.find_one({'id':m.chat.id})
+    text=''
+    y=users.find({})
+    for ids in y:
+        if ids['id'] in x['users']:
+            text+='`'+ids['name']+'`'+'\n'
+    if text=='':
+        text='В данном чате нет ни одного зарегистрировавшегося юзера.'
+    bot.send_message(m.chat.id, text, parse_mode='markdown')
         
 
 def roletoname(x):
@@ -101,7 +126,11 @@ def name(m):
     text=m.text.split(' ')
     if len(text)==2:
         if len(text[1])<=25:
-          if '@' not in text[1]:
+          i=0
+          for symbol in text[1]:
+            if symbol not in symbollist:
+                i=1
+          if i==0:
             zz=users.find({})
             spisok=[]
             for ids in zz:
@@ -113,7 +142,7 @@ def name(m):
             else:
                 bot.send_message(m.chat.id, 'Такое имя уже занято!')
           else:
-            bot.send_message(m.chat.id, 'Нельзя использовать символ "@" в нике!')
+            bot.send_message(m.chat.id, 'В нике можно использовать только русские и английские символы!')
      else:
             bot.send_message(m.chat.id, 'Длина ника не должна превышать 25 символов!')
     else:
