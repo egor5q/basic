@@ -131,13 +131,50 @@ def roletoname(x):
 
 def fight(x,y, id):
     if x['id']!=y['id']:
-        fight2(x['role'], y['role'], id)
+        result=fight2(x['role'], y['role'], id)
+        if result[1]=='x':
+            winner=x
+        else:
+            winner=y
+        bot.send_message(id, result[0]+'Победа '+winner['name']+'!')
     else:
         bot.send_message(id, 'Нельзя сражаться с самим собой!')
 
 
 def fight2(x, y, id):
-    pass
+    returned=[]
+    if x=='wolf':
+        if y=='wolf':
+            text='Встретились 2 волка... Пиздились день и ночь, но в итоге один из них одержал верх.\n'
+            returned.append(text)
+            a=random.randint(1,100)
+            if a<=50:
+                winner='x'
+            else:
+                winner='y'
+            returned.append(winner)
+        elif y=='gunner':
+            returned.append(text)
+            a=random.randint(1,100)
+            if a<=15:
+                winner='x'
+                text='Волк нарвался на стрелка, но ему повезло - тот оказался неумелым, и сожрать его было несложно.\n'
+            else:
+                winner='y'
+                text='Встретились волк и стрелок. Неудачно получилось... Для волка, естественно. Точный выстрел в голову - и волк мертв.\n'
+            returned.append(winner)
+        elif y=='berserk':
+            returned.append(text)
+            a=random.randint(1,100)
+            if a<=70:
+                winner='x'
+                text='Всё-таки волк сильнее берсерка.\n'
+            else:
+                winner='y'
+                text='\n'
+            returned.append(winner)
+            
+    return returned
 
 
 @bot.message_handler(commands=['name'])
