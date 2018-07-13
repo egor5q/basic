@@ -94,14 +94,17 @@ def fight(m):
 @bot.message_handler(commands=['users'])
 def userssss(m):
     x=chats.find_one({'id':m.chat.id})
-    text=''
-    y=users.find({})
-    for ids in y:
-        if ids['id'] in x['users']:
-            text+='`'+ids['name']+'`'+'\n'
-    if text=='':
-        text='В данном чате нет ни одного зарегистрировавшегося юзера.'
-    bot.send_message(m.chat.id, text, parse_mode='markdown')
+    if x!=None:
+           text=''
+           y=users.find({})
+           for ids in y:
+                if ids['id'] in x['users']:
+                     text+='`'+ids['name']+'`'+'\n'
+           if text=='':
+              text='В данном чате нет ни одного зарегистрировавшегося юзера.'
+           bot.send_message(m.chat.id, text, parse_mode='markdown')
+    else:
+        bot.send_message(m.chat.id, 'В данном чате не было отправлено ни одного сообщения!')
         
 
 def roletoname(x):
