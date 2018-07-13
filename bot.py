@@ -92,7 +92,7 @@ def fight(m):
             
             
 @bot.message_handler(commands=['users'])
-def users(m):
+def userssss(m):
     x=chats.find_one({'id':m.chat.id})
     text=''
     y=users.find({})
