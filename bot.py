@@ -124,7 +124,7 @@ def roletoname(x):
     if x=='nindza':
         role='Ниндзя'
     if x=='cat':
-        x='Кот'
+        role='Кот'
     if x=='killer':
         role='Убийца'
     return role
@@ -410,7 +410,6 @@ def fight2(x, y, id):
                 winner='y'
             returned.append(winner)
         elif y=='gunner':
-            returned.append(text)
             a=random.randint(1,100)
             if a<=15:
                 winner='x'
@@ -418,9 +417,9 @@ def fight2(x, y, id):
             else:
                 winner='y'
                 text='Встретились волк и стрелок. Неудачно получилось... Для волка, естественно. Точный выстрел в голову - и волк мертв.\n'
+            returned.append(text)
             returned.append(winner)
         elif y=='berserk':
-            returned.append(text)
             a=random.randint(1,100)
             if a<=70:
                 winner='x'
@@ -428,9 +427,9 @@ def fight2(x, y, id):
             else:
                 winner='y'
                 text='\n'
+            returned.append(text)
             returned.append(winner)
         elif y=='nindza':
-            returned.append(text)
             a=random.randint(1,100)
             if a<=50:
                 winner='x'
@@ -438,9 +437,9 @@ def fight2(x, y, id):
             else:
                 winner='y'
                 text='\n'
+            returned.append(text)
             returned.append(winner)
         elif y=='cat':
-            returned.append(text)
             a=random.randint(1,100)
             if a<=70:
                 winner='x'
@@ -448,9 +447,9 @@ def fight2(x, y, id):
             else:
                 winner='y'
                 text='\n'
+            returned.append(text)
             returned.append(winner) 
         elif y=='killer':
-            returned.append(text)
             a=random.randint(1,100)
             if a<=70:
                 winner='x'
@@ -458,6 +457,7 @@ def fight2(x, y, id):
             else:
                 winner='y'
                 text='\n'
+            returned.append(text)
             returned.append(winner)
            
            
