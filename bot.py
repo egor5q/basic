@@ -173,8 +173,8 @@ def fight(x,y, id):
         users.update_one({'id':winner['id']}, {'$inc':{'wins':1}})
         
         users.update_one({'id':looser['id']}, {'$inc':{'games':1}})
-        users.update_one({'id':winner['id']}, {'$inc':{'looses':1}})
-        users.update_one({'id':winner['id']}, {'$inc':{'dies':1}})
+        users.update_one({'id':looser['id']}, {'$inc':{'looses':1}})
+        users.update_one({'id':looser['id']}, {'$inc':{'dies':1}})
       else:
         bot.send_message(id, 'Выбранный соперник отдыхает после предыдущего сражения.')
      else:
