@@ -73,10 +73,10 @@ def banns(id, chatid, name):
     else:
         print('2')
         timers[id]['messages']+=1
-        if timers[id]['messages']>=5:
-            bot.send_message(chatid, 'Пользователь '+name+' много спамил и был заблокирован на 10 секунд.')
+        if timers[id]['messages']>=4:
+            bot.send_message(chatid, 'Пользователь '+name+' много спамил и был заблокирован на 20 секунд.')
             ban.append(id)
-            t=threading.Timer(10, unban, args=[id])
+            t=threading.Timer(20, unban, args=[id])
             t.start()
     
     
