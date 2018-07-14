@@ -97,7 +97,7 @@ def statss(m):
    
 @bot.message_handler(commands=['help'])
 def help(m):
-    
+    pass
 
 
            
