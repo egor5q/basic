@@ -48,7 +48,7 @@ def statss(m):
                          'Боёв проведено: '+str(x['games'])+'\n'+
                          'Побед: '+str(x['wins'])+'\n'+
                          'Поражений (смертей): '+str(x['looses'])+'\n'+
-                         'Процент побед: '+str(round(x['wins']/x['games'], 2)))
+                         'Процент побед: '+str((round(x['wins']/x['games'], 2))*100)+'%')
 
            
            
