@@ -294,7 +294,7 @@ def fight2(x, y, id):
             returned.append(winner)
         elif y=='mage':
             a=random.randint(1,100)
-            if a<==50:
+            if a<=50:
                 winner='x'
             else:
                 winner='y'
