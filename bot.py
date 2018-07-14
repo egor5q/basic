@@ -613,6 +613,15 @@ def fight2(x, y, id):
             text='*Медведь* _vs_ *Убийца*\n'
             returned.append(text)
             returned.append(winner)
+        elif y=='bear':
+            a=random.randint(1,100)
+            if a<=50:
+                winner='x'
+            else:
+                winner='y'
+            text='*Медведь* _vs_ *Медведь*\n'
+            returned.append(text)
+            returned.append(winner)
 
     return returned
 
