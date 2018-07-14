@@ -144,7 +144,7 @@ def fight(x,y, id):
            bot.send_message(looser['id'], 'Вы погибли! Ваша новая роль: '+roletoname(zzz)+'.')
         except:
            pass
-        bot.send_message(id, result[0]+'Победа '+winner['name']+' ('+roletoname(winner['role'])+')!')
+        bot.send_message(id, result[0]+'Победа '+winner['name']+' ('+roletoname(winner['role'])+')!', parse_mode='markdown')
     else:
         bot.send_message(id, 'Нельзя сражаться с самим собой!')
 
