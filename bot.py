@@ -78,12 +78,15 @@ def banns(id, chatid, name):
             ban.append(id)
             t=threading.Timer(20, unban, args=[id])
             t.start()
+            return 1
+    return 0
     
     
 @bot.message_handler(commands=['stats'])
 def statss(m):
  if m.from_user.id not in ban:
-    banns(m.from_user.id, m.chat.id, m.from_user.first_name)
+   x=banns(m.from_user.id, m.chat.id, m.from_user.first_name)
+   if x==0:
     x=users.find_one({'id':m.from_user.id})
     if x!=None:
       try:
@@ -117,8 +120,9 @@ def start(m):
 
 @bot.message_handler(commands=['addme'])
 def addme(m):
-  if m.from_user.id not in ban:
-    banns(m.from_user.id, m.chat.id, m.from_user.first_name)
+ if m.from_user.id not in ban:
+   x=banns(m.from_user.id, m.chat.id, m.from_user.first_name)
+   if x==0:
     x=chats.find_one({'id':m.chat.id})
     if x!=None:
       y=users.find_one({'id':m.from_user.id})
@@ -138,7 +142,8 @@ def addme(m):
 @bot.message_handler(commands=['fight'])
 def fighttt(m):
  if m.from_user.id not in ban:
-    banns(m.from_user.id, m.chat.id, m.from_user.first_name)
+  x=banns(m.from_user.id, m.chat.id, m.from_user.first_name)
+  if x==0:
     name=users.find_one({'id':m.from_user.id})
     x=m.text.split(' ')
     if name['name']!=None:
@@ -166,9 +171,10 @@ def fighttt(m):
 @bot.message_handler(commands=['users'])
 def userssss(m):
   if m.from_user.id not in ban:
-    banns(m.from_user.id, m.chat.id, m.from_user.first_name)
-    x=chats.find_one({'id':m.chat.id})
-    if x!=None:
+    x=banns(m.from_user.id, m.chat.id, m.from_user.first_name)
+    if x==0:
+      x=chats.find_one({'id':m.chat.id})
+      if x!=None:
            text=''
            y=users.find({})
            for ids in y:
@@ -177,7 +183,7 @@ def userssss(m):
            if text=='':
               text='В данном чате нет ни одного зарегистрировавшегося юзера.'
            bot.send_message(m.chat.id, text, parse_mode='markdown')
-    else:
+      else:
         bot.send_message(m.chat.id, 'В данном чате не было отправлено ни одного сообщения!')
         
 
@@ -720,7 +726,8 @@ def fight2(x, y, id):
 @bot.message_handler(commands=['name'])
 def name(m):
   if m.from_user.id not in ban:
-    banns(m.from_user.id, m.chat.id, m.from_user.first_name)
+   x=banns(m.from_user.id, m.chat.id, m.from_user.first_name)
+   if x==0:
     text=m.text.split(' ')
     if len(text)==2:
         if len(text[1])<=25:
