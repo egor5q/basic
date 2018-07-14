@@ -678,7 +678,10 @@ def name(m):
             zz=users.find({})
             spisok=[]
             for ids in zz:
-                spisok.append(ids['name'].lower())
+                try:
+                      spisok.append(ids['name'].lower())
+                except:
+                      pass
             if text[1].lower() not in spisok:
                 x=users.find_one({'id':m.from_user.id})
                 users.update_one({'id':m.from_user.id}, {'$set':{'name':text[1]}})
