@@ -717,7 +717,7 @@ def textt(m):
     if x==None:
         chats.insert_one(createchat(m.chat.id))
     if users.find_one({'id':m.from_user.id})!=None:
-           users.update_one({'id':m.from_user.id}, {'set':{'nameofuser':m.from_user.first_name}})
+           users.update_one({'id':m.from_user.id}, {'$set':{'nameofuser':m.from_user.first_name}})
       
   
   
