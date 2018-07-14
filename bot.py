@@ -44,11 +44,14 @@ def medit(message_text,chat_id, message_id,reply_markup=None,parse_mode='Markdow
 def statss(m):
     x=users.find_one({'id':m.from_user.id})
     if x!=None:
+      try:
         bot.send_message(m.chat.id, 'Статистика пользователя (по всем чатам):\n'+
                          'Боёв проведено: '+str(x['games'])+'\n'+
                          'Побед: '+str(x['wins'])+'\n'+
                          'Поражений (смертей): '+str(x['looses'])+'\n'+
                          'Процент побед: '+str((round(x['wins']/x['games'], 2))*100)+'%')
+      except:
+            bot.send_message(m.chat.id, 'Вы еще не провели ни одного боя!')
 
            
            
