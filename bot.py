@@ -102,7 +102,22 @@ def statss(m):
    
 @bot.message_handler(commands=['help'])
 def help(m):
-    pass
+    bot.send_message(m.chat.id, 'Цель этой игры очень проста - побеждать в боях. Чтобы победить, нужно выбрать правильного соперника. '+
+                     'Как же это сделать? Очень просто. По команде /roles вам будет выведен список того, кто кого 100% побеждает в бою '+
+                     '(Одинаковые роли имеют 50% шанс друг против друга). После вашей смерти вам выдается случайная роль, которую никто не знает, пока '+
+                     'вы не вступите в следующий бой. Сражаться можно раз в минуту.')
+    
+    
+@bot.message_handler(commands=['roles'])
+def roles(m):
+    bot.send_message(m.chat.id, 'Кто кого выигрывает в бою:\n\n'+
+'''Волк: ниндзя, кот, медведь
+Стрелок: волк, ниндзя, кот
+Колдун: волк, стрелок, убийца
+Ниндзя: колдун, убийца, медведь
+Кот: колдун, ниндзя, медведь
+Убийца: волк, кот, стрелок
+Медведь: стрелок, колдун, убийца''')
 
 
            
@@ -230,7 +245,7 @@ def fight(x,y, id):
            bot.send_message(looser['id'], 'Вы погибли! Ваша новая роль: '+roletoname(zzz)+'.')
         except:
            pass
-        bot.send_message(id, result[0]+'Победа '+winner['name']+' (`'+roletoname(winner['role'])+'`)!', parse_mode='markdown')
+        bot.send_message(id, result[0]+'Победа `'+winner['name']+'` ('+roletoname(winner['role'])+')!', parse_mode='markdown')
         users.update_one({'id':winner['id']}, {'$inc':{'games':1}})
         users.update_one({'id':winner['id']}, {'$inc':{'wins':1}})
         
