@@ -65,11 +65,13 @@ def banns(id, chatid, name):
         if timers[ids]['id']==id:
             i=1
     if i==0:
+        print('1')
         timers.update({id:{'id':id,
                           'messages':0}})
-        t=threading.Timer(5, unwarn, args=[id])
+        t=threading.Timer(10, unwarn, args=[id])
         t.start()
     else:
+        print('2')
         timers[id]['messages']+=1
         if timers[id]['messages']>=5:
             bot.send_message(chatid, 'Пользователь '+name+' много спамил и был заблокирован на 10 секунд.')
