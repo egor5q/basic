@@ -68,7 +68,7 @@ def banns(id, chatid, name):
         print('1')
         timers.update({id:{'id':id,
                           'messages':0}})
-        t=threading.Timer(10, unwarn, args=[id])
+        t=threading.Timer(15, unwarn, args=[id])
         t.start()
     else:
         print('2')
