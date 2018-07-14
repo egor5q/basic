@@ -165,7 +165,8 @@ def fighttt(m):
  if m.from_user.id not in ban:
   x=banns(m.from_user.id, m.chat.id, m.from_user.first_name)
   if x==0:
-    name=users.find_one({'id':m.from_user.id})
+   name=users.find_one({'id':m.from_user.id})
+   if name!=None:
     x=m.text.split(' ')
     if name['name']!=None:
       if len(x)==2:
