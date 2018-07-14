@@ -105,7 +105,7 @@ def userssss(m):
            y=users.find({})
            for ids in y:
                 if ids['id'] in x['users']:
-                     text+='`'+ids['name']+'`'+'\n'
+                     text+=ids['nameofuser']+' (`'+ids['name']+'`)'+'\n'
            if text=='':
               text='В данном чате нет ни одного зарегистрировавшегося юзера.'
            bot.send_message(m.chat.id, text, parse_mode='markdown')
@@ -131,8 +131,18 @@ def roletoname(x):
         role='Медведь'
     return role
 
+def unbattle(id1, id2):
+    users.update_one({'id':id1}, {'$set':{'fighting':0}})
+    users.update_one({'id':id2}, {'$set':{'fighting':0}})
+
 def fight(x,y, id):
     if x['id']!=y['id']:
+     if x['fighting']==0:
+      if y['fighting']==0:
+        users.update_one({'id':x['id']}, {'$set':{'fighting':1}})
+        users.update_one({'id':y['id']}, {'$set':{'fighting':1}})
+        t=threading.Timer(60, unbattle, args=[x['id'], y['id']])
+        t.start()
         result=fight2(x['role'], y['role'], id)
         if result[1]=='x':
             winner=x
@@ -147,8 +157,31 @@ def fight(x,y, id):
         except:
            pass
         bot.send_message(id, result[0]+'Победа '+winner['name']+' ('+roletoname(winner['role'])+')!', parse_mode='markdown')
+        users.update_one({'id':winner['id']}, {'$inc':{'games':1}})
+        users.update_one({'id':winner['id']}, {'$inc':{'wins':1}})
+        
+        users.update_one({'id':looser['id']}, {'$inc':{'games':1}})
+        users.update_one({'id':winner['id']}, {'$inc':{'looses':1}})
+        users.update_one({'id':winner['id']}, {'$inc':{'dies':1}})
+      else:
+        bot.send_message(m.chat.id, 'Выбранный соперник отдыхает после предыдущего сражения.')
+     else:
+        bot.send_message(m.chat.id, 'Вы отдыхаете после предыдущего сражения. Сражаться можно раз в минуту.')
     else:
         bot.send_message(id, 'Нельзя сражаться с самим собой!')
+
+
+#def createuser(id, name):
+#    return{'id':id,
+#           'nameofuser':name,
+#           'name':None,
+#           'role':None,
+#           'dies':0,
+#           'wins':0,
+#           'looses':0,
+#           'games':0,
+#           'fighting':0
+#          }
 
 
 def fight2(x, y, id):
@@ -668,7 +701,8 @@ def createuser(id, name):
            'dies':0,
            'wins':0,
            'looses':0,
-           'games':0
+           'games':0,
+           'fighting':0
           }
 
 @bot.message_handler(content_types=['text'])
@@ -681,6 +715,9 @@ def textt(m):
 if True:
  try:
    print('7777')
+
+   users.update_many({}, {'$set':{'fighting':0}})
+    
    bot.polling(none_stop=True,timeout=600)
  except (requests.ReadTimeout):
         print('!!! READTIME OUT !!!')           
