@@ -22,6 +22,11 @@ vip=[441399484, 55888804]
 games={}
 skills=[]
 
+ban=[]
+timers={}
+
+
+
 client1=os.environ['database']
 client=MongoClient(client1)
 db=client.minigame
@@ -40,9 +45,43 @@ def medit(message_text,chat_id, message_id,reply_markup=None,parse_mode='Markdow
                                  parse_mode=parse_mode)
 
 
+def unwarn(id):
+    try:
+        del timers[id]
+    except:
+        pass
 
+
+def unban(id):
+    try:
+        ban.remove(id)
+    except:
+        pass
+
+    
+def banns(id, chatid, name):
+    i=0
+    for ids in timers:
+        if timers[ids]['id']==id:
+            i=1
+    if i==0:
+        timers.update(id:{'id':id,
+                          'messages':0})
+        t=threading.Timer(5, unwarn, args=[id])
+        t.start()
+    else:
+        timers[id]['messages']+=1
+        if timers[id]['messages']>=5:
+            bot.send_message(chatid, 'Пользователь '+name+' много спамил и был заблокирован на 10 секунд.')
+            ban.append(id)
+            t=threading.Timer(10, unban, args=[id])
+            t.start()
+    
+    
 @bot.message_handler(commands=['stats'])
 def statss(m):
+ if m.from_user.id not in ban:
+    banns(m.from_user.id, m.chat.id, m.from_user.first_name)
     x=users.find_one({'id':m.from_user.id})
     if x!=None:
       try:
@@ -50,12 +89,17 @@ def statss(m):
                          'Боёв проведено: '+str(x['games'])+'\n'+
                          'Побед: '+str(x['wins'])+'\n'+
                          'Поражений (смертей): '+str(x['looses'])+'\n'+
-                         'Процент побед: '+str((round(x['wins']/x['games'], 2))*100)+'%')
+                         'Процент побед: '+str(int((round(x['wins']/x['games'], 2))*100))+'%')
       except:
             bot.send_message(m.chat.id, 'Вы еще не провели ни одного боя!')
 
            
-           
+   
+@bot.message_handler(commands=['help'])
+def help(m):
+    
+
+
            
 @bot.message_handler(commands=['start'])
 def start(m):
@@ -71,6 +115,8 @@ def start(m):
 
 @bot.message_handler(commands=['addme'])
 def addme(m):
+  if m.from_user.id not in ban:
+    banns(m.from_user.id, m.chat.id, m.from_user.first_name)
     x=chats.find_one({'id':m.chat.id})
     if x!=None:
       y=users.find_one({'id':m.from_user.id})
@@ -89,6 +135,8 @@ def addme(m):
 
 @bot.message_handler(commands=['fight'])
 def fighttt(m):
+ if m.from_user.id not in ban:
+    banns(m.from_user.id, m.chat.id, m.from_user.first_name)
     name=users.find_one({'id':m.from_user.id})
     x=m.text.split(' ')
     if name['name']!=None:
@@ -115,6 +163,8 @@ def fighttt(m):
             
 @bot.message_handler(commands=['users'])
 def userssss(m):
+  if m.from_user.id not in ban:
+    banns(m.from_user.id, m.chat.id, m.from_user.first_name)
     x=chats.find_one({'id':m.chat.id})
     if x!=None:
            text=''
@@ -667,6 +717,8 @@ def fight2(x, y, id):
 
 @bot.message_handler(commands=['name'])
 def name(m):
+  if m.from_user.id not in ban:
+    banns(m.from_user.id, m.chat.id, m.from_user.first_name)
     text=m.text.split(' ')
     if len(text)==2:
         if len(text[1])<=25:
