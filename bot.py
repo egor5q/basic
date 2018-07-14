@@ -168,7 +168,7 @@ def fight(x,y, id):
            bot.send_message(looser['id'], 'Вы погибли! Ваша новая роль: '+roletoname(zzz)+'.')
         except:
            pass
-        bot.send_message(id, result[0]+'Победа '+winner['name']+' ('+roletoname(winner['role'])+')!', parse_mode='markdown')
+        bot.send_message(id, result[0]+'Победа '+winner['name']+' (`'+roletoname(winner['role'])+'`)!', parse_mode='markdown')
         users.update_one({'id':winner['id']}, {'$inc':{'games':1}})
         users.update_one({'id':winner['id']}, {'$inc':{'wins':1}})
         
