@@ -40,7 +40,19 @@ def medit(message_text,chat_id, message_id,reply_markup=None,parse_mode='Markdow
 
 
 
-    
+@bot.message_handler(commands=['stats'])
+def statss(m):
+    x=users.find_one({'id':m.from_user.id})
+    if x!=None:
+        bot.send_message(m.chat.id, 'Статистика пользователя (по всем чатам):\n'+
+                         'Боёв проведено: '+str(x['games'])+'\n'+
+                         'Побед: '+str(x['wins'])+'\n'+
+                         'Поражений (смертей): '+str(x['looses'])+'\n'+
+                         'Процент побед: '+str(round(x['wins']/x['games'], 2)))
+
+           
+           
+           
 @bot.message_handler(commands=['start'])
 def start(m):
   if users.find_one({'id':m.from_user.id})==None:
@@ -171,17 +183,7 @@ def fight(x,y, id):
         bot.send_message(id, 'Нельзя сражаться с самим собой!')
 
 
-#def createuser(id, name):
-#    return{'id':id,
-#           'nameofuser':name,
-#           'name':None,
-#           'role':None,
-#           'dies':0,
-#           'wins':0,
-#           'looses':0,
-#           'games':0,
-#           'fighting':0
-#          }
+
 
 
 def fight2(x, y, id):
