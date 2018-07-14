@@ -164,9 +164,9 @@ def fight(x,y, id):
         users.update_one({'id':winner['id']}, {'$inc':{'looses':1}})
         users.update_one({'id':winner['id']}, {'$inc':{'dies':1}})
       else:
-        bot.send_message(m.chat.id, 'Выбранный соперник отдыхает после предыдущего сражения.')
+        bot.send_message(id, 'Выбранный соперник отдыхает после предыдущего сражения.')
      else:
-        bot.send_message(m.chat.id, 'Вы отдыхаете после предыдущего сражения. Сражаться можно раз в минуту.')
+        bot.send_message(id, 'Вы отдыхаете после предыдущего сражения. Сражаться можно раз в минуту.')
     else:
         bot.send_message(id, 'Нельзя сражаться с самим собой!')
 
