@@ -671,14 +671,14 @@ def name(m):
         if len(text[1])<=25:
           i=0
           for symbol in text[1]:
-            if symbol not in symbollist:
+            if symbol.lower() not in symbollist:
                 i=1
           if i==0:
             zz=users.find({})
             spisok=[]
             for ids in zz:
-                spisok.append(ids['name'])
-            if text[1] not in spisok:
+                spisok.append(ids['name'].lower())
+            if text[1].lower() not in spisok:
                 x=users.find_one({'id':m.from_user.id})
                 users.update_one({'id':m.from_user.id}, {'$set':{'name':text[1]}})
                 bot.send_message(m.chat.id, 'Вы успешно изменили имя на '+text[1]+'!')
