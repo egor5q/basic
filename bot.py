@@ -1026,10 +1026,12 @@ def textt(m):
             except:
                 bot.send_message(m.chat.id, 'Введите натуральное число (1 или больше)!')
                 return 0
-            if x>=1:
+            if x>=1 and x<=1000:
                 game['players'][m.from_user.id]['xod']=0
                 game['players'][m.from_user.id]['number']=x
                 bot.send_message(m.chat.id, 'Вы сделали выбор: '+str(x)+'. Ожидайте результатов...')
+             else
+                      bot.send_message(m.chat.id, 'Слишком большое число, не страдай хуйнёй')
             
       
   
