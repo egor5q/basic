@@ -96,7 +96,7 @@ def guessnumber(m):
 def top(m):
     try:
            x=guessrecs.find_one({'id':m.chat.id})
-           bot.send_message(m.chat.id, 'Рекорд этого чата: '+str(x['record'])
+           bot.send_message(m.chat.id, 'Рекорд этого чата: '+str(x['record']))
     except:
         bot.send_message(m.chat.id, 'В этом чате не было сыграно ни одной игры!')
 
