@@ -50,6 +50,14 @@ def medit(message_text,chat_id, message_id,reply_markup=None,parse_mode='Markdow
                                  parse_mode=parse_mode)
 
 
+pokemons=['Подрочу','Дрочемыш','Хуебес','Писькозавр','Кончефлыга','Блядун','Хуйдрочу','Подрочилла','Дрочь','Залупяндрий','Еблодок',
+          'Спермобак','Слоудроч','Пиздераст','Анальгена','Лизосрук','Ахуймот','Спермон','Кулдыга','Хуйпиздёныш','Покесперм','Спермомон','Спермак']
+
+
+@bot.message_handler(commands=['pokemon'])
+def pokemon(m):
+    x=random.choice(pokemons)
+    bot.send_message(m.chat.id, 'Вам выпал покемон *'+x+'*!')
 
 def deletemin(id):
     try:
