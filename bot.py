@@ -62,13 +62,15 @@ def unpoke(id):
 
 @bot.message_handler(commands=['pokemon'])
 def pokemon(m):
- if m.chat.id not in pokeban:
+ x=banns(m.from_user.id, m.chat.id, m.from_user.first_name)
+ if x==0:
+  if m.chat.id not in pokeban:
     x=random.choice(pokemons)
     bot.send_message(m.chat.id, 'Вам выпал покемон *'+x+'*!', parse_mode='markdown')
     pokeban.append(m.chat.id)
     t=threading.Timer(60, unpoke, args=[m.chat.id])
     t.start()
- else:
+  else:
       bot.send_message(m.chat.id, 'Покемона можно выбивать раз в минуту!')
 
 def deletemin(id):
