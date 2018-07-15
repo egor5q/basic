@@ -127,16 +127,16 @@ def endxod(id):
     winners={}       
     for ids in games[id]['players']:
             if games[id]['players'][ids]['win']==1:
-                winners.update({'id':games[id]['players'][ids]['id'],
+                winners.update({games[id]['players'][ids]['id']:{'id':games[id]['players'][ids]['id'],
                                 'number':games[id]['players'][ids]['number']
-                               })
+                               }})
     x=101
     for ids in winners:
-        if ids['number']<x:
-            x=ids['number']
+        if winners[ids]['number']<x:
+            x=winners[ids]['number']
     for ids in winners:
-        if ids['number']==x:
-            games[id]['players'][ids['id']]['finalwin']=1
+        if winners[ids]['number']==x:
+            games[id]['players'][winners[ids]['id']]['finalwin']=1
     text1=''
     for ids in games[id]['players']:
         zz=games[id]['players'][ids]['name']+': Ничего\n'
