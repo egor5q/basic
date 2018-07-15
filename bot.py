@@ -90,7 +90,7 @@ def pokemon(m):
     t=threading.Timer(60, unpoke, args=[m.chat.id])
     t.start()
    else:
-       pokemons.insert_one({'id':m.from_user.id,
+       pokemonss.insert_one({'id':m.from_user.id,
                             'pokemons':[]
                            })
        bot.send_message(m.chat.id, 'Вы создали дом для покемонов! Теперь настало время собрать их всех!')
