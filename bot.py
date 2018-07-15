@@ -79,7 +79,11 @@ def guessnumber(m):
             if y==chat['number']:
                 bot.send_message(m.chat.id, 'Попал! Верное число: *'+str(chat['number'])+'*.\nКоличество попыток: *'+str(chat['attemps']+1)+'*.', parse_mode='markdown')
                 rec=guessrecs.find_one({'id':m.chat.id})
-                if chat['attemps']+1<rec['record']:
+                if rec['record']!=None:
+                  if chat['attemps']+1<rec['record']:
+                    guessrecs.update_one({'id':m.chat.id}, {'$set':{'record':chat['attemps']+1}})
+                    guess.remove({'id':m.chat.id})
+                else:
                     guessrecs.update_one({'id':m.chat.id}, {'$set':{'record':chat['attemps']+1}})
                     guess.remove({'id':m.chat.id})
             elif y<chat['number']:
