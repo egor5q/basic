@@ -150,6 +150,7 @@ def endxod(id):
     if winner==None:
         winner='Победителя нет!'
     bot.send_message(id, 'Итоги игры:\nПоставленные числа:\n'+text1+'\nПобедитель: '+winner)
+    del games[id]
             
 def startminimum(id):
     for ids in games[id]['players']:
