@@ -57,7 +57,7 @@ pokemons=['Подрочу','Дрочемыш','Хуебес','Писькозав
 @bot.message_handler(commands=['pokemon'])
 def pokemon(m):
     x=random.choice(pokemons)
-    bot.send_message(m.chat.id, 'Вам выпал покемон *'+x+'*!')
+    bot.send_message(m.chat.id, 'Вам выпал покемон *'+x+'*!', parse_mode='markdown')
 
 def deletemin(id):
     try:
