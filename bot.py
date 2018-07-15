@@ -304,7 +304,10 @@ def statss(m):
       except:
             bot.send_message(m.chat.id, 'Вы еще не провели ни одного боя!')
 
-           
+@bot.message_handler(commands=['flee'])
+def flee(m):
+           pass
+
    
 @bot.message_handler(commands=['help'])
 def help(m):
