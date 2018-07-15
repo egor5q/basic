@@ -73,23 +73,23 @@ def guessnumber(m):
                 guess.update_one({'id':m.chat.id},{'$inc':{'attemps':1}})
             else:
                 guess.insert_one(createguess(m.chat.id))
-                x=guess.find({})
-                for ids in x:
+            x=guess.find({})
+            for ids in x:
                     if ids['id']==m.chat.id:
                         chat=ids
             if y==chat['number']:
-                bot.send_message(m.chat.id, 'Попал! Верное число: *'+str(chat['number'])+'*.\nКоличество попыток: *'+str(chat['attemps']+1)+'*.', parse_mode='markdown')
+                bot.send_message(m.chat.id, 'Попал! Верное число: *'+str(chat['number'])+'*.\nКоличество попыток: *'+str(chat['attemps'])+'*.', parse_mode='markdown')
                 rec=guessrecs.find_one({'id':m.chat.id})
                 if rec['record']!=None:
                   if chat['attemps']+1<rec['record']:
-                    guessrecs.update_one({'id':m.chat.id}, {'$set':{'record':chat['attemps']+1}})
+                    guessrecs.update_one({'id':m.chat.id}, {'$set':{'record':chat['attemps']}})
                 else:
-                    guessrecs.update_one({'id':m.chat.id}, {'$set':{'record':chat['attemps']+1}})
+                    guessrecs.update_one({'id':m.chat.id}, {'$set':{'record':chat['attemps']}})
                 guess.remove({'id':m.chat.id})
             elif y<chat['number']:
-                bot.send_message(m.chat.id, 'Число '+str(y)+' меньше загаданного! Количество попыток: '+str(chat['attemps']+1))
+                bot.send_message(m.chat.id, 'Число '+str(y)+' меньше загаданного! Количество попыток: '+str(chat['attemps']))
             elif y>chat['number']:
-                bot.send_message(m.chat.id, 'Число '+str(y)+' больше загаданного! Количество попыток: '+str(chat['attemps']+1))
+                bot.send_message(m.chat.id, 'Число '+str(y)+' больше загаданного! Количество попыток: '+str(chat['attemps']))
                 
         
 @bot.message_handler(commands=['top'])
@@ -109,7 +109,7 @@ def createrec(id):
 
 def createguess(id):
     return{'id':id,
-           'attemps':0,
+           'attemps':1,
            'number':random.randint(1,100)
           }
         
