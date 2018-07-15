@@ -22,6 +22,9 @@ vip=[441399484, 55888804]
 games={}
 skills=[]
 
+games={}
+
+
 ban=[]
 timers={}
 
@@ -48,6 +51,32 @@ def medit(message_text,chat_id, message_id,reply_markup=None,parse_mode='Markdow
 
 
 
+@bot.message_handler(commands=['minimum'])
+def unique(m):
+    i=0
+    for ids in games:
+        if games[ids]['id']==m.chat.id:
+            i=1
+    if i==0:
+        games.update(createminimum(m.chat.id))
+
+
+def createminplayer(id):
+    return{id:{'id':id,
+               'number':None,
+               'xod':0
+              }
+          }
+        
+def createminimum(id):
+    return{id:{'id':id,
+               'players':{},
+               'started':0
+              }
+          }
+        
+        
+        
 @bot.message_handler(commands=['gn'])
 def guessnumber(m):
   q=guessrecs.find_one({'id':m.chat.id})
