@@ -97,7 +97,7 @@ def createrec(id):
 
 def createguess(id):
     return{'id':id,
-           'attemps':1,
+           'attemps':0,
            'number':random.randint(1,100)
           }
         
