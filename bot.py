@@ -1030,7 +1030,7 @@ def textt(m):
                 game['players'][m.from_user.id]['xod']=0
                 game['players'][m.from_user.id]['number']=x
                 bot.send_message(m.chat.id, 'Вы сделали выбор: '+str(x)+'. Ожидайте результатов...')
-             else
+             else:
                       bot.send_message(m.chat.id, 'Слишком большое число, не страдай хуйнёй')
             
       
