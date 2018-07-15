@@ -37,7 +37,7 @@ users=db.users
 chats=db.chats
 guess=db.guessusergame
 guessrecs=db.guessrecords
-pokemons=db.pokemons
+pokemonss=db.pokemons
 
 rolelist=['wolf', 'gunner', 'mage', 'nindza', 'cat', 'killer', 'bear']
 
@@ -63,7 +63,7 @@ def unpoke(id):
 
 @bot.message_handler(commands=['mypoke'])
 def mypoke(m):
-    x=pokemons.find_one({'id':m.from_user.id})
+    x=pokemonss.find_one({'id':m.from_user.id})
     if x!=None:
         text=''
         for ids in x['pokemons']:
@@ -80,11 +80,11 @@ def pokemon(m):
  x=banns(m.from_user.id, m.chat.id, m.from_user.first_name)
  if x==0:
   if m.from_user.id not in pokeban:
-   x=pokemons.find_one({'id':m.from_user.id})
+   x=pokemonss.find_one({'id':m.from_user.id})
    if x!=None:
     y=random.choice(pokemons)
     if y not in x['pokemons']:
-        pokemons.update_one({'id':m.from_user.id}, {'push':{'pokemons':y}})
+        pokemonss.update_one({'id':m.from_user.id}, {'push':{'pokemons':y}})
     bot.send_message(m.chat.id, 'Вам выпал покемон *'+y+'*!', parse_mode='markdown')
     pokeban.append(m.from_user.id)
     t=threading.Timer(60, unpoke, args=[m.chat.id])
