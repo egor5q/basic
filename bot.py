@@ -59,6 +59,7 @@ def guessnumber(m):
         y=int(z[1])
     except:
         bot.send_message(m.chat.id, 'Для игры нужно использовать формат:\n/gn *x*;\n1<=*x*<=100', parse_mode='markdown') 
+        return 0
     if y>100 or y<1:
             bot.send_message(m.chat.id, 'x должен быть в пределах:\n1<=*x*<=100', parse_mode='markdown')
     else:
