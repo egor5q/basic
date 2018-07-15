@@ -98,6 +98,8 @@ def startmin(m):
             i=1
     if i==1:
         if len(game['players'])>1:
+         if game['started']==0:
+            game['started']=1
             game['timer'].cancel()
             t=threading.Timer(45, endxod, args=[game['id']])
             t.start()
@@ -144,7 +146,7 @@ def endxod(id):
     for ids in games[id]['players']:  
         if games[id]['players'][ids]['finalwin']==1:
             winner=games[id]['players'][ids]['name']
-    if winner=None:
+    if winner==None:
         winner='Победителя нет!'
     bot.send_message(id, 'Итоги игры:\nПоставленные числа:\n'+text1+'\nПобедитель: '+winner)
             
