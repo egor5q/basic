@@ -97,7 +97,7 @@ def startmin(m):
             game=games[ids]
             i=1
     if i==1:
-        if len(game['players'])>1:
+        if len(game['players'])>2:
          if game['started']==0:
             game['started']=1
             game['timer'].cancel()
@@ -1020,9 +1020,9 @@ def textt(m):
             try:
                 x=int(m.text)
             except:
-                bot.send_message(m.chat.id, 'Введите целое число от 1 до 100!')
+                bot.send_message(m.chat.id, 'Введите натуральное число (1 или больше)!')
                 return 0
-            if x>=1 and x<=100:
+            if x>=1:
                 game['players'][m.from_user.id]['xod']=0
                 game['players'][m.from_user.id]['number']=x
                 bot.send_message(m.chat.id, 'Вы сделали выбор: '+str(x)+'. Ожидайте результатов...')
