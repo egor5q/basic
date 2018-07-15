@@ -83,16 +83,23 @@ def guessnumber(m):
                 if rec['record']!=None:
                   if chat['attemps']+1<rec['record']:
                     guessrecs.update_one({'id':m.chat.id}, {'$set':{'record':chat['attemps']+1}})
-                    guess.remove({'id':m.chat.id})
                 else:
                     guessrecs.update_one({'id':m.chat.id}, {'$set':{'record':chat['attemps']+1}})
-                    guess.remove({'id':m.chat.id})
+                guess.remove({'id':m.chat.id})
             elif y<chat['number']:
                 bot.send_message(m.chat.id, 'Число '+str(y)+' меньше загаданного! Количество попыток: '+str(chat['attemps']+1))
             elif y>chat['number']:
                 bot.send_message(m.chat.id, 'Число '+str(y)+' больше загаданного! Количество попыток: '+str(chat['attemps']+1))
                 
         
+@bot.message_handler(commands=['top'])
+def top(m):
+    try:
+           x=guessrecs.find_one({'id':m.chat.id})
+           bot.send_message(m.chat.id, 'Рекорд этого чата: '+str(x['record'])
+    except:
+        bot.send_message(m.chat.id, 'В этом чате не было сыграно ни одной игры!')
+
 
 def createrec(id):
     return{'id':id,
