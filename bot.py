@@ -104,6 +104,7 @@ def startmin(m):
             t=threading.Timer(45, endxod, args=[game['id']])
             t.start()
             startminimum(m.chat.id)
+            bot.send_message(m.chat.id, 'Игра началась! Перемещайтесь в личку к боту для выбора.')
         else:
             bot.send_message(m.chat.id, 'Недостаточно игроков!')
             
@@ -138,9 +139,9 @@ def endxod(id):
             games[id]['players'][winners[ids]['id']]['finalwin']=1
     text1=''
     for ids in games[id]['players']:
-        zz=games[id]['players']['name']+': Ничего\n'
-        if games[id]['players']['number']!=None:
-            zz=games[id]['players']['name']+': '+str(games[id]['players']['number'])+'\n'
+        zz=games[id]['players'][ids]['name']+': Ничего\n'
+        if games[id]['players'][ids]['number']!=None:
+            zz=games[id]['players'][ids]['name']+': '+str(games[id]['players'][ids]['number'])+'\n'
         text1+=zz
     winner=None
     for ids in games[id]['players']:  
