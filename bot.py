@@ -87,7 +87,7 @@ def pokemon(m):
         pokemonss.update_one({'id':m.from_user.id}, {'$push':{'pokemons':y}})
     bot.send_message(m.chat.id, 'Вам выпал покемон *'+y+'*!', parse_mode='markdown')
     pokeban.append(m.from_user.id)
-    t=threading.Timer(60, unpoke, args=[m.chat.id])
+    t=threading.Timer(60, unpoke, args=[m.from_user.id])
     t.start()
    else:
        pokemonss.insert_one({'id':m.from_user.id,
