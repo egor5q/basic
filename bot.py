@@ -57,9 +57,11 @@ def guessnumber(m):
   if len(z)==2:
     try:
         y=int(z[1])
-        if y>100 or y<1:
-            notright()
-        else:
+    except:
+        bot.send_message(m.chat.id, 'Для игры нужно использовать формат:\n/gn *x*;\n1<=*x*<=100', parse_mode='markdown') 
+    if y>100 or y<1:
+            bot.send_message(m.chat.id, 'x должен быть в пределах:\n1<=*x*<=100', parse_mode='markdown')
+    else:
             x=guess.find({})
             i=0
             for ids in x:
@@ -85,8 +87,6 @@ def guessnumber(m):
             elif y>chat['number']:
                 bot.send_message(m.chat.id, 'Число '+str(y)+' больше загаданного! Количество попыток: '+str(chat['attemps']+1))
                 
-    except:
-        bot.send_message(m.chat.id, 'Для игры нужно использовать формат:\n/gn *x*;\n1<=*x*<=100', parse_mode='markdown')
         
 
 def createrec(id):
