@@ -132,11 +132,11 @@ def endxod(id):
                                })
     x=101
     for ids in winners:
-        if winners[ids]['number']<x:
-            x=winners[ids]['number']
+        if ids['number']<x:
+            x=ids['number']
     for ids in winners:
-        if winners[ids]['number']==x:
-            games[id]['players'][winners[ids]['id']]['finalwin']=1
+        if ids['number']==x:
+            games[id]['players'][ids['id']]['finalwin']=1
     text1=''
     for ids in games[id]['players']:
         zz=games[id]['players'][ids]['name']+': Ничего\n'
@@ -154,7 +154,7 @@ def endxod(id):
 def startminimum(id):
     for ids in games[id]['players']:
         try:
-            bot.send_message(games[id]['players'][ids]['id'], 'Отправьте сюда число от 1 до 100 и ожидайте результатов в беседе.')
+            bot.send_message(games[id]['players'][ids]['id'], 'Отправьте сюда натуральное число (от 1 и выше) и ожидайте результатов в беседе.')
         except:
             pass
         games[id]['players'][ids]['xod']=1
