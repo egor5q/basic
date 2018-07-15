@@ -67,7 +67,7 @@ def pokemon(m):
     pokeban.append(m.chat.id)
     t=threading.Timer(60, unpoke, args=[m.chat.id])
     t.start()
-  else:
+ else:
       bot.send_message(m.chat.id, 'Покемона можно выбивать раз в минуту!')
 
 def deletemin(id):
