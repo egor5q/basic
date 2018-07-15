@@ -51,6 +51,13 @@ def medit(message_text,chat_id, message_id,reply_markup=None,parse_mode='Markdow
 
 
 
+def deletemin(id):
+    try:
+        del games[id]
+        bot.send_message(id, 'Игра была отменена!')
+    except:
+        pass
+
 @bot.message_handler(commands=['minimum'])
 def unique(m):
     i=0
@@ -58,20 +65,116 @@ def unique(m):
         if games[ids]['id']==m.chat.id:
             i=1
     if i==0:
-        games.update(createminimum(m.chat.id))
+        t=threading.Timer(300, deletemin, args=[m.chat.id])
+        t.start()
+        games.update(createminimum(m.chat.id, t))
+        bot.send_message(m.chat.id, 'Присоединиться к игре можно командой /joinmin.')
+        
+@bot.message_handler(commands=['joinmin'])
+def joinmin(m):
+    i=0
+    for ids in games:
+        if games[ids]['id']==m.chat.id:
+            game=games[ids]
+            i=1
+    if i==1:
+        if m.from_user.id not in game['ids']:
+          try:
+            bot.send_message(m.from_user.id, 'Вы присоединились к игре "Минимум"!')
+          except:
+            bot.send_message(m.chat.id, m.from_user.first_name+', сначала напишите боту в личку!')
+            return 0
+          game['ids'].append(m.from_user.id)
+          game['players'].update(createminplayer(m.from_user.id, m.from_user.first_name))
+          bot.send_message(m.chat.id, m.from_user.first_name+' присоединился!')
+            
+            
+@bot.message_handler(commands=['startmin'])
+def startmin(m):
+    i=0
+    for ids in games:
+        if games[ids]['id']==m.chat.id:
+            game=games[ids]
+            i=1
+    if i==1:
+        if len(game['players'])>1:
+            game['timer'].cancel()
+            t=threading.Timer(45, endxod, args=[game['id']])
+            t.start()
+            startminimum(m.chat.id)
+        else:
+            bot.send_message(m.chat.id, 'Недостаточно игроков!')
+            
+def endxod(id):
+    for ids in games[id]['players']:
+        x=games[id]['players'][ids]['number']
+        idd=games[id]['players'][ids]['id']
+        if x!=None:
+            i=0
+            for idss in games[id]['players']:
+                if games[id]['players'][idss]['id']!=idd:
+                    if games[id]['players'][idss]['number']==x:
+                        i=1
+            if i==1:
+                games[id]['players'][ids]['win']=0
+            else:
+                games[id]['players'][ids]['win']=1
+        else:
+            games[id]['players'][ids]['win']=0
+    winners={}       
+    for ids in games[id]['players']:
+            if games[id]['players'][ids]['win']==1:
+                winners.update({'id':games[id]['players'][ids]['id'],
+                                'number':games[id]['players'][ids]['number']
+                               })
+    x=101
+    for ids in winners:
+        if winners[ids]['number']<x:
+            x=winners[ids]['number']
+    for ids in winners:
+        if winners[ids]['number']==x:
+            games[id]['players'][winners[ids]['id']]['finalwin']=1
+    text1=''
+    for ids in games[id]['players']:
+        zz=games[id]['players']['name']+': Ничего\n'
+        if games[id]['players']['number']!=None:
+            zz=games[id]['players']['name']+': '+str(games[id]['players']['number'])+'\n'
+        text1+=zz
+    winner=None
+    for ids in games[id]['players']:  
+        if games[id]['players'][ids]['finalwin']==1:
+            winner=games[id]['players'][ids]['name']
+    if winner=None:
+        winner='Победителя нет!'
+    bot.send_message(id, 'Итоги игры:\nПоставленные числа:\n'+text1+'\nПобедитель: '+winner)
+            
+def startminimum(id):
+    for ids in games[id]['players']:
+        try:
+            bot.send_message(games[id]['players'][ids]['id'], 'Отправьте сюда число от 1 до 100 и ожидайте результатов в беседе.')
+        except:
+            pass
+        games[id]['players'][ids]['xod']=1
+        
+            
+            
 
-
-def createminplayer(id):
+def createminplayer(id, name):
     return{id:{'id':id,
+               'name':name,
                'number':None,
-               'xod':0
+               'xod':0,
+               'win':0,
+               'finalwin':0
               }
           }
         
-def createminimum(id):
+def createminimum(id, timerr):
     return{id:{'id':id,
                'players':{},
-               'started':0
+               'ids':[],
+               'started':0,
+               'timer':timerr
               }
           }
         
@@ -903,6 +1006,24 @@ def textt(m):
         chats.insert_one(createchat(m.chat.id))
     if users.find_one({'id':m.from_user.id})!=None:
            users.update_one({'id':m.from_user.id}, {'$set':{'nameofuser':m.from_user.first_name}})
+    i=0
+    for ids in games:
+        if m.from_user.id in games[ids]['ids']:
+            game=games[ids]
+            i=1
+    if i==1:
+      if m.from_user.id==m.chat.id:
+        if game['players'][m.from_user.id]['xod']==1:
+            try:
+                x=int(m.text)
+            except:
+                bot.send_message(m.chat.id, 'Введите целое число от 1 до 100!')
+                return 0
+            if x>=1 and x<=100:
+                game['players'][m.from_user.id]['xod']=0
+                game['players'][m.from_user.id]['number']=x
+                bot.send_message(m.chat.id, 'Вы сделали выбор: '+str(x)+'. Ожидайте результатов...')
+            
       
   
   
