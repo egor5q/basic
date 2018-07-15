@@ -37,6 +37,7 @@ users=db.users
 chats=db.chats
 guess=db.guessusergame
 guessrecs=db.guessrecords
+pokemons=db.pokemons
 
 rolelist=['wolf', 'gunner', 'mage', 'nindza', 'cat', 'killer', 'bear']
 
@@ -60,16 +61,39 @@ pokemons=['Подрочу','Дрочемыш','Хуебес','Писькозав
 def unpoke(id):
     pokeban.remove(id)
 
+@bot.message_handler(commands=['mypoke'])
+def mypoke(m):
+    x=pokemons.find_one({'id':m.from_user.id})
+    if x!=None:
+        text=''
+        for ids in x['pokemons']:
+            text+='*'+ids+'*, '
+        bot.send_message(m.chat.id, 'Ваши покемоны:\n\n'+text, parse_mode='markdown')
+    else:
+        bot.send_message(m.chat.id, 'Вы не открыли ни одного покеболла!')
+           
+           
+           
+           
 @bot.message_handler(commands=['pokemon'])
 def pokemon(m):
  x=banns(m.from_user.id, m.chat.id, m.from_user.first_name)
  if x==0:
-  if m.chat.id not in pokeban:
-    x=random.choice(pokemons)
-    bot.send_message(m.chat.id, 'Вам выпал покемон *'+x+'*!', parse_mode='markdown')
-    pokeban.append(m.chat.id)
+  if m.from_user.id not in pokeban:
+   x=pokemons.find_one({'id':m.from_user.id})
+   if x!=None:
+    y=random.choice(pokemons)
+    if y not in x['pokemons']:
+        pokemons.update_one({'id':m.from_user.id}, {'push':{'pokemons':y}})
+    bot.send_message(m.chat.id, 'Вам выпал покемон *'+y+'*!', parse_mode='markdown')
+    pokeban.append(m.from_user.id)
     t=threading.Timer(60, unpoke, args=[m.chat.id])
     t.start()
+   else:
+       pokemons.insert_one({'id':m.from_user.id,
+                            'pokemons':[]
+                           })
+       bot.send_message(m.chat.id, 'Вы создали дом для покемонов! Теперь настало время собрать их всех!')
   else:
       bot.send_message(m.chat.id, 'Покемона можно выбивать раз в минуту!')
 
