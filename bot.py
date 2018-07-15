@@ -50,14 +50,25 @@ def medit(message_text,chat_id, message_id,reply_markup=None,parse_mode='Markdow
                                  parse_mode=parse_mode)
 
 
-pokemons=['Подрочу','Дрочемыш','Хуебес','Писькозавр','Кончефлыга','Блядун','Хуйдрочу','Подрочилла','Дрочь','Залупяндрий','Еблодок',
-          'Спермобак','Слоудроч','Пиздераст','Анальгена','Лизосрук','Ахуймот','Спермон','Кулдыга','Хуйпиздёныш','Покесперм','Спермомон','Спермак']
+pokeban=[]
 
+pokemons=['Подрочу','Дрочемыш','Хуебес','Писькозавр','Кончефлыга','Блядун','Хуйдрочу','Подрочилла','Дрочь','Залупяндрий','Еблодок',
+          'Спермобак','Слоудроч','Пиздераст','Спермон','Кулдыга','Покесперм','Спермомон','Спермак']
+
+
+def unpoke(id):
+    pokeban.remove(id)
 
 @bot.message_handler(commands=['pokemon'])
 def pokemon(m):
+ if m.chat.id not in pokeban:
     x=random.choice(pokemons)
     bot.send_message(m.chat.id, 'Вам выпал покемон *'+x+'*!', parse_mode='markdown')
+    pokeban.append(m.chat.id)
+    t=threading.Timer(60, unpoke, args=[m.chat.id])
+    t.start()
+  else:
+      bot.send_message(m.chat.id, 'Покемона можно выбивать раз в минуту!')
 
 def deletemin(id):
     try:
