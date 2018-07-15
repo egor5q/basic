@@ -32,6 +32,8 @@ client=MongoClient(client1)
 db=client.minigame
 users=db.users
 chats=db.chats
+guess=db.guessusergame
+guessrecs=db.guessrecords
 
 rolelist=['wolf', 'gunner', 'mage', 'nindza', 'cat', 'killer', 'bear']
 
@@ -44,6 +46,62 @@ def medit(message_text,chat_id, message_id,reply_markup=None,parse_mode='Markdow
     return bot.edit_message_text(chat_id=chat_id,message_id=message_id,text=message_text,reply_markup=reply_markup,
                                  parse_mode=parse_mode)
 
+
+
+@bot.message_handler(commands=['gn'])
+def guessnumber(m):
+  q=guessrecs.find_one({'id':m.chat.id})
+  if q==None:
+        guessrecs.insert_one(createrec(m.chat.id))
+  z=m.text.split(' ')
+  if len(z)==2:
+    try:
+        y=int(z[1])
+        if y>100 or y<1:
+            notright()
+        else:
+            x=guess.find({})
+            i=0
+            for ids in x:
+                if ids['id']==m.chat.id:
+                    i=1
+                    chat=ids
+            if i==1:
+                guess.update_one({'id':m.chat.id},{'$inc':{'attemps':1}})
+            else:
+                guess.insert_one(createguess(m.chat.id))
+                x=guess.find({})
+                for ids in x:
+                    if ids['id']==m.chat.id:
+                        chat=ids
+            if y==chat['number']:
+                bot.send_message(m.chat.id, 'Попал! Верное число: *'+str(chat['number'])+'*.\nКоличество попыток: *'+str(chat['attemps']+1)+'*.', parse_mode='markdown')
+                rec=guessrecs.find_one({'id':m.chat.id})
+                if chat['attemps']+1<rec['record']:
+                    guessrecs.update_one({'id':m.chat.id}, {'$set':{'record':chat['attemps']+1}})
+                    guess.remove({'id':m.chat.id})
+            elif y<chat['number']:
+                bot.send_message(m.chat.id, 'Число '+str(y)+' меньше загаданного! Количество попыток: '+str(chat['attemps']+1))
+            elif y>chat['number']:
+                bot.send_message(m.chat.id, 'Число '+str(y)+' больше загаданного! Количество попыток: '+str(chat['attemps']+1))
+                
+    except:
+        bot.send_message(m.chat.id, 'Для игры нужно использовать формат:\n/gn *x*;\n1<=*x*<=100', parse_mode='markdown')
+        
+
+def createrec(id):
+    return{'id':id,
+           'record':None
+          }
+        
+
+def createguess(id):
+    return{'id':id,
+           'attemps':1,
+           'number':random.randint(1,100)
+          }
+        
+        
 
 def unwarn(id):
     try:
