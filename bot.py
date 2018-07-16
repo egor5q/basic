@@ -79,10 +79,12 @@ def unpoke(id):
 def mypoke(m):
     x=pokemonss.find_one({'id':m.from_user.id})
     if x!=None:
+        i=0
         text=''
         for ids in x['pokemons']:
             text+='*'+ids+'*, '
-        bot.send_message(m.chat.id, 'Ваши покемоны:\n\n'+text, parse_mode='markdown')
+            i+=1
+        bot.send_message(m.chat.id, 'Ваши покемоны:\n\n'+text+'\nВсего покемонов: '+str(i), parse_mode='markdown')
     else:
         bot.send_message(m.chat.id, 'Вы не открыли ни одного покеболла!')
            
