@@ -75,7 +75,7 @@ def dailypoke(id):
       poke=random.choice(pokemons)
       kb=types.InlineKeyboardMarkup()
       kb.add(types.InlineKeyboardButton(text='Поймать', callback_data=poke))
-      bot.send_message(id, 'Обнаружен '+gold+'покемон '+poke+'! Жмите кнопку ниже, чтобы попытаться поймать.', parse_mode='markdown')
+      bot.send_message(id, 'Обнаружен '+gold+'покемон '+poke+'! Жмите кнопку ниже, чтобы попытаться поймать.',reply_markup=kb,parse_mode='markdown')
 
 
            
