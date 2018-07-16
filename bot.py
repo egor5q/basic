@@ -81,7 +81,7 @@ def dailypoke(id):
            
 @bot.callback_query_handler(func=lambda call:True)
 def inline(call):
-    givepoke(call.data, call.chat.id, call.message.message_id, call.from_user.id)
+    givepoke(call.data, call.message.chat.id, call.message.message_id, call.from_user.id)
              
    
 def givepoke(pokemon,id, mid, name):
