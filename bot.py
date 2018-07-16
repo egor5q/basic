@@ -72,13 +72,14 @@ pokemons=['Подрочу','Дрочемыш','Хуебес','Писькозав
 @bot.message_handler(commands=['sendm'])
 def sendmes(m):
     if m.from_user.id==441399484:
+        print('yes')
         y=chats.find({})
         tex=m.text.split('/sendm')
         for one in y:
             try:
               bot.send_message(one['id'], tex[1])
             except:
-                pass
+                print('Notsent')
 
 
 
