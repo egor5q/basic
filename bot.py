@@ -69,23 +69,23 @@ def dailypoke(id):
       t.start()
       gold=random.randint(1,100)
       if gold==1:
-            gold='*золотой*'
+            gold='*золотой* '
       else:
             gold=''
       poke=random.choice(pokemons)
       kb=types.InlineKeyboardMarkup()
       kb.add(types.InlineKeyboardButton(text='Поймать', callback_data=poke)
-      bot.send_message(id, 'Обнаружен '+gold+' покемон '+poke+'! Жмите кнопку ниже, чтобы попытаться поймать.', parse_mode='markdown')
+      bot.send_message(id, 'Обнаружен '+gold+'покемон '+poke+'! Жмите кнопку ниже, чтобы попытаться поймать.', parse_mode='markdown')
 
 
            
 @bot.callback_query_handler(func=lambda call:True)
 def inline(call):
-    givepoke(call.data, call.from_user.id)
+    givepoke(call.data, call.chat.id, call.message.message_id, call.from_user.id)
              
    
-def givepoke(x,y):
-             pass
+def givepoke(pokemon,id, mid, name):
+             medit('Покемона поймал '+name+'!',id, mid)
              
  
 @bot.message_handler(content_types=['text'])
@@ -103,10 +103,7 @@ def textt(m):
 if True:
  try:
    print('7777')
-   try:
-    dailypoke(-14353655)
-   except:
-       pass
+   dailypoke(-1001256539790)
    bot.polling(none_stop=True,timeout=600)
  except (requests.ReadTimeout):
         print('!!! READTIME OUT !!!')           
