@@ -62,6 +62,13 @@ pokemons=['Подрочу','Дрочемыш','Хуебес','Писькозав
          'Мудозвоныч','Кто прочитал тот здохнет','Лохпидр','Даунич','Дрочевик','Говноедина','Хуй ебливый']
 
 
+@bot.message_handler(commands=['allpoke'])
+def allpoke(m):
+    i=0
+    for ids in pokemons:
+        i+=1
+    bot.send_message(m.chat.id, 'Всего покемонов существует: '+str(i))
+
 def unpoke(id):
     pokeban.remove(id)
 
