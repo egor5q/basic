@@ -84,7 +84,7 @@ def mypoke(m):
         for ids in x['pokemons']:
             text+='*'+ids+'*, '
             i+=1
-        bot.send_message(m.chat.id, 'Ваши покемоны:\n\n'+text+'\nВсего покемонов: '+str(i), parse_mode='markdown')
+        bot.send_message(m.chat.id, 'Ваши покемоны:\n\n'+text+'\n\nВсего покемонов: '+str(i), parse_mode='markdown')
     else:
         bot.send_message(m.chat.id, 'Вы не открыли ни одного покеболла!')
            
