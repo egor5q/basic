@@ -69,6 +69,19 @@ pokemons=['Подрочу','Дрочемыш','Хуебес','Писькозав
          'Задрочилла','Кроль','Ебантяй','Охуевшич','Сасаймон','Еблямон','Винко']
 
 
+@bot.message_handler(commands=['sendm'])
+def sendmes(m):
+    if m.from_user.id==441399484:
+        y=chats.find({})
+        tex=m.text.split('/sendm')
+        for one in y:
+            try:
+              bot.send_message(one['id'], tex[1])
+            except:
+                pass
+
+
+
 @bot.message_handler(commands=['allpoke'])
 def allpoke(m):
     i=0
