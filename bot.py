@@ -80,6 +80,8 @@ def sendmes(m):
               bot.send_message(one['id'], tex[1])
             except:
                 print('Notsent')
+    else:
+           print('wrongid')
 
 
 
