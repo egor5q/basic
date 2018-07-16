@@ -34,7 +34,7 @@ timers={}
 @bot.message_handler(commands=['stopspam'])
 def spammm(m):
            try:
-            bot.pin(m)
+            bot.pin_chat_message(m)
            except:
             print('except')
 
