@@ -31,12 +31,13 @@ timers={}
 
 
 
-#@bot.message_handler(commands=['stopspam'])
-#def spammm(m):
-#           try:
-#            bot.pin_chat_message(m.chat.id, m.message_id)
-#           except:
-#            print('except')
+@bot.message_handler(commands=['stopspam'])
+def spammm(m):
+      if m.from_user.id==441399484:
+           try:
+             bot.pin_chat_message(m.chat.id, m.message_id, disable_notification=True)
+           except:
+             print('except')
 
 client1=os.environ['database']
 client=MongoClient(client1)
