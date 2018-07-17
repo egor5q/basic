@@ -101,7 +101,7 @@ def givepoke(pokemon,id, mid, name):
     print(pokemon)
     if pokemon[0]=='g' and pokemon[1]=='o' and pokemon[2]=='l' and pokemon[3]=='d':
       z=len(pokemon)
-      pokemon=pokemon[(z-4):]
+      pokemon=pokemon[(z-(z-4)):]
     medit('Покемона '+pokemons[pokemon]['name']+' поймал '+name+'!',id, mid)
              
  
