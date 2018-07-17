@@ -95,10 +95,21 @@ def dailypoke(id):
            
 @bot.callback_query_handler(func=lambda call:True)
 def inline(call):
-    givepoke(call.data, call.message.chat.id, call.message.message_id, call.from_user.first_name)
+    x=users.find_one({'id':call.from_user.id})
+    if x!=None:
+        i=1
+        for ids in x['pokemons']:
+            if x['pokemons'][ids]['code']==pokemon:
+                i=1
+        if i!=1:
+            givepoke(call.data, call.message.chat.id, call.message.message_id, call.from_user.first_name, call.from_user.id)
+        else:
+            bot.answer_callback_query(call.id, 'У вас уже есть этот покемон!')
+    else:
+        bot.answer_callback_query(call.id, 'Сначала напишите в чат что-нибудь (не команду!).')
              
    
-def givepoke(pokemon,id, mid, name):
+def givepoke(pokemon,id, mid, name, userid):
     print(pokemon)
     golden=0
     if pokemon[0]=='g' and pokemon[1]=='o' and pokemon[2]=='l' and pokemon[3]=='d':
@@ -108,21 +119,39 @@ def givepoke(pokemon,id, mid, name):
     text=''
     if golden==1:
         text='*Золотой* '
-    medit('Покемона '+text+pokemons[pokemon]['name']+' поймал '+name+'!',id, mid, parse_mode='markdown')
-             
+    try:
+            medit('Покемона '+text+pokemons[pokemon]['name']+' поймал '+name+'!',id, mid, parse_mode='markdown')
+            users.update_one({'id':userid},{'$set':{'pokemons.'+pokemon:createpoke(pokemon,golden)}})
+    except:
+            pass  
  
 @bot.message_handler(content_types=['text'])
 def textt(m):
+    if users.find_one({'id':m.from_user.id})==None:
+      users.insert_one(createuser(m.from_user.id))
     x=chats.find_one({'id':m.chat.id})
     if x==None:
         chats.insert_one(createchat(m.chat.id))
     if users.find_one({'id':m.from_user.id})!=None:
-           users.update_one({'id':m.from_user.id}, {'$set':{'nameofuser':m.from_user.first_name}})
+           users.update_one({'id':m.from_user.id}, {'$set':{'name':m.from_user.first_name}})
 
-            
+   
+def createpoke(pokemon, gold):
+      return{'name':pokemons[pokemon]['name'],
+             'code':pokemon,
+             'cool':pokemons[pokemon]['cool'],
+             'golden':gold
+            }
+
 def createchat(id):
     return{'id':id
           }
+
+def createuser(id):
+      return{'id':id,
+             'name':None,
+             'pokemons':{}
+            }
   
 if True:
  try:
