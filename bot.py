@@ -110,9 +110,11 @@ def inline(call):
     x=users.find_one({'id':call.from_user.id})
     if x!=None:
         text=call.data
+        golden=0
         if call.data[0]=='g' and call.data[1]=='o' and call.data[2]=='l' and call.data[3]=='d':
             z=len(call.data)
             text=call.data[(z-(z-4)):]
+            golden=1
         i=0
         for ids in x['pokemons']:
             if x['pokemons'][ids]['code']==text:
@@ -120,7 +122,12 @@ def inline(call):
         if i!=1:
             givepoke(call.data, call.message.chat.id, call.message.message_id, call.from_user.first_name, call.from_user.id)
         else:
-            bot.answer_callback_query(call.id, 'У вас уже есть этот покемон!')
+            if golden==1 and x['pokemons'][text]['golden']==0:
+                  users.update_one({'id':call.from_user.id}, {'$set':{'pokemons.'+text+'.golden':1}})
+                  medit('Покемона *Золотой* '+pokemons[text]['name']+' поймал '+call.from_user.first_name+'! Данный покемон у него уже был, '+
+                        'но обычный. Теперь он стал золотым!',call.message.chat.id, call.message.message_id, parse_mode='markdown')
+            else:
+                  bot.answer_callback_query(call.id, 'У вас уже есть этот покемон!')
     else:
         bot.answer_callback_query(call.id, 'Сначала напишите в чат что-нибудь (не команду!).')
              
