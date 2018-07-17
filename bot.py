@@ -64,15 +64,36 @@ pokemonlist=['dildak','loshod','penis','zaluper','pikachu']
 
 
 pokemons={'dildak':{'cool':10,
-                   'name':'Дилдак'},
+                   'name':'Дилдак',
+                   'lvl':1,
+                   'atk':1,
+                   'def':1},
           'loshod':{'cool':25,
-                    'name':'Лошод'},
+                   'name':'Лошод',
+                   'lvl':1,
+                   'atk':1,
+                   'def':1},
           'penis':{'cool':37,
-                   'name':'Пенис'},
+                   'name':'Пенис',
+                   'lvl':1,
+                   'atk':1,
+                   'def':1},
           'zaluper':{'cool':13,
-                     'name':'Залупер'},
+                   'name':'Залупер',
+                   'lvl':1,
+                   'atk':1,
+                   'def':1},
           'pikachu':{'cool':100,
-                     'name':'Пикачу'}
+                   'name':'Пикачу',
+                   'lvl':1,
+                   'atk':1,
+                   'def':1},
+          'ruinmon':{'cool':-1,
+                   'name':'Руинмон',
+                   'lvl':1,
+                   'atk':1,
+                   'def':1}
+          
 }
 
 
@@ -91,9 +112,17 @@ def dailypoke(id):
       kb=types.InlineKeyboardMarkup()
       kb.add(types.InlineKeyboardButton(text='Поймать', callback_data=pokemon+poke))
       m=bot.send_message(id, 'Обнаружен *'+gold+'*покемон '+pokemons[poke]['name']+'! Жмите кнопку ниже, чтобы попытаться поймать.',reply_markup=kb,parse_mode='markdown')
+      t=threading.Timer(random.randint(600,1200),runpoke,args=[m.message_id,m.chat.id])
+      t.start()
       bot.pin_chat_message(m.chat.id, m.message_id, disable_notification=True)
 
-
+def runpoke(cid,mid):
+    medit('Покемон сбежал!', cid, mid)
+    
+            
+                        
+                        
+                        
 @bot.message_handler(commands=['pokes'])
 def pokes(m):
       x=users.find_one({'id':m.from_user.id})
