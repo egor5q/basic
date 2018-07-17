@@ -65,7 +65,7 @@ pokemonlist=['dildak','loshod','penis','zaluper','pikachu']
 @bot.message_handler(commands=['give'])
 def give(m):
   if m.from_user.id==441399484:
-    x=m.text.split('/give')
+    x=m.text.split(' ')
     try:
       users.update_one({'id':m.reply_to_message.from_user.id}, {'$set':{'pokemons.'+x[1]:createpoke(x[1], 0)}})
       bot.send_message(m.chat.id, 'Покемон '+pokemons[x[1]]['name']+' успешно выдан!')
