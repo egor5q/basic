@@ -42,11 +42,9 @@ def spammm(m):
 
 client1=os.environ['database']
 client=MongoClient(client1)
-db=client.minigame
+db=client.pokewars
 users=db.users
-chats=db.chats
-guess=db.guessusergame
-guessrecs=db.guessrecords
+
 pokemonss=db.pokemons
 
 rolelist=['wolf', 'gunner', 'mage', 'nindza', 'cat', 'killer', 'bear']
@@ -61,7 +59,19 @@ def medit(message_text,chat_id, message_id,reply_markup=None,parse_mode='Markdow
                                  parse_mode=parse_mode)
 
 
-pokemons=['Дилдак','Лошод','Пенис','Залупер']
+pokemonlist=['Дилдак','Лошод','Пенис','Залупер']
+
+
+pokemons={'dildak':{'cool':10,
+                   'name':'Дилдак'},
+          'loshod':{'cool':25,
+                    'name':'Лошод'},
+          'penis':{'cool':37,
+                   'name':'Пенис'},
+          'zaluper':{'cool':13,
+                     'name':'Залупер'}
+}
+
 
 def dailypoke(id):
       x=random.randint(1200,4500)
@@ -69,12 +79,14 @@ def dailypoke(id):
       t.start()
       gold=random.randint(1,100)
       if gold==1:
-            gold='*золотой* '
+            gold='золотой '
+            pokemon='gold'
       else:
             gold=''
-      poke=random.choice(pokemons)
+            pokemon=''
+      poke=random.choice(pokemonlist)
       kb=types.InlineKeyboardMarkup()
-      kb.add(types.InlineKeyboardButton(text='Поймать', callback_data=poke))
+      kb.add(types.InlineKeyboardButton(text='Поймать', callback_data=pokemon+poke))
       bot.send_message(id, 'Обнаружен '+gold+'покемон '+poke+'! Жмите кнопку ниже, чтобы попытаться поймать.',reply_markup=kb,parse_mode='markdown')
 
 
@@ -85,7 +97,7 @@ def inline(call):
              
    
 def givepoke(pokemon,id, mid, name):
-             medit('Покемона поймал '+name+'!',id, mid)
+    medit('Покемона '+pokemon+' поймал '+name+'!',id, mid)
              
  
 @bot.message_handler(content_types=['text'])
@@ -115,7 +127,7 @@ if True:
             bot.polling(none_stop=True,timeout=1)
             print('checkkk')
             check = False
-          except (requests.exceptions.ConnectionError):
+          except (requests.exceptions.ConnectionError
             time.sleep(1)
    
 #if __name__ == '__main__':
