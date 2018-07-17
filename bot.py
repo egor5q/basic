@@ -97,9 +97,13 @@ def dailypoke(id):
 def inline(call):
     x=users.find_one({'id':call.from_user.id})
     if x!=None:
+        text=call.data
+        if call.data[0]=='g' and call.data[1]=='o' and call.data[2]=='l' and call.data[3]=='d':
+            z=len(call.data)
+            text=call.data[(z-(z-4)):]
         i=0
         for ids in x['pokemons']:
-            if x['pokemons'][ids]['code']==pokemon:
+            if x['pokemons'][ids]['code']==text:
                 i=1
         if i!=1:
             givepoke(call.data, call.message.chat.id, call.message.message_id, call.from_user.first_name, call.from_user.id)
