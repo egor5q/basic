@@ -97,12 +97,15 @@ def dailypoke(id):
 @bot.message_handler(commands=['pokes'])
 def pokes(m):
       x=users.find_one({'id':m.from_user.id})
-      text=''
-      for ids in x['pokemons']:
+      if x!=None:
+        text=''
+        for ids in x['pokemons']:
             if x['pokemons'][ids]['golden']==1:
                   text+='*Золотой* '
             text+=x['pokemons'][ids]['name']+'\n'
-      bot.send_message(m.chat.id, 'Ваши покемоны:\n\n'+text,parse_mode='markdown')
+        bot.send_message(m.chat.id, 'Ваши покемоны:\n\n'+text,parse_mode='markdown')
+      else:
+            bot.send_message(m.chat.id, 'Сначала напишите в чат что-нибудь (не команду!).')
       
            
 @bot.callback_query_handler(func=lambda call:True)
