@@ -142,7 +142,7 @@ def pokes(m):
         for ids in x['pokemons']:
             if x['pokemons'][ids]['golden']==1:
                   text+='*Золотой* '
-            text+=x['pokemons'][ids]['name']+'\n'
+            text+=x['pokemons'][ids]['name']+' - крутость: '+str(x['pokemons'][ids]['cool'])+'\n'
         bot.send_message(m.chat.id, 'Ваши покемоны:\n\n'+text,parse_mode='markdown')
       else:
             bot.send_message(m.chat.id, 'Сначала напишите в чат что-нибудь (не команду!).')
