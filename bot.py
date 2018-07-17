@@ -79,7 +79,7 @@ def dailypoke(id):
       t=threading.Timer(x, dailypoke, args=[id])
       t.start()
       gold=random.randint(1,100)
-      if gold==1:
+      if gold>=1:
             gold='(золотой!!!) '
             pokemon='gold'
       else:
