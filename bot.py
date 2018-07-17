@@ -102,7 +102,7 @@ def pokes(m):
             if x['pokemons'][ids]['golden']==1:
                   text+='*Золотой* '
             text+=x['pokemons'][ids]['name']+'\n'
-      bot.send_message(m.chat.id, 'Ваши покемоны:\n\n',parse_mode='markdown')
+      bot.send_message(m.chat.id, 'Ваши покемоны:\n\n'+text,parse_mode='markdown')
       
            
 @bot.callback_query_handler(func=lambda call:True)
