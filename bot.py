@@ -44,6 +44,7 @@ client1=os.environ['database']
 client=MongoClient(client1)
 db=client.pokewars
 users=db.users
+chats=db.chats
 
 pokemonss=db.pokemons
 
@@ -109,8 +110,9 @@ def textt(m):
            users.update_one({'id':m.from_user.id}, {'$set':{'nameofuser':m.from_user.first_name}})
 
             
-      
-  
+def createchat(id):
+    return{'id':id
+          }
   
 if True:
  try:
