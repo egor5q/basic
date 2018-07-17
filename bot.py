@@ -80,7 +80,7 @@ def dailypoke(id):
       t.start()
       gold=random.randint(1,100)
       if gold>=0:
-            gold='золотой '
+            gold='(золотой!!!) '
             pokemon='gold'
       else:
             gold=''
