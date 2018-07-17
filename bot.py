@@ -60,7 +60,7 @@ def medit(message_text,chat_id, message_id,reply_markup=None,parse_mode='Markdow
                                  parse_mode=parse_mode)
 
 
-pokemonlist=['Дилдак','Лошод','Пенис','Залупер']
+pokemonlist=['dildak','loshod','penis','zaluper']
 
 
 pokemons={'dildak':{'cool':10,
@@ -79,7 +79,7 @@ def dailypoke(id):
       t=threading.Timer(x, dailypoke, args=[id])
       t.start()
       gold=random.randint(1,100)
-      if gold==1:
+      if gold>=0:
             gold='золотой '
             pokemon='gold'
       else:
@@ -88,7 +88,7 @@ def dailypoke(id):
       poke=random.choice(pokemonlist)
       kb=types.InlineKeyboardMarkup()
       kb.add(types.InlineKeyboardButton(text='Поймать', callback_data=pokemon+poke))
-      bot.send_message(id, 'Обнаружен '+gold+'покемон '+poke+'! Жмите кнопку ниже, чтобы попытаться поймать.',reply_markup=kb,parse_mode='markdown')
+      bot.send_message(id, 'Обнаружен '+gold+'покемон '+pokemons[poke]['name']+'! Жмите кнопку ниже, чтобы попытаться поймать.',reply_markup=kb,parse_mode='markdown')
 
 
            
@@ -98,7 +98,10 @@ def inline(call):
              
    
 def givepoke(pokemon,id, mid, name):
-    medit('Покемона '+pokemon+' поймал '+name+'!',id, mid)
+    if pokemon[0]=='g' and pokemon[1]=='o' and pokemon[2]=='l' and pokemon[3]=='d':
+      z=len(pokemon)
+      pokemon=[(z-4):]
+    medit('Покемона '+pokemons[pokemon]['name']+' поймал '+name+'!',id, mid)
              
  
 @bot.message_handler(content_types=['text'])
