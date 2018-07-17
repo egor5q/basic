@@ -184,7 +184,7 @@ if True:
    print('7777')
    dailypoke(-1001256539790)
    bot.polling(none_stop=True,timeout=600)
- except (requests.ReadTimeout):
+ except:
         print('!!! READTIME OUT !!!')           
         bot.stop_polling()
         time.sleep(1)
