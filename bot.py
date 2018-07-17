@@ -97,7 +97,7 @@ def dailypoke(id):
 def inline(call):
     x=users.find_one({'id':call.from_user.id})
     if x!=None:
-        i=1
+        i=0
         for ids in x['pokemons']:
             if x['pokemons'][ids]['code']==pokemon:
                 i=1
