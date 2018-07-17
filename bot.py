@@ -48,8 +48,6 @@ chats=db.chats
 
 pokemonss=db.pokemons
 
-rolelist=['wolf', 'gunner', 'mage', 'nindza', 'cat', 'killer', 'bear']
-
 symbollist=['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
            'а','б','в','г','д','е','ё','ж','з','и','й','к','л','м','н','о','п','р','с','т','у','ф','х','ц','ч','ш','щ','ъ','ы','ь','э','ю','я',
            '1','2','3','4','5','6','7','8','9','0']
@@ -61,6 +59,20 @@ def medit(message_text,chat_id, message_id,reply_markup=None,parse_mode='Markdow
 
 
 pokemonlist=['dildak','loshod','penis','zaluper','pikachu']
+
+
+
+@bot.message_handler(commands=['give'])
+def give(m):
+  if m.from_user.id==441399484:
+    x=m.text.split('/give')
+    try:
+      x[1]
+      users.update_one({'id':m.reply_to_message.from_user.id}, {'$set':{'pokemons.'x[1]:createpoke(x[1], 0)}})
+      bot.send_message(m.chat.id, 'Покемон '+pokemons[x[1]]['name']+' успешно выдан!')
+    except:
+        pass
+      
 
 
 pokemons={'dildak':{'cool':10,
