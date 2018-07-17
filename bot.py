@@ -60,7 +60,7 @@ def medit(message_text,chat_id, message_id,reply_markup=None,parse_mode='Markdow
                                  parse_mode=parse_mode)
 
 
-pokemonlist=['dildak','loshod','penis','zaluper']
+pokemonlist=['dildak','loshod','penis','zaluper','pikachu']
 
 
 pokemons={'dildak':{'cool':10,
@@ -70,7 +70,9 @@ pokemons={'dildak':{'cool':10,
           'penis':{'cool':37,
                    'name':'Пенис'},
           'zaluper':{'cool':13,
-                     'name':'Залупер'}
+                     'name':'Залупер'},
+          'pikachu':{'cool':100,
+                     'name':'Пикачу'}
 }
 
 
@@ -92,6 +94,16 @@ def dailypoke(id):
       bot.pin_chat_message(m.chat.id, m.message_id, disable_notification=True)
 
 
+@bot.message_handler(commands=['pokes'])
+def pokes(m):
+      x=users.find_one({'id':m.from_user.id})
+      text=''
+      for ids in x['pokemons']:
+            if x['pokemons'][ids]['golden']==1:
+                  text+='*Золотой* '
+            text+=x['pokemons'][ids]['name']+'\n'
+      bot.send_message(m.chat.id, 'Ваши покемоны:\n\n',parse_mode='markdown')
+      
            
 @bot.callback_query_handler(func=lambda call:True)
 def inline(call):
