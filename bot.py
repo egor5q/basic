@@ -68,7 +68,7 @@ def give(m):
     x=m.text.split('/give')
     try:
       x[1]
-      users.update_one({'id':m.reply_to_message.from_user.id}, {'$set':{'pokemons.'x[1]:createpoke(x[1], 0)}})
+      users.update_one({'id':m.reply_to_message.from_user.id}, {'$set':{'pokemons.'+x[1]:createpoke(x[1], 0)}})
       bot.send_message(m.chat.id, 'Покемон '+pokemons[x[1]]['name']+' успешно выдан!')
     except:
         pass
@@ -128,7 +128,7 @@ def dailypoke(id):
       t.start()
       bot.pin_chat_message(m.chat.id, m.message_id, disable_notification=True)
 
-def runpoke(cid,mid):
+def runpoke(mid,cid):
     medit('Покемон сбежал!', cid, mid)
     
             
