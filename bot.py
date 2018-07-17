@@ -88,7 +88,7 @@ def dailypoke(id):
       poke=random.choice(pokemonlist)
       kb=types.InlineKeyboardMarkup()
       kb.add(types.InlineKeyboardButton(text='Поймать', callback_data=pokemon+poke))
-      bot.send_message(id, 'Обнаружен '+gold+'покемон '+pokemons[poke]['name']+'! Жмите кнопку ниже, чтобы попытаться поймать.',reply_markup=kb,parse_mode='markdown')
+      bot.send_message(id, 'Обнаружен *'+gold+'*покемон '+pokemons[poke]['name']+'! Жмите кнопку ниже, чтобы попытаться поймать.',reply_markup=kb,parse_mode='markdown')
 
 
            
@@ -99,10 +99,15 @@ def inline(call):
    
 def givepoke(pokemon,id, mid, name):
     print(pokemon)
+    golden=0
     if pokemon[0]=='g' and pokemon[1]=='o' and pokemon[2]=='l' and pokemon[3]=='d':
       z=len(pokemon)
       pokemon=pokemon[(z-(z-4)):]
-    medit('Покемона '+pokemons[pokemon]['name']+' поймал '+name+'!',id, mid)
+      golden=1
+    text=''
+    if golden==1:
+        text='*Золотой* '
+    medit('Покемона '+text+pokemons[pokemon]['name']+' поймал '+name+'!',id, mid, parse_mode='markdown')
              
  
 @bot.message_handler(content_types=['text'])
