@@ -434,6 +434,10 @@ def createuser(id):
 if True:
  try:
    print('7777')
+   x=users.find({})
+   for ids in x:
+     for idss in ids['pokemons']:
+        users.update_one({'id':ids['id']},{'$set':{'pokemons.'+idss+'.hunting':0}})
    t=threading.Timer(300,dailypoke,args=[-1001256539790])
    t.start()
    bot.polling(none_stop=True,timeout=600)
