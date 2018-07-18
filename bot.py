@@ -108,7 +108,7 @@ def unwarn(id):
 
 
 def unban(id):
-      print('unbanlaunch)
+      print('unbanlaunch')
       try:
         ban.remove(id)
         print('UNBAN!')
