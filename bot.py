@@ -225,7 +225,7 @@ def inline(call):
            pokeban.append(call.from_user.id)
            t=threading.Timer(60,unban,args=[call.from_user.id])
            t.start()
-           bot.send_message(call.chat.id, 'Пользователю '+call.from_user.first_name+' не удалось поймать покемона!')
+           bot.send_message(call.message.chat.id, 'Пользователю '+call.from_user.first_name+' не удалось поймать покемона!')
     else:
         bot.answer_callback_query(call.id, 'Сначала напишите в чат что-нибудь (не команду!).')
   else:
