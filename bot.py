@@ -367,7 +367,7 @@ def inline(call):
       if x['pokemons'][text]['hunting']==0:
         users.update_one({'id':call.from_user.id},{'$set':{'pokemons.'+text+'.hunting':1}})
         medit('Вы отправили покемона '+pokemons[text]['name']+' на охоту. Он вернётся через пол часа.', call.message.chat.id, call.message.message_id)
-        t=threading.Timer(18,huntt,args=[call.from_user.id, call.message.chat.id, text])
+        t=threading.Timer(1800,huntt,args=[call.from_user.id, call.message.chat.id, text])
         t.start()
       else:
            medit('Покемон уже на охоте!', call.message.chat.id, call.message.message_id)
