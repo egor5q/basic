@@ -203,7 +203,7 @@ def inline(call):
             z=len(call.data)
             text=call.data[(z-(z-4)):]
             golden=1
-        chancetocatch=(100*(x['chancetocatch']+1))/(pokemons[text]['cool']*0.06)
+        chancetocatch=(100*(x['chancetocatch']+1))/(pokemons[text]['cool']*0.03)
         z=random.randint(1,100)
         if z<=chancetocatch:
          i=0
