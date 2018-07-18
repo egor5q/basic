@@ -30,15 +30,6 @@ timers={}
 
 
 
-@bot.message_handler(commands=['update'])
-def spammm(m):
-      if m.from_user.id==441399484:
-           try:
-             users.update_many({},{'$set':{'chancetocatch':0}})
-             print('yes')
-           except:
-             print('except')
-
 client1=os.environ['database']
 client=MongoClient(client1)
 db=client.pokewars
@@ -56,6 +47,14 @@ def medit(message_text,chat_id, message_id,reply_markup=None,parse_mode='Markdow
     return bot.edit_message_text(chat_id=chat_id,message_id=message_id,text=message_text,reply_markup=reply_markup,
                                  parse_mode=parse_mode)
 
+@bot.message_handler(commands=['update'])
+def spammm(m):
+      if m.from_user.id==441399484:
+           try:
+             users.update_many({},{'$set':{'chancetocatch':0}})
+             print('yes')
+           except:
+             print('except')
 
 pokemonlist=['dildak','loshod','penis','zaluper','pikachu','pedro','bulbazaur','mayt','psyduck','zhopa']
 basepokes=['dildak','loshod','penis','zaluper','zhopa']
