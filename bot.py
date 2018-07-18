@@ -91,7 +91,7 @@ def huntt(id, chatid, pokemon):
     if z<=10:
         earned=earned*pokemon['lvl']
         level='да'
-    bot.send_message(chatid, 'Покемон пользователя '+x['name']+' вернулся с охоты!\nПринесённое золото: '+str(earned)+'\n'+
+    bot.send_message(chatid, 'Покемон '+pokemon['name']+' пользователя '+x['name']+' вернулся с охоты!\nПринесённое золото: '+str(earned)+'\n'+
                     'Количество попыток: '+str(chances)+'\nКоличество побед: '+str(win)+'\nУмножено ли золото на уровень покемона: '+level)
     users.update_one({'id':id},{'$inc':{'money':earned}})
 
