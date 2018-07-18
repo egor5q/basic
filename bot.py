@@ -107,11 +107,8 @@ def unwarn(id):
 
 
 def unban(id):
-    try:
         ban.remove(id)
         print('UNBAN!')
-    except:
-        pass
 
 pokemons={'dildak':{'cool':10,
                    'name':'Дилдак',
