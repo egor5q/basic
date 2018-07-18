@@ -209,7 +209,9 @@ def runpoke(mid,cid, t):
     
             
                         
-@bot.message_handler(commands=['
+@bot.message_handler(commands=['invitetofight'])
+def invitee(m):
+           pass
 
 
                         
