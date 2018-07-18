@@ -27,7 +27,7 @@ games={}
 
 ban=[]
 timers=[]
-
+pokeban=[]
 
 
 client1=os.environ['database']
@@ -36,7 +36,6 @@ db=client.pokewars
 users=db.users
 chats=db.chats
 
-pokemonss=db.pokemons
 
 symbollist=['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
            'а','б','в','г','д','е','ё','ж','з','и','й','к','л','м','н','о','п','р','с','т','у','ф','х','ц','ч','ш','щ','ъ','ы','ь','э','ю','я',
@@ -126,6 +125,11 @@ pokemons={'dildak':{'cool':10,
                    'name':'Жопа',
                    'lvl':1,
                    'atk':1,
+                   'def':1},
+          'catchermon':{'cool':200,
+                   'name':'Кэтчермон',
+                   'lvl':1,
+                   'atk':1,
                    'def':1}
           
 }
@@ -190,6 +194,7 @@ def pokes(m):
            
 @bot.callback_query_handler(func=lambda call:True)
 def inline(call):
+  if call.from_user.id not in pokeban:
     x=users.find_one({'id':call.from_user.id})
     if x!=None:
         text=call.data
@@ -198,14 +203,17 @@ def inline(call):
             z=len(call.data)
             text=call.data[(z-(z-4)):]
             golden=1
-        i=0
-        for ids in x['pokemons']:
+        chancetocatch=(100*(x['chancetocatch']+1))/(pokemons[text]['cool']*0.06)
+        z=random.randint(1,100)
+        if z<=chancetocatch:
+         i=0
+         for ids in x['pokemons']:
             if x['pokemons'][ids]['code']==text:
                 i=1
-        if i!=1:
+         if i!=1:
             givepoke(call.data, call.message.chat.id, call.message.message_id, call.from_user.first_name, call.from_user.id)
             timers.remove('1')
-        else:
+         else:
             if golden==1 and x['pokemons'][text]['golden']==0:
                   users.update_one({'id':call.from_user.id}, {'$set':{'pokemons.'+text+'.golden':1}})
                   medit('Покемона *Золотой* '+pokemons[text]['name']+' поймал '+call.from_user.first_name+'! Данный покемон у него уже был, '+
@@ -213,10 +221,23 @@ def inline(call):
                   timers.remove('1')
             else:
                   bot.answer_callback_query(call.id, 'У вас уже есть этот покемон!')
+        else:
+           pokeban.append(call.from_user.id)
+           t=threading.Timer(60,unban,args=[call.from_user.id])
+           t.start()
+           bot.send_message(call.chat.id, 'Пользователю '+call.from_user.first_name+' не удалось поймать покемона!')
     else:
         bot.answer_callback_query(call.id, 'Сначала напишите в чат что-нибудь (не команду!).')
+  else:
+    bot.answer_callback_query(call.id, 'Подождите минуту для ловли следующего покемона!')
              
-   
+def unban(id):
+    try:
+        pokeban.remove(id)
+    except:
+        pass
+
+
 def givepoke(pokemon,id, mid, name, userid):
     golden=0
     if pokemon[0]=='g' and pokemon[1]=='o' and pokemon[2]=='l' and pokemon[3]=='d':
