@@ -226,7 +226,7 @@ def cooltop(m):
 
                         
 @bot.message_handler(commands=['pokes'])
-def pokes(m):
+def pokesfgtd(m):
    if m.from_user.id not in ban:
      x=banns(m.from_user.id, m.chat.id, m.from_user.first_name)
      if x==0:
