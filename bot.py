@@ -285,7 +285,7 @@ def dailypoke(id):
       t=threading.Timer(random.randint(300,600),runpoke,args=[m.message_id,m.chat.id, t])
       t.start()
       timers.append('1')
-      bot.pin_chat_message(m.chat.id, m.message_id, disable_notification=True)
+      bot.pin_chat_message(m.chat.id, m.message_id, disable_notification=False)
 
 def runpoke(mid,cid, t):
     if '1' in timers:
