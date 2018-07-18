@@ -48,19 +48,22 @@ def medit(message_text,chat_id, message_id,reply_markup=None,parse_mode='Markdow
     return bot.edit_message_text(chat_id=chat_id,message_id=message_id,text=message_text,reply_markup=reply_markup,
                                  parse_mode=parse_mode)
 
-@bot.message_handler(commands=['update'])
-def spammm(m):
-      if m.from_user.id==441399484:
-           users.update_many({},{'$set':{'money':0}})
-           x=users.find({})
-           for ids in x:
-             for idss in ids['pokemons']:
-                    users.update_one({'id':ids['id']},{'$set':{'pokemons.'+idss+'.hunting':0}})
-           print('yes')
+#@bot.message_handler(commands=['update'])
+#def spammm(m):
+#      if m.from_user.id==441399484:
+#           users.update_many({},{'$set':{'money':0}})
+#           x=users.find({})
+#           for ids in x:
+#             for idss in ids['pokemons']:
+#                    users.update_one({'id':ids['id']},{'$set':{'pokemons.'+idss+'.hunting':0}})
+#           print('yes')
 
 
-pokemonlist=['dildak','loshod','penis','zaluper','pikachu','pedro','bulbazaur','mayt','psyduck','zhopa']
+pokemonlist=['dildak','loshod','penis','zaluper','pikachu','pedro','bulbazaur','mayt','psyduck','zhopa','moxnatka']
 basepokes=['dildak','loshod','penis','zaluper','zhopa']
+elita=['pikachu','pedro','bulbazaur','psyduck', 'moxnatka']
+
+
 
 def hunt(id, chatid, pokemon):
     x=users.find_one({'id':id})
@@ -211,6 +214,11 @@ pokemons={'dildak':{'cool':10,
                    'def':1},
           'catchermon':{'cool':200,
                    'name':'Кэтчермон',
+                   'lvl':1,
+                   'atk':1,
+                   'def':1},
+          'moxnatka':{'cool':75,
+                   'name':'Мохнатка',
                    'lvl':1,
                    'atk':1,
                    'def':1}
