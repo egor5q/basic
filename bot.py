@@ -54,7 +54,7 @@ def spammm(m):
            users.update_many({},{'$set':{'money':0}})
            x=users.find({})
            for ids in x:
-             for idss in x['pokemons']:
+             for idss in ids['pokemons']:
                     users.update_one({'id':ids['id']},{'$set':{'pokemons.'+idss+'.hunting':0}})
            print('yes')
 
