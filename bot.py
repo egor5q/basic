@@ -213,7 +213,6 @@ def inline(call):
              
    
 def givepoke(pokemon,id, mid, name, userid):
-    print(pokemon)
     golden=0
     if pokemon[0]=='g' and pokemon[1]=='o' and pokemon[2]=='l' and pokemon[3]=='d':
       z=len(pokemon)
