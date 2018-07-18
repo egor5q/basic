@@ -25,18 +25,17 @@ skills=[]
 
 games={}
 
-
 ban=[]
 timers={}
 
 
 
-@bot.message_handler(commands=['stopspam'])
+@bot.message_handler(commands=['update'])
 def spammm(m):
       if m.from_user.id==441399484:
            try:
-             print(str(m.chat.id))
-             bot.pin_chat_message(m.chat.id, m.message_id, disable_notification=True)
+             users.update_many({},{'$set':{'chancetocatch':0}})
+             print('yes')
            except:
              print('except')
 
@@ -58,8 +57,8 @@ def medit(message_text,chat_id, message_id,reply_markup=None,parse_mode='Markdow
                                  parse_mode=parse_mode)
 
 
-pokemonlist=['dildak','loshod','penis','zaluper','pikachu']
-
+pokemonlist=['dildak','loshod','penis','zaluper','pikachu','pedro','bulbazaur','mayt','psyduck','zhopa']
+basepokes=['dildak','loshod','penis','zaluper','zhopa']
 
 
 @bot.message_handler(commands=['give'])
@@ -103,13 +102,38 @@ pokemons={'dildak':{'cool':10,
                    'name':'Руинмон',
                    'lvl':1,
                    'atk':1,
+                   'def':1},
+          'pedro':{'cool':68,
+                   'name':'Педро',
+                   'lvl':1,
+                   'atk':1,
+                   'def':1},
+          'bulbazaur':{'cool':112,
+                   'name':'Бульбазавр',
+                   'lvl':1,
+                   'atk':1,
+                   'def':1}
+          'mayt':{'cool':41,
+                   'name':'Мяут',
+                   'lvl':1,
+                   'atk':1,
+                   'def':1}
+          'psyduck':{'cool':131,
+                   'name':'Псайдак',
+                   'lvl':1,
+                   'atk':1,
+                   'def':1}
+          'zhopa':{'cool':16,
+                   'name':'Жопа',
+                   'lvl':1,
+                   'atk':1,
                    'def':1}
           
 }
 
 
 def dailypoke(id):
-      x=random.randint(1200,4500)
+      x=random.randint(600,3600)
       t=threading.Timer(x, dailypoke, args=[id])
       t.start()
       gold=random.randint(1,100)
@@ -119,11 +143,24 @@ def dailypoke(id):
       else:
             gold=''
             pokemon=''
-      poke=random.choice(pokemonlist)
+      i=0
+      for ids in pokemons:
+          i+=1   
+      pokechance=30/(i*0.08)
+      come=[]
+      for ids in pokemonlist:
+            chance=pokechance/(pokemons[ids]['cool']*0.05)
+            x=random.randint(1,100)
+            if x<=chance:
+                come.append(ids)
+      if len(come)>0:
+        poke=random.choice(come)
+      else:
+        poke=random.choice(basepokes)
       kb=types.InlineKeyboardMarkup()
       kb.add(types.InlineKeyboardButton(text='Поймать', callback_data=pokemon+poke))
       m=bot.send_message(id, 'Обнаружен *'+gold+'*покемон '+pokemons[poke]['name']+'! Жмите кнопку ниже, чтобы попытаться поймать.',reply_markup=kb,parse_mode='markdown')
-      t=threading.Timer(random.randint(600,1200),runpoke,args=[m.message_id,m.chat.id])
+      t=threading.Timer(random.randint(300,600),runpoke,args=[m.message_id,m.chat.id])
       t.start()
       bot.pin_chat_message(m.chat.id, m.message_id, disable_notification=True)
 
@@ -216,7 +253,8 @@ def createchat(id):
 def createuser(id):
       return{'id':id,
              'name':None,
-             'pokemons':{}
+             'pokemons':{},
+             'chancetocatch':0
             }
   
 if True:
