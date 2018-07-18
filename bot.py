@@ -25,6 +25,8 @@ skills=[]
 
 games={}
 
+spam=[]
+
 ban=[]
 timers=[]
 pokeban=[]
@@ -70,6 +72,28 @@ def give(m):
         pass
       
 
+def banns(id, chatid, name):
+    i=0
+    for ids in timers:
+        if timers[ids]['id']==id:
+            i=1
+    if i==0:
+        print('1')
+        timers.update({id:{'id':id,
+                          'messages':0}})
+        t=threading.Timer(15, unwarn, args=[id])
+        t.start()
+    else:
+        print('2')
+        timers[id]['messages']+=1
+        if timers[id]['messages']>=4:
+            if id not in ban:
+                      bot.send_message(chatid, 'Пользователь '+name+' много спамил и был заблокирован на 20 секунд.')
+            ban.append(id)
+            t=threading.Timer(20, unban, args=[id])
+            t.start()
+            return 1
+    return 0         
 
 pokemons={'dildak':{'cool':10,
                    'name':'Дилдак',
@@ -180,6 +204,9 @@ def runpoke(mid,cid, t):
                         
 @bot.message_handler(commands=['pokes'])
 def pokes(m):
+   if m.from_user.id not in spam:
+     x=banns(m.from_user.id, m.chat.id, m.from_user.first_name)
+     if x==0:
       x=users.find_one({'id':m.from_user.id})
       if x!=None:
         text=''
