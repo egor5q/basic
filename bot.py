@@ -52,11 +52,14 @@ def medit(message_text,chat_id, message_id,reply_markup=None,parse_mode='Markdow
 @bot.message_handler(commands=['update'])
 def spammm(m):
       if m.from_user.id==441399484:
-           try:
-             users.update_many({},{'$set':{'chancetocatch':0}})
+           x=users.find({})
+             for ids in x:
+                for idss in ids['pokemons']:
+                    users.update_one({'id':ids['id']},{'$set':{'pokemons.'+idss+'.lvl':1}})
+                    users.update_one({'id':ids['id']},{'$set':{'pokemons.'+idss+'.atk':1}})
+                    users.update_one({'id':ids['id']},{'$set':{'pokemons.'+idss+'.def':1}})
              print('yes')
-           except:
-             print('except')
+
 
 pokemonlist=['dildak','loshod','penis','zaluper','pikachu','pedro','bulbazaur','mayt','psyduck','zhopa']
 basepokes=['dildak','loshod','penis','zaluper','zhopa']
