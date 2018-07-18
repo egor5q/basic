@@ -65,7 +65,7 @@ elita=['pikachu','pedro','bulbazaur','psyduck', 'moxnatka']
 
 
 
-def hunt(id, chatid, pokemon):
+def huntt(id, chatid, pokemon):
     x=users.find_one({'id':id})
     earned=0
     users.update_one({'id':id},{'$set':{'pokemons.'+pokemon+'.hunting':0}})
@@ -367,7 +367,7 @@ def inline(call):
       if x['pokemons'][text]['hunting']==0:
         users.update_one({'id':call.from_user.id},{'$set':{'pokemons.'+text+'.hunting':1}})
         medit('Вы отправили покемона '+pokemons[text]['name']+' на охоту. Он вернётся через пол часа.', call.message.chat.id, call.message.message_id)
-        t=threading.Timer(18,hunt,args=[call.from_user.id, call.message.chat.id, text])
+        t=threading.Timer(18,huntt,args=[call.from_user.id, call.message.chat.id, text])
         t.start()
       else:
            medit('Покемон уже на охоте!', call.message.chat.id, call.message.message_id)
