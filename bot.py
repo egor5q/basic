@@ -222,7 +222,7 @@ def cooltop(m):
                         
 @bot.message_handler(commands=['pokes'])
 def pokes(m):
-   if m.from_user.id not in spam:
+   if m.from_user.id not in ban:
      x=banns(m.from_user.id, m.chat.id, m.from_user.first_name)
      if x==0:
       x=users.find_one({'id':m.from_user.id})
