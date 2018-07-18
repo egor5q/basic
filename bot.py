@@ -127,10 +127,13 @@ def extra(m):
 def hunt(m):
     kb=types.InlineKeyboardMarkup()
     x=users.find_one({'id':m.from_user.id})
-    for ids in x['pokemons']:
+    if x!=None:
+     for ids in x['pokemons']:
       if x['pokemons'][ids]['hunting']!=1:
         kb.add(types.InlineKeyboardButton(text=pokemons[ids]['name'], callback_data=str(m.from_user.id)+' earn'+ids))
-    bot.send_message(m.chat.id, m.from_user.first_name+', какого покемона вы хотите отправить на охоту?', reply_markup=kb)
+     bot.send_message(m.chat.id, m.from_user.first_name+', какого покемона вы хотите отправить на охоту?', reply_markup=kb)
+    else:
+           bot.send_message(m.chat.id, 'Ошибка!')
     
     
     
