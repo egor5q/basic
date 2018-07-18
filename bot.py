@@ -25,6 +25,7 @@ skills=[]
 
 games={}
 
+timerss={}
 spam=[]
 
 ban=[]
@@ -74,22 +75,22 @@ def give(m):
 
 def banns(id, chatid, name):
     i=0
-    for ids in timers:
-        if timers[ids]['id']==id:
+    for ids in timerss:
+        if timerss[ids]['id']==id:
             i=1
     if i==0:
         print('1')
-        timers.update({id:{'id':id,
+        timerss.update({id:{'id':id,
                           'messages':0}})
         t=threading.Timer(15, unwarn, args=[id])
         t.start()
     else:
         print('2')
-        timers[id]['messages']+=1
-        if timers[id]['messages']>=4:
-            if id not in ban:
+        timerss[id]['messages']+=1
+        if timerss[id]['messages']>=4:
+            if id not in spam:
                       bot.send_message(chatid, 'Пользователь '+name+' много спамил и был заблокирован на 20 секунд.')
-            ban.append(id)
+            spam.append(id)
             t=threading.Timer(20, unban, args=[id])
             t.start()
             return 1
@@ -315,7 +316,8 @@ def createuser(id):
 if True:
  try:
    print('7777')
-   dailypoke(-1001256539790)
+   t=threading.Timer(300,dailypoke,args=[-1001256539790])
+   t.start()
    bot.polling(none_stop=True,timeout=600)
  except:
         print('!!! READTIME OUT !!!')           
