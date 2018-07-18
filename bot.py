@@ -26,7 +26,7 @@ skills=[]
 games={}
 
 ban=[]
-timers={}
+timers=[]
 
 
 
@@ -159,12 +159,15 @@ def dailypoke(id):
       kb=types.InlineKeyboardMarkup()
       kb.add(types.InlineKeyboardButton(text='Поймать', callback_data=pokemon+poke))
       m=bot.send_message(id, 'Обнаружен *'+gold+'*покемон '+pokemons[poke]['name']+'! Жмите кнопку ниже, чтобы попытаться поймать.',reply_markup=kb,parse_mode='markdown')
-      t=threading.Timer(random.randint(300,600),runpoke,args=[m.message_id,m.chat.id])
+      t=threading.Timer(random.randint(300,600),runpoke,args=[m.message_id,m.chat.id, t])
       t.start()
+      timers.append('1')
       bot.pin_chat_message(m.chat.id, m.message_id, disable_notification=True)
 
-def runpoke(mid,cid):
-    medit('Покемон сбежал!', cid, mid)
+def runpoke(mid,cid, t):
+    if '1' in timers:
+         medit('Покемон сбежал!', cid, mid)
+         timers.remove('1')
     
             
                         
@@ -201,11 +204,13 @@ def inline(call):
                 i=1
         if i!=1:
             givepoke(call.data, call.message.chat.id, call.message.message_id, call.from_user.first_name, call.from_user.id)
+            timers.remove('1')
         else:
             if golden==1 and x['pokemons'][text]['golden']==0:
                   users.update_one({'id':call.from_user.id}, {'$set':{'pokemons.'+text+'.golden':1}})
                   medit('Покемона *Золотой* '+pokemons[text]['name']+' поймал '+call.from_user.first_name+'! Данный покемон у него уже был, '+
                         'но обычный. Теперь он стал золотым!',call.message.chat.id, call.message.message_id, parse_mode='markdown')
+                  timers.remove('1')
             else:
                   bot.answer_callback_query(call.id, 'У вас уже есть этот покемон!')
     else:
