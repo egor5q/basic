@@ -26,7 +26,6 @@ skills=[]
 games={}
 
 timerss={}
-spam=[]
 
 ban=[]
 timers=[]
@@ -91,9 +90,9 @@ def banns(id, chatid, name):
         print('2')
         timerss[id]['messages']+=1
         if timerss[id]['messages']>=4:
-            if id not in spam:
+            if id not in ban:
                       bot.send_message(chatid, 'Пользователь '+name+' много спамил и был заблокирован на 20 секунд.')
-            spam.append(id)
+            ban.append(id)
             t=threading.Timer(20, unban, args=[id])
             t.start()
             return 1
@@ -101,7 +100,7 @@ def banns(id, chatid, name):
 
 def unban(id):
     try:
-        spam.remove(id)
+        ban.remove(id)
     except:
         pass
 
