@@ -212,7 +212,10 @@ def inline(call):
                 i=1
          if i!=1:
             givepoke(call.data, call.message.chat.id, call.message.message_id, call.from_user.first_name, call.from_user.id)
-            timers.remove('1')
+            try:
+                      timers.remove('1')
+            except:
+                      pass
          else:
             if golden==1 and x['pokemons'][text]['golden']==0:
                   users.update_one({'id':call.from_user.id}, {'$set':{'pokemons.'+text+'.golden':1}})
