@@ -93,7 +93,7 @@ def banns(id, chatid, name):
             if id not in ban:
                       bot.send_message(chatid, 'Пользователь '+name+' много спамил и был заблокирован на 20 секунд.')
             ban.append(id)
-            tt=threading.Timer(20, unban, args=[id])
+            tt=threading.Timer(20, unbannn, args=[id])
             tt.start()
             print(ban)
             return 1
@@ -107,7 +107,7 @@ def unwarn(id):
         pass
 
 
-def unban(id):
+def unbannn(id):
       print('unbanlaunch')
       try:
         ban.remove(id)
