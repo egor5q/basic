@@ -136,7 +136,7 @@ pokemons={'dildak':{'cool':10,
 
 
 def dailypoke(id):
-      x=random.randint(600,3600)
+      x=random.randint(10,15)#(600,3600)
       t=threading.Timer(x, dailypoke, args=[id])
       t.start()
       gold=random.randint(1,100)
