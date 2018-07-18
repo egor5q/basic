@@ -99,6 +99,12 @@ def banns(id, chatid, name):
             return 1
     return 0         
 
+def unwarn(id):
+    try:
+        del timerss[id]
+    except:
+        pass
+
 pokemons={'dildak':{'cool':10,
                    'name':'Дилдак',
                    'lvl':1,
@@ -203,7 +209,8 @@ def runpoke(mid,cid, t):
     
             
                         
- 
+@bot.message_handler(commands=['
+
 
                         
 @bot.message_handler(commands=['pokes'])
