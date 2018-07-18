@@ -299,7 +299,10 @@ def createpoke(pokemon, gold):
       return{'name':pokemons[pokemon]['name'],
              'code':pokemon,
              'cool':pokemons[pokemon]['cool'],
-             'golden':gold
+             'golden':gold,
+             'lvl':1,
+             'atk':1,
+             'def':1
             }
 
 def createchat(id):
