@@ -110,7 +110,7 @@ def extra(m):
           i+=1   
       pokechance=40/(i*0.06)
       come=[]
-        for ids in elita:
+      for ids in elita:
                come.append(ids)
       if len(come)>0:
         poke=random.choice(come)
