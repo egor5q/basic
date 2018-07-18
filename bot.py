@@ -51,19 +51,58 @@ def medit(message_text,chat_id, message_id,reply_markup=None,parse_mode='Markdow
 @bot.message_handler(commands=['update'])
 def spammm(m):
       if m.from_user.id==441399484:
+           users.update_many({},{'$set':{'money':0}})
            x=users.find({})
            for ids in x:
-                for idss in ids['pokemons']:
-                    users.update_one({'id':ids['id']},{'$set':{'pokemons.'+idss+'.lvl':1}})
-                    users.update_one({'id':ids['id']},{'$set':{'pokemons.'+idss+'.atk':1}})
-                    users.update_one({'id':ids['id']},{'$set':{'pokemons.'+idss+'.def':1}})
+             for idss in x['pokemons']:
+                    users.update_one({'id':ids['id']},{'$set':{'pokemons.'+idss+'.hunting':0}})
            print('yes')
 
 
 pokemonlist=['dildak','loshod','penis','zaluper','pikachu','pedro','bulbazaur','mayt','psyduck','zhopa']
 basepokes=['dildak','loshod','penis','zaluper','zhopa']
 
+def hunt(id, chatid, pokemon):
+    x=users.find_one({'id':id})
+    earned=0
+    i=0
+    chances=0
+    win=0
+    pokemon=x['pokemons'][pokemon]
+    while i<pokemon['cool']:
+        i+=1
+        chances+=1
+        z=random.randint(1,100)
+        if z<=30+(pokemon['atk']*2):
+            win+=1
+            earned+=1
+            z=random.randint(1,100)
+            if z<=5+pokemon['agility']:
+                earned+=1
+            z=random.randint(1,100)
+            if z<=pokemon['def']:
+                i-=1
+    z=random.randint(1,100)
+    level='нет'
+    if z<=10:
+        earned=earned*pokemon['lvl']
+        level='да'
+    bot.send_message(chatid, 'Покемон пользователя '+x['name']+' вернулся с охоты!\nПринесённое золото: '+str(earned)+'\n'+
+                    'Количество попыток: '+str(chances)+'\nКоличество побед: '+str(win)+'\nУмножено ли золото на уровень покемона: '+level)
+    users.update_one({'id':id},{'$inc':{'money':earned}})
 
+    
+@bot.message_handler(commands=['hunt'])
+def hunt(m):
+    kb=types.InlineKeyboardMarkup()
+    x=users.find_one({'id':m.from_user.id})
+    for ids in x['pokemons']:
+      if x['pokemons'][ids]['hunting']!=1:
+        kb.add(types.InlineKeyboardButton(text=pokemons[ids]['name'], callback_data=str(m.from_user.id)+' earn'+ids))
+    bot.send_message(m.chat.id, m.from_user.first_name+', какого покемона вы хотите отправить на охоту?', reply_markup=kb)
+    
+    
+    
 @bot.message_handler(commands=['give'])
 def give(m):
   if m.from_user.id==441399484:
@@ -244,14 +283,14 @@ def pokesfgtd(m):
            
 @bot.callback_query_handler(func=lambda call:True)
 def inline(call):
+ if 'earn' not in call.data:
   if call.from_user.id not in pokeban:
     x=users.find_one({'id':call.from_user.id})
     if x!=None:
         text=call.data
         golden=0
         if call.data[0]=='g' and call.data[1]=='o' and call.data[2]=='l' and call.data[3]=='d':
-            z=len(call.data)
-            text=call.data[(z-(z-4)):]
+            text=call.data[4:]
             golden=1
         chancetocatch=(100*(x['chancetocatch']+1))/(pokemons[text]['cool']*0.03)
         z=random.randint(1,100)
@@ -283,6 +322,16 @@ def inline(call):
         bot.answer_callback_query(call.id, 'Сначала напишите в чат что-нибудь (не команду!).')
   else:
     bot.answer_callback_query(call.id, 'Подождите минуту для ловли следующего покемона!')
+ else:
+    text=call.data.split(' ')
+    if int(text[0])==call.from_user.id:
+        text=text[1]
+        text=text[4:]
+        medit('Вы отправили покемона '+pokemons[text]['name']+' на охоту. Он вернётся через пол часа.', call.message.chat.id, call.message.message_id)
+        t=threading.Timer(1800,hunt,args=[call.from_user.id, call.message.chat.id, text])
+        t.start()
+    else:
+        bot.answer_callback_query(call.id, 'Это не ваше меню!')
              
 def unban(id):
     try:
@@ -324,7 +373,9 @@ def createpoke(pokemon, gold):
              'golden':gold,
              'lvl':1,
              'atk':1,
-             'def':1
+             'def':1,
+             'agility':1,
+             'hunting':0
             }
 
 def createchat(id):
@@ -335,7 +386,8 @@ def createuser(id):
       return{'id':id,
              'name':None,
              'pokemons':{},
-             'chancetocatch':0
+             'chancetocatch':0,
+             'money':0
             }
   
 if True:
