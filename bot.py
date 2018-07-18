@@ -100,7 +100,7 @@ def banns(id, chatid, name):
 
 def unwarn(id):
     try:
-        del timers[id]
+        del timerss[id]
     except:
         pass
 
