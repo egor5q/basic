@@ -209,9 +209,9 @@ def runpoke(mid,cid, t):
     
             
                         
-@bot.message_handler(commands=['invitetofight'])
-def invitee(m):
-           pass
+@bot.message_handler(commands=['cooltop'])
+def cooltop(m):
+    x=users.find({})
 
 
                         
