@@ -101,6 +101,7 @@ def banns(id, chatid, name):
 def unwarn(id):
     try:
         del timerss[id]
+        print('UNWARN!!!!!')
     except:
         pass
 
@@ -108,6 +109,7 @@ def unwarn(id):
 def unban(id):
     try:
         ban.remove(id)
+        print('UNBAN!')
     except:
         pass
 
