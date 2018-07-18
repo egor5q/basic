@@ -99,6 +99,12 @@ def banns(id, chatid, name):
             return 1
     return 0         
 
+def unban(id):
+    try:
+        spam.remove(id)
+    except:
+        pass
+
 def unwarn(id):
     try:
         del timerss[id]
