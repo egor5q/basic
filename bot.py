@@ -96,17 +96,18 @@ def banns(id, chatid, name):
             t=threading.Timer(20, unban, args=[id])
             t.start()
             return 1
-    return 0         
+    return 0
+
+def unwarn(id):
+    try:
+        del timers[id]
+    except:
+        pass
+
 
 def unban(id):
     try:
         ban.remove(id)
-    except:
-        pass
-
-def unwarn(id):
-    try:
-        del timerss[id]
     except:
         pass
 
