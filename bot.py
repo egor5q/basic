@@ -94,7 +94,34 @@ def hunt(id, chatid, pokemon):
                     'Количество попыток: '+str(chances)+'\nКоличество побед: '+str(win)+'\nУмножено ли золото на уровень покемона: '+level)
     users.update_one({'id':id},{'$inc':{'money':earned}})
 
-    
+ 
+@bot.message_handler(commands=['extra'])
+def extra(m):
+   if m.from_user.id==441399484:
+      gold=random.randint(1,100)
+      if gold==1:
+            gold='(золотой!!!) '
+            pokemon='gold'
+      else:
+            gold=''
+            pokemon=''
+      i=0
+      for ids in pokemons:
+          i+=1   
+      pokechance=40/(i*0.06)
+      come=[]
+        for ids in elita:
+               come.append(ids)
+      if len(come)>0:
+        poke=random.choice(come)
+      else:
+        poke=random.choice(basepokes)
+      kb=types.InlineKeyboardMarkup()
+      kb.add(types.InlineKeyboardButton(text='Поймать', callback_data=pokemon+poke))
+      m=bot.send_message(id, 'Обнаружен *'+gold+'*покемон '+pokemons[poke]['name']+'! Его крутость: '+str(pokemons[poke]['cool'])+'. Жмите кнопку ниже, чтобы попытаться поймать.',reply_markup=kb,parse_mode='markdown')
+      bot.pin_chat_message(m.chat.id, m.message_id, disable_notification=True)
+                      
+
 @bot.message_handler(commands=['hunt'])
 def hunt(m):
     kb=types.InlineKeyboardMarkup()
