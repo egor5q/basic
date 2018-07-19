@@ -53,12 +53,12 @@ def medit(message_text,chat_id, message_id,reply_markup=None,parse_mode='Markdow
 @bot.message_handler(commands=['update'])
 def spammm(m):
       if m.from_user.id==441399484:
-#           users.update_many({},{'$set':{'money':0}})
-           x=users.find({})
-           for ids in x:
-             for idss in ids['pokemons']:
-                    users.update_one({'id':ids['id']},{'$set':{'pokemons.'+idss+'.agility':1}})
-           print('yes')
+          users.update_many({'money':{'$lt':0}},{'$set':{'money':0}})
+#           x=users.find({})
+ #          for ids in x:
+  #           for idss in ids['pokemons']:
+   #                 users.update_one({'id':ids['id']},{'$set':{'pokemons.'+idss+'.agility':1}})
+          print('yes')
 
 
 pokemonlist=['dildak','loshod','penis','zaluper','pikachu','pedro','bulbazaur','mayt','psyduck','zhopa','moxnatka']
@@ -104,16 +104,16 @@ def goldd(m):
             bot.send_message(m.chat.id, m.from_user.first_name+', ваше золото: '+str(x['money']))
 
 
-@bot.message_handler(commands=['suckdick'])
-def suckdick(m):
- if m.from_user.id not in ban:
-   x=banns(m.from_user.id, m.chat.id, m.from_user.first_name)
-   if x==0:
-     try:
-        users.update_one({'id':m.from_user.id},{'$inc':{'money':-10}}) 
-        bot.send_message(m.chat.id, 'Вы успешно отсосали хуйца и потратили 10 монет.')
-     except:
-        pass
+#@bot.message_handler(commands=['suckdick'])
+#def suckdick(m):
+# if m.from_user.id not in ban:
+#   x=banns(m.from_user.id, m.chat.id, m.from_user.first_name)
+#   if x==0:
+#     try:
+#        users.update_one({'id':m.from_user.id},{'$inc':{'money':-10}}) 
+#        bot.send_message(m.chat.id, 'Вы успешно отсосали хуйца и потратили 10 монет.')
+#     except:
+#        pass
 
 
 @bot.message_handler(commands=['extra'])
