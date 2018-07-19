@@ -99,7 +99,7 @@ def huntt(id, chatid, pokemon):
 def goldd(m):
      x=users.find_one({'id':m.from_user.id})
      if x!=None:
-            bot.esnd_message(m.chat.id, m.from_user.first_name+', ваше золото: '+str(x['gold']))
+            bot.send_message(m.chat.id, m.from_user.first_name+', ваше золото: '+str(x['gold']))
 
 
 @bot.message_handler(commands=['extra'])
