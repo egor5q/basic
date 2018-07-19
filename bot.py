@@ -62,7 +62,7 @@ def spammm(m):
 
 
 pokemonlist=['dildak','loshod','penis','zaluper','pikachu','pedro','bulbazaur','mayt','psyduck','zhopa','moxnatka','charmander',
-            'diglet','golem','sidot','traxer']
+            'diglet','golem','sidot','traxer', 'pizdak']
 basepokes=['dildak','loshod','penis','zaluper','zhopa']
 elita=['pikachu','pedro','bulbazaur','psyduck', 'moxnatka']
 
@@ -284,6 +284,8 @@ pokemons={'dildak':{'cool':10,
                    'name':'Сидот'},
           'traxer':{'cool':110,
                    'name':'Трахер'},
+          'pizdak':{'cool':19,
+                   'name':'Вонючий Пиздак'}
 
           
 }
