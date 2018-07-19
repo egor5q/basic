@@ -106,11 +106,14 @@ def goldd(m):
 
 @bot.message_handler(commands=['suckdick'])
 def suckdick(m):
-  try:
-    users.update_one({'id':m.from_user.id},{'$inc':{'money':-10}}) 
-    bot.send_message(m.chat.id, 'Вы успешно отсосали хуйца и потратили 10 монет.')
-  except:
-    pass
+ if m.from_user.id not in ban:
+   x=banns(m.from_user.id, m.chat.id, m.from_user.first_name)
+   if x==0:
+     try:
+        users.update_one({'id':m.from_user.id},{'$inc':{'money':-10}}) 
+        bot.send_message(m.chat.id, 'Вы успешно отсосали хуйца и потратили 10 монет.')
+     except:
+        pass
 
 
 @bot.message_handler(commands=['extra'])
@@ -142,6 +145,9 @@ def extra(m):
 
 @bot.message_handler(commands=['hunt'])
 def hunt(m):
+ if m.from_user.id not in ban:
+   x=banns(m.from_user.id, m.chat.id, m.from_user.first_name)
+   if x==0:
     kb=types.InlineKeyboardMarkup()
     x=users.find_one({'id':m.from_user.id})
     if x!=None:
