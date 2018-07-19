@@ -94,8 +94,14 @@ def huntt(id, chatid, pokemon):
     bot.send_message(chatid, 'Покемон '+pokemon['name']+' пользователя '+x['name']+' вернулся с охоты!\nПринесённое золото: '+str(earned)+'\n'+
                     'Количество попыток: '+str(chances)+'\nКоличество побед: '+str(win)+'\nУмножено ли золото на уровень покемона: '+level)
     users.update_one({'id':id},{'$inc':{'money':earned}})
+           
+@bot.message_handler(commands=['gold'])
+def goldd(m):
+     x=users.find_one({'id':m.from_user.id})
+     if x!=None:
+            bot.esnd_message(m.chat.id, m.from_user.first_name+', ваше золото: '+str(x['gold']))
 
- 
+
 @bot.message_handler(commands=['extra'])
 def extra(m):
    if m.from_user.id==441399484:
