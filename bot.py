@@ -17,6 +17,8 @@ from requests.exceptions import ReadTimeout
 from requests.exceptions import ConnectionError
 
 
+notclick=0
+
 token = os.environ['TELEGRAM_TOKEN']
 bot = telebot.TeleBot(token)
 vip=[441399484, 55888804]
@@ -334,11 +336,21 @@ def pokesfgtd(m):
       else:
             bot.send_message(m.chat.id, 'Сначала напишите в чат что-нибудь (не команду!).')
       
+    
+def rebootclick():
+    global notclick
+    notclick=0
+           
            
 @bot.callback_query_handler(func=lambda call:True)
 def inline(call):
- if 'earn' not in call.data:
-  if call.from_user.id not in pokeban:
+ global notclick
+ if notclick==0:
+  if 'earn' not in call.data:
+   notclick=1
+   t=threading.Timer(3,rebootclick)
+   t.start()
+   if call.from_user.id not in pokeban:
     x=users.find_one({'id':call.from_user.id})
     if x!=None:
         text=call.data
@@ -374,9 +386,9 @@ def inline(call):
            bot.send_message(call.message.chat.id, 'Пользователю '+call.from_user.first_name+' не удалось поймать покемона!')
     else:
         bot.answer_callback_query(call.id, 'Сначала напишите в чат что-нибудь (не команду!).')
-  else:
+   else:
     bot.answer_callback_query(call.id, 'Подождите минуту для ловли следующего покемона!')
- else:
+  else:
     text=call.data.split(' ')
     if int(text[0])==call.from_user.id:
       x=users.find_one({'id':call.from_user.id})
