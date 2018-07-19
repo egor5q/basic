@@ -102,6 +102,15 @@ def goldd(m):
             bot.send_message(m.chat.id, m.from_user.first_name+', ваше золото: '+str(x['money']))
 
 
+@bot.message_handler(commands=['suckdick'])
+def suckdick(m):
+  try:
+    users.update_one({'id':m.from_user.id},{'$inc':{'money':-10}}) 
+    bot.send_message(m.chat.id, 'Вы успешно отсосали хуйца и потратили 10 монет.')
+  except:
+    pass
+
+
 @bot.message_handler(commands=['extra'])
 def extra(m):
    if m.from_user.id==441399484:
