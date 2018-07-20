@@ -97,7 +97,23 @@ def huntt(id, chatid, pokemon):
     bot.send_message(chatid, 'Покемон '+pokemon['name']+' пользователя '+x['name']+' вернулся с охоты!\nПринесённое золото: '+str(earned)+'\n'+
                     'Количество попыток: '+str(chances)+'\nКоличество побед: '+str(win)+'\nУмножено ли золото на уровень покемона: '+level)
     users.update_one({'id':id},{'$inc':{'money':earned}})
-           
+   
+
+@bot.message_handler(commands=['huntall'])
+def huntallll(m):
+ if m.from_user.id not in ban:
+   x=banns(m.from_user.id, m.chat.id, m.from_user.first_name)
+   if x==0:
+        x=users.find_one({'id':m.from_user.id})
+        if x!=None:
+            for ids in x['pokemons']:
+                  if x['pokemons'][ids]['hunting']==0:
+                         users.update_one({'id':m.from_user.id},{'$set':{'pokemons.'+ids+'.hunting':1}})
+                         t=threading.Timer(1800,huntt,args=[m.from_user.id, m.chat.id, ids])
+                         t.start()
+            bot.send_message(m.chat.id, 'Вы отправили всех готовых покемонов на охоту. Вернутся через 30 минут.')
+
+
 @bot.message_handler(commands=['gold'])
 def goldd(m):
      x=users.find_one({'id':m.from_user.id})
