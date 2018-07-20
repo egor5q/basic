@@ -64,7 +64,8 @@ def spammm(m):
 pokemonlist=['dildak','loshod','penis','zaluper','pikachu','pedro','bulbazaur','mayt','psyduck','zhopa','moxnatka','charmander',
             'diglet','golem','sidot','traxer', 'pizdak','tyxlomon','morzh','penisdetrov','gandonio','spermostrel']
 basepokes=['dildak','loshod','penis','zaluper','zhopa']
-elita=['pikachu','pedro','bulbazaur','psyduck', 'moxnatka']
+elita=['pikachu','pedro','bulbazaur','psyduck', 'moxnatka','charmander',
+            'diglet','golem','sidot','traxer','tyxlomon','morzh','penisdetrov','gandonio','spermostrel']
 
 
 def huntt(id, chatid, pokemon):
@@ -345,7 +346,7 @@ def poke(id):
           i+=1   
       pokechance=40/(i*0.06)
       come=[]
-      for ids in pokemonlist:
+      for ids in elita:
             chance=pokechance/(pokemons[ids]['cool']*0.03)
             x=random.randint(1,100)
             if x<=chance:
@@ -353,7 +354,7 @@ def poke(id):
       if len(come)>0:
         poke=random.choice(come)
       else:
-        poke=random.choice(basepokes)
+        poke=random.choice(elita)
       kb=types.InlineKeyboardMarkup()
       kb.add(types.InlineKeyboardButton(text='Поймать', callback_data=pokemon+poke))
       m=bot.send_message(id, 'Обнаружен *'+gold+'*покемон '+pokemons[poke]['name']+'! Его крутость: '+str(pokemons[poke]['cool'])+'. Жмите кнопку ниже, чтобы попытаться поймать.',reply_markup=kb,parse_mode='markdown')
