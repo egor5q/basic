@@ -62,10 +62,9 @@ def spammm(m):
 
 
 pokemonlist=['dildak','loshod','penis','zaluper','pikachu','pedro','bulbazaur','mayt','psyduck','zhopa','moxnatka','charmander',
-            'diglet','golem','sidot','traxer', 'pizdak']
+            'diglet','golem','sidot','traxer', 'pizdak','tyxlomon','morzh','penisdetrov','gandonio','spermostrel']
 basepokes=['dildak','loshod','penis','zaluper','zhopa']
 elita=['pikachu','pedro','bulbazaur','psyduck', 'moxnatka']
-
 
 
 def huntt(id, chatid, pokemon):
@@ -301,10 +300,68 @@ pokemons={'dildak':{'cool':10,
           'traxer':{'cool':110,
                    'name':'Трахер'},
           'pizdak':{'cool':19,
-                   'name':'Вонючий Пиздак'}
+                   'name':'Вонючий Пиздак'},
+          'tyxlomon':{'cool':250,
+                   'name':'Тухломон'},
+          'morzh':{'cool':176,
+                   'name':'Морж'},
+          'penisdetrov':{'cool':425,
+                   'name':'Пенис Детров'},
+          'gandonio':{'cool':99,
+                   'name':'Гандонио'},
+          'spermostrel':{'cool':213,
+                   'name':'Спермострел'}
 
           
 }
+
+
+@bot.message_handler(commands=['summon'])
+def summon(m):
+     y=users.find_one({'id':m.from_user.id})
+     if y['money']>=100:
+        x=random.randint(1,100)
+        users.update_one({'id':y['id']},{'$inc':{'money':-100}})
+        if x<=10:
+           bot.send_message(m.chat.id, 'Вы потратили 100 монет. Вам удалось призвать покемона!!!')
+           poke(m.chat.id)
+        else:
+           bot.send_message(m.chat.id, 'Вы потратили 100 монет. Вам не удалось призвать покемона.')
+     else:
+        bot.send_message(m.chat.id, 'Недостаточно золота!')
+         
+
+
+def poke(id):
+      gold=random.randint(1,100)
+      if gold==1:
+            gold='(золотой!!!) '
+            pokemon='gold'
+      else:
+            gold=''
+            pokemon=''
+      i=0
+      for ids in pokemons:
+          i+=1   
+      pokechance=40/(i*0.06)
+      come=[]
+      for ids in pokemonlist:
+            chance=pokechance/(pokemons[ids]['cool']*0.03)
+            x=random.randint(1,100)
+            if x<=chance:
+                come.append(ids)
+      if len(come)>0:
+        poke=random.choice(come)
+      else:
+        poke=random.choice(basepokes)
+      kb=types.InlineKeyboardMarkup()
+      kb.add(types.InlineKeyboardButton(text='Поймать', callback_data=pokemon+poke))
+      m=bot.send_message(id, 'Обнаружен *'+gold+'*покемон '+pokemons[poke]['name']+'! Его крутость: '+str(pokemons[poke]['cool'])+'. Жмите кнопку ниже, чтобы попытаться поймать.',reply_markup=kb,parse_mode='markdown')
+      t=threading.Timer(random.randint(300,600),runpoke,args=[m.message_id,m.chat.id, t])
+      t.start()
+      timers.append('1')
+      bot.pin_chat_message(m.chat.id, m.message_id, disable_notification=False)
+
 
 
 def dailypoke(id):
