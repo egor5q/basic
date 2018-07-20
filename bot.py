@@ -357,7 +357,7 @@ def poke(id):
       kb=types.InlineKeyboardMarkup()
       kb.add(types.InlineKeyboardButton(text='Поймать', callback_data=pokemon+poke))
       m=bot.send_message(id, 'Обнаружен *'+gold+'*покемон '+pokemons[poke]['name']+'! Его крутость: '+str(pokemons[poke]['cool'])+'. Жмите кнопку ниже, чтобы попытаться поймать.',reply_markup=kb,parse_mode='markdown')
-      t=threading.Timer(random.randint(300,600),runpoke,args=[m.message_id,m.chat.id, t])
+      t=threading.Timer(random.randint(300,600),runpoke,args=[m.message_id,m.chat.id])
       t.start()
       timers.append('1')
       bot.pin_chat_message(m.chat.id, m.message_id, disable_notification=False)
@@ -392,12 +392,12 @@ def dailypoke(id):
       kb=types.InlineKeyboardMarkup()
       kb.add(types.InlineKeyboardButton(text='Поймать', callback_data=pokemon+poke))
       m=bot.send_message(id, 'Обнаружен *'+gold+'*покемон '+pokemons[poke]['name']+'! Его крутость: '+str(pokemons[poke]['cool'])+'. Жмите кнопку ниже, чтобы попытаться поймать.',reply_markup=kb,parse_mode='markdown')
-      t=threading.Timer(random.randint(300,600),runpoke,args=[m.message_id,m.chat.id, t])
+      t=threading.Timer(random.randint(300,600),runpoke,args=[m.message_id,m.chat.id])
       t.start()
       timers.append('1')
       bot.pin_chat_message(m.chat.id, m.message_id, disable_notification=False)
 
-def runpoke(mid,cid, t):
+def runpoke(mid,cid):
     if '1' in timers:
          medit('Покемон сбежал!', cid, mid)
          timers.remove('1')
