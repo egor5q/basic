@@ -345,6 +345,7 @@ pokemons={'dildak':{'cool':10,
 def upgradee(m):
     x=users.find_one({'id':m.from_user.id})
     if x!=None:
+     kb=types.InlineKeyboardMarkup()
      for ids in x['pokemons']:
         kb.add(types.InlineKeyboardButton(text=pokemons[ids]['name'], callback_data=str(m.from_user.id)+' upgrade'+ids))
      bot.send_message(m.chat.id, m.from_user.first_name+', какого покемона вы хотите попытаться улучшить? Цена: 200 голды. Шанс: 15%.', reply_markup=kb)
