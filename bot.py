@@ -362,23 +362,23 @@ def toppp(m):
             cool1=summ1
             top1=ids
            
-    for ids in x:
+    for ids2 in x:
         summ2=0
-        for idss in ids['pokemons']:
-            summ2+=ids['pokemons'][idss]['cool']
+        for idss2 in ids2['pokemons']:
+            summ2+=ids2['pokemons'][idss2]['cool']
         print(str(summ2))
         if summ2>cool2 and summ2!=cool1:
             cool2=summ2
-            top2=ids
+            top2=ids2
            
-    for ids in x:
+    for ids3 in x:
         summ3=0
-        for idss in ids['pokemons']:
-            summ3+=ids['pokemons'][idss]['cool']
+        for idss3 in ids3['pokemons']:
+            summ3+=ids3['pokemons'][idss3]['cool']
         print(str(summ3))
         if summ3>=cool3 and summ3!=cool2 and summ3!=cool1:
             cool3=summ3
-            top3=ids
+            top3=ids3
     
     bot.send_message(m.chat.id, 'Топ-3 по крутости:\n\n'+'1 место: '+top1['name']+' - '+str(cool1)+'\n'+'2 место: '+top2['name']+' - '+str(cool2)+'\n'+'3 место: '+top3['name']+' - '+str(cool3)+'\n')        
      
