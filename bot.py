@@ -185,10 +185,17 @@ def give(m):
   if m.from_user.id==441399484:
     x=m.text.split(' ')
     try:
-      users.update_one({'id':m.reply_to_message.from_user.id}, {'$set':{'pokemons.'+x[1]:createpoke(x[1], 0)}})
-      bot.send_message(m.chat.id, 'Покемон '+pokemons[x[1]]['name']+' успешно выдан!')
+      golden=''
+      i=0
+      if len(x)>2:
+          if x[2]=='gold':
+            golden='*золотой* '
+            i=1
+      users.update_one({'id':m.reply_to_message.from_user.id}, {'$set':{'pokemons.'+x[1]:createpoke(x[1], i)}})
+      bot.send_message(m.chat.id, 'Покемон '+golden+pokemons[x[1]]['name']+' успешно выдан!')
     except:
         pass
+
       
 
 def banns(id, chatid, name):
@@ -314,7 +321,16 @@ pokemons={'dildak':{'cool':10,
           'gandonio':{'cool':99,
                    'name':'Гандонио'},
           'spermostrel':{'cool':213,
-                   'name':'Спермострел'}
+                   'name':'Спермострел'},
+          'quelern':{'cool':100,
+                   'name':'Кьюлёрн'}
+          'eidolon':{'cool':100,
+                   'name':'Эйдолон'}
+          'pasyuk':{'cool':100,
+                   'name':'Пасюк'}
+          'bombarnac':{'cool':100,
+                   'name':'Бомбарнак'}
+          
 
           
 }
