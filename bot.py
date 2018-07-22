@@ -375,7 +375,8 @@ def toppp(m):
         if summ3>cool3 and summ3!=summ2 and summ3!=summ1:
             cool3=summ3
             top3=ids
-            
+    
+    bot.send_message(m.chat.id, 'Топ-3 по крутости:\n\n'+top1['name']+': '+cool1+'\n'+top2['name']+': '+cool2+'\n'+top3['name']+': '+cool3+'\n')        
      
           
            
