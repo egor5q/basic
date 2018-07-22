@@ -359,7 +359,7 @@ def toppp(m):
         if summ1>cool1:
             cool1=summ1
             top1=ids
-            
+           
     for ids in x:
         summ2=0
         for idss in ids['pokemons']:
@@ -367,7 +367,7 @@ def toppp(m):
         if summ2>cool2 and summ2!=summ1:
             cool2=summ2
             top2=ids
-            
+           
     for ids in x:
         summ3=0
         for idss in ids['pokemons']:
