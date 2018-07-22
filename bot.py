@@ -331,7 +331,9 @@ pokemons={'dildak':{'cool':10,
           'bombarnac':{'cool':100,
                    'name':'Бомбарнак'},
           'zawarudo':{'cool':100,
-                   'name':'ZAAAA WARUDOOOOO'}
+                   'name':'ZAAAA WARUDOOOOO'},
+          'sharingan':{'cool':100,
+                   'name':'Шаринган'}
           
 
           
