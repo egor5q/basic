@@ -366,7 +366,6 @@ def toppp(m):
         summ2=0
         for idss2 in ids2['pokemons']:
             summ2+=ids2['pokemons'][idss2]['cool']
-        print(str(summ2))
         if summ2>cool2 and summ2!=cool1:
             cool2=summ2
             top2=ids2
@@ -375,7 +374,6 @@ def toppp(m):
         summ3=0
         for idss3 in ids3['pokemons']:
             summ3+=ids3['pokemons'][idss3]['cool']
-        print(str(summ3))
         if summ3>=cool3 and summ3!=cool2 and summ3!=cool1:
             cool3=summ3
             top3=ids3
@@ -411,12 +409,12 @@ def poke(id):
             gold=''
             pokemon=''
       i=0
-      for ids in pokemons:
+      for ids in elita:
           i+=1   
-      pokechance=40/(i*0.06)
+      pokechance=50/(i*0.06)
       come=[]
       for ids in elita:
-            chance=pokechance/(pokemons[ids]['cool']*0.03)
+            chance=pokechance/(pokemons[ids]['cool']*0.02)
             x=random.randint(1,100)
             if x<=chance:
                 come.append(ids)
