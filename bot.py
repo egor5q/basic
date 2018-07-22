@@ -353,6 +353,7 @@ def toppp(m):
     cool2=0
     cool3=0
     top2={'name':'Не определено'}
+    top3={'name':'Не определено'}
     for ids in x:
         summ1=0
         for idss in ids['pokemons']:
