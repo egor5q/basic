@@ -343,7 +343,13 @@ pokemons={'dildak':{'cool':10,
 
 @bot.message_handler(commands=['upgrade'])
 def upgradee(m):
-    pass
+    x=users.find_one({'id':m.from_user.id})
+    if x!=None:
+     for ids in x['pokemons']:
+        kb.add(types.InlineKeyboardButton(text=pokemons[ids]['name'], callback_data=str(m.from_user.id)+' upgrade'+ids))
+     bot.send_message(m.chat.id, m.from_user.first_name+', какого покемона вы хотите попытаться улучшить? Цена: 200 голды. Шанс: 15%.', reply_markup=kb)
+    else:
+       bot.send_message(m.chat.id, 'Ошибка!')
     
 
 @bot.message_handler(commands=['top'])
@@ -498,7 +504,7 @@ def rebootclick():
 def inline(call):
  global notclick
  if notclick==0:
-  if 'earn' not in call.data:
+  if 'earn' not in call.data and 'upgrade' not in call.data:
    notclick=1
    t=threading.Timer(3,rebootclick)
    t.start()
@@ -540,7 +546,7 @@ def inline(call):
         bot.answer_callback_query(call.id, 'Сначала напишите в чат что-нибудь (не команду!).')
    else:
     bot.answer_callback_query(call.id, 'Подождите минуту для ловли следующего покемона!')
-  else:
+  elif 'earn' in call.data:
     text=call.data.split(' ')
     if int(text[0])==call.from_user.id:
       x=users.find_one({'id':call.from_user.id})
@@ -555,7 +561,41 @@ def inline(call):
            medit('Покемон уже на охоте!', call.message.chat.id, call.message.message_id)
     else:
         bot.answer_callback_query(call.id, 'Это не ваше меню!')
-             
+  elif 'upgrade' in call.data:
+    text=call.data.split(' ')
+    if int(text[0])==call.from_user.id:
+      x=users.find_one({'id':call.from_user.id})
+      users.update_one({'id':call.from_user.id},{'$inc':{'money':-200}})
+      text=text[1]
+      text=text[7:]
+      z=random.randint(1,100)
+      bonus=0
+      abc=['atk','def','agility','cool']
+      attribute=random.choice(abc)
+      if attribute=='atk':
+            bonus=1
+            name='Атака'
+            
+      elif attribute=='def':
+            bonus=random.randint(1,3)
+            name='Защита'
+            
+      elif attribute=='agility':
+            bonus=random.randint(1,3)
+            name='Ловкость'
+            
+      elif attribute=='cool':
+            bonus=random.randint(1,10)
+            name='Крутость'
+    
+      if z<=15:
+        users.update_one({'id':call.from_user.id},{'inc':{'pokemons.'+text+'.'+attribute:bonus}})
+        medit('Вы успешно улучшили покемона! Улучшено:\n\n'+name+': '+str(bonus)+'\nПотрачено 200 голды.')
+      else:
+        medit('У вас не получилось улучшить покемона! Потрачено 200 голды.')
+    else:
+        bot.answer_callback_query(call.id, 'Это не ваше меню!')
+        
 def unban(id):
     try:
         pokeban.remove(id)
