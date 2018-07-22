@@ -66,6 +66,8 @@ pokemonlist=['dildak','loshod','penis','zaluper','pikachu','pedro','bulbazaur','
 basepokes=['dildak','loshod','penis','zaluper','zhopa']
 elita=['pikachu','pedro','bulbazaur','psyduck', 'moxnatka','charmander',
             'diglet','golem','sidot','traxer','tyxlomon','morzh','penisdetrov','gandonio','spermostrel']
+elitaweak=['moxnatka',
+            'diglet','traxer','penis','gandonio']
 
 
 def huntt(id, chatid, pokemon):
@@ -92,10 +94,11 @@ def huntt(id, chatid, pokemon):
     z=random.randint(1,100)
     level='нет'
     if z<=10:
-        earned=earned*pokemon['lvl']
+      if pokemon['golden']==1:
+        earned=earned*2
         level='да'
     bot.send_message(chatid, 'Покемон '+pokemon['name']+' пользователя '+x['name']+' вернулся с охоты!\nПринесённое золото: '+str(earned)+'\n'+
-                    'Количество попыток: '+str(chances)+'\nКоличество побед: '+str(win)+'\nУмножено ли золото на уровень покемона: '+level)
+                    'Количество попыток: '+str(chances)+'\nКоличество побед: '+str(win)+'\nУмножено ли золото на 2 (только для золотых): '+level)
     users.update_one({'id':id},{'$inc':{'money':earned}})
    
 
@@ -354,7 +357,7 @@ def poke(id):
       if len(come)>0:
         poke=random.choice(come)
       else:
-        poke=random.choice(elita)
+        poke=random.choice(elitaweak)
       kb=types.InlineKeyboardMarkup()
       kb.add(types.InlineKeyboardButton(text='Поймать', callback_data=pokemon+poke))
       m=bot.send_message(id, 'Обнаружен *'+gold+'*покемон '+pokemons[poke]['name']+'! Его крутость: '+str(pokemons[poke]['cool'])+'. Жмите кнопку ниже, чтобы попытаться поймать.',reply_markup=kb,parse_mode='markdown')
