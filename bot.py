@@ -192,7 +192,7 @@ def give(m):
             golden='*золотой* '
             i=1
       users.update_one({'id':m.reply_to_message.from_user.id}, {'$set':{'pokemons.'+x[1]:createpoke(x[1], i)}})
-      bot.send_message(m.chat.id, 'Покемон '+golden+pokemons[x[1]]['name']+' успешно выдан!')
+      bot.send_message(m.chat.id, 'Покемон '+golden+pokemons[x[1]]['name']+' успешно выдан!', parse_mode='markdown')
     except:
         pass
 
