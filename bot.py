@@ -330,10 +330,17 @@ pokemons={'dildak':{'cool':10,
                    'name':'Пасюк'},
           'bombarnac':{'cool':100,
                    'name':'Бомбарнак'}
+          'zawarudo':{'cool':100,
+                   'name':'ZAAAA WARUDOOOOO'}
           
 
           
 }
+
+@bot.message_handler(commands=['upgrade'])
+def upgradee(m):
+    
+
 
 
 @bot.message_handler(commands=['summon'])
