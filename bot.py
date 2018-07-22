@@ -339,8 +339,8 @@ pokemons={'dildak':{'cool':10,
 
 @bot.message_handler(commands=['upgrade'])
 def upgradee(m):
+    pass
     
-
 
 
 @bot.message_handler(commands=['summon'])
