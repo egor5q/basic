@@ -345,10 +345,13 @@ pokemons={'dildak':{'cool':10,
 def upgradee(m):
     x=users.find_one({'id':m.from_user.id})
     if x!=None:
-     kb=types.InlineKeyboardMarkup()
-     for ids in x['pokemons']:
+     if x['gold']>=200:
+      kb=types.InlineKeyboardMarkup()
+      for ids in x['pokemons']:
         kb.add(types.InlineKeyboardButton(text=pokemons[ids]['name'], callback_data=str(m.from_user.id)+' upgrade'+ids))
-     bot.send_message(m.chat.id, m.from_user.first_name+', какого покемона вы хотите попытаться улучшить? Цена: 200 голды. Шанс: 15%.', reply_markup=kb)
+      bot.send_message(m.chat.id, m.from_user.first_name+', какого покемона вы хотите попытаться улучшить? Цена: 200 голды. Шанс: 15%.', reply_markup=kb)
+     else:
+           bot.send_message(m.chat.id, 'Недостаточно золота!')
     else:
        bot.send_message(m.chat.id, 'Ошибка!')
     
@@ -565,7 +568,8 @@ def inline(call):
   elif 'upgrade' in call.data:
     text=call.data.split(' ')
     if int(text[0])==call.from_user.id:
-      x=users.find_one({'id':call.from_user.id})
+     x=users.find_one({'id':call.from_user.id})
+     if x['money']>=200:
       users.update_one({'id':call.from_user.id},{'$inc':{'money':-200}})
       text=text[1]
       text=text[7:]
@@ -594,6 +598,8 @@ def inline(call):
         medit('Вы успешно улучшили покемона '+x['pokemons'][text]['name']+'! Улучшено:\n\n'+name+': '+str(bonus)+'\nПотрачено 200 голды.', call.message.chat.id, call.message.message_id)
       else:
         medit('У вас не получилось улучшить покемона! Потрачено 200 голды.', call.message.chat.id, call.message.message_id)
+     else:
+       medit('Недостаточно золота!', call.message.chat.id, call.message.message_id)           
     else:
         bot.answer_callback_query(call.id, 'Это не ваше меню!')
         
