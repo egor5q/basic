@@ -323,11 +323,11 @@ pokemons={'dildak':{'cool':10,
           'spermostrel':{'cool':213,
                    'name':'Спермострел'},
           'quelern':{'cool':100,
-                   'name':'Кьюлёрн'}
+                   'name':'Кьюлёрн'},
           'eidolon':{'cool':100,
-                   'name':'Эйдолон'}
+                   'name':'Эйдолон'},
           'pasyuk':{'cool':100,
-                   'name':'Пасюк'}
+                   'name':'Пасюк'},
           'bombarnac':{'cool':100,
                    'name':'Бомбарнак'}
           
