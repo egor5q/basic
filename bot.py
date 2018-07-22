@@ -376,7 +376,7 @@ def toppp(m):
             cool3=summ3
             top3=ids
     
-    bot.send_message(m.chat.id, 'Топ-3 по крутости:\n\n'+top1['name']+': '+cool1+'\n'+top2['name']+': '+cool2+'\n'+top3['name']+': '+cool3+'\n')        
+    bot.send_message(m.chat.id, 'Топ-3 по крутости:\n\n'+top1['name']+': '+str(cool1)+'\n'+top2['name']+': '+str(cool2)+'\n'+top3['name']+': '+str(cool3)+'\n')        
      
           
            
