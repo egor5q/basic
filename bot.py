@@ -591,9 +591,9 @@ def inline(call):
     
       if z<=15:
         users.update_one({'id':call.from_user.id},{'$inc':{'pokemons.'+text+'.'+attribute:bonus}})
-        medit('Вы успешно улучшили покемона! Улучшено:\n\n'+name+': '+str(bonus)+'\nПотрачено 200 голды.')
+        medit('Вы успешно улучшили покемона! Улучшено:\n\n'+name+': '+str(bonus)+'\nПотрачено 200 голды.', call.message.chat.id, call.message.message_id)
       else:
-        medit('У вас не получилось улучшить покемона! Потрачено 200 голды.')
+        medit('У вас не получилось улучшить покемона! Потрачено 200 голды.', call.message.chat.id, call.message.message_id)
     else:
         bot.answer_callback_query(call.id, 'Это не ваше меню!')
         
