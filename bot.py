@@ -468,15 +468,9 @@ def dailypoke(id):
       bot.pin_chat_message(m.chat.id, m.message_id, disable_notification=False)
 
 def runpoke(mid,cid):
-    if '1' in timers:
-         medit('Покемон сбежал!', cid, mid)
-         timers.remove('1')
+         medit('Время на поимку покемона вышло.', cid, mid)
     
             
-                        
-@bot.message_handler(commands=['cooltop'])
-def cooltop(m):
-    x=users.find({})
 
 
                         
