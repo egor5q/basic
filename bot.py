@@ -361,6 +361,7 @@ def toppp(m):
         if summ1>cool1:
             cool1=summ1
             top1=ids
+    summ1=cool1
            
     for ids in x:
         summ2=0
@@ -369,6 +370,7 @@ def toppp(m):
         if summ2>cool2 and summ2!=summ1:
             cool2=summ2
             top2=ids
+    summ2=cool2
            
     for ids in x:
         summ3=0
@@ -378,7 +380,7 @@ def toppp(m):
             cool3=summ3
             top3=ids
     
-    bot.send_message(m.chat.id, 'Топ-3 по крутости:\n\n'+top1['name']+': '+str(cool1)+'\n'+top2['name']+': '+str(cool2)+'\n'+top3['name']+': '+str(cool3)+'\n')        
+    bot.send_message(m.chat.id, 'Топ-3 по крутости:\n\n'+'1 место: '+top1['name']+' - '+str(cool1)+'\n'+'2 место: '+top2['name']+' - '+str(cool2)+'\n'+'3 место: '+top3['name']+' - '+str(cool3)+'\n')        
      
           
            
