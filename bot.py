@@ -361,7 +361,7 @@ def toppp(m):
         if summ1>cool1:
             cool1=summ1
             top1=ids
-           
+    x=users.find({})       
     for ids2 in x:
         summ2=0
         for idss2 in ids2['pokemons']:
@@ -370,7 +370,7 @@ def toppp(m):
         if summ2>cool2 and summ2!=cool1:
             cool2=summ2
             top2=ids2
-           
+    x=users.find({})       
     for ids3 in x:
         summ3=0
         for idss3 in ids3['pokemons']:
