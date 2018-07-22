@@ -334,6 +334,8 @@ pokemons={'dildak':{'cool':10,
                    'name':'ZAAAA WARUDOOOOO'},
           'sharingan':{'cool':100,
                    'name':'Шаринган'}
+          'shadowmew':{'cool':100,
+                   'name':'Shadow Mewtwo'}
           
 
           
@@ -344,7 +346,41 @@ def upgradee(m):
     pass
     
 
-
+@bot.message_handler(commands=['top'])
+def toppp(m):
+    x=users.find({})
+    cool1=0
+    cool2=0
+    cool3=0
+    for ids in x:
+        summ1=0
+        for idss in ids['pokemons']:
+            summ1+=ids['pokemons'][idss]['cool']
+        if summ1>cool1:
+            cool1=summ1
+            top1=ids
+            
+    for ids in x:
+        summ2=0
+        for idss in ids['pokemons']:
+            summ2+=ids['pokemons'][idss]['cool']
+        if summ2>cool2 and summ2!=summ1:
+            cool2=summ2
+            top2=ids
+            
+    for ids in x:
+        summ3=0
+        for idss in ids['pokemons']:
+            summ3+=ids['pokemons'][idss]['cool']
+        if summ3>cool3 and summ3!=summ2 and summ3!=summ1:
+            cool3=summ3
+            top3=ids
+            
+     
+          
+           
+           
+           
 @bot.message_handler(commands=['summon'])
 def summon(m):
      y=users.find_one({'id':m.from_user.id})
