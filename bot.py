@@ -339,7 +339,7 @@ def upgradee(m):
       kb=types.InlineKeyboardMarkup()
       for ids in x['pokemons']:
         kb.add(types.InlineKeyboardButton(text=pokemons[ids]['name'], callback_data=str(m.from_user.id)+' upgrade'+ids))
-      bot.send_message(m.chat.id, m.from_user.first_name+', какого покемона вы хотите попытаться улучшить? Цена: 200 голды. Шанс: 15%.', reply_markup=kb)
+      bot.send_message(m.chat.id, m.from_user.first_name+', какого покемона вы хотите попытаться улучшить? Цена: 200 голды. Шанс: 22%.', reply_markup=kb)
      else:
            bot.send_message(m.chat.id, 'Недостаточно золота!')
     else:
