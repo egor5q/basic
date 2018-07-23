@@ -77,11 +77,11 @@ def huntt(id, chatid, pokemon):
         if z<=30+(pokemon['atk']*2):
             win+=1
             earned+=1
-            z=random.randint(1,100)
-            if z<=5+pokemon['agility']:
+        z=random.randint(1,100)
+        if z<=5+pokemon['agility']:
                 earned+=1
-            z=random.randint(1,100)
-            if z<=pokemon['def']:
+        z=random.randint(1,100)
+        if z<=pokemon['def']:
                 i-=1
     z=random.randint(1,100)
     level='нет'
