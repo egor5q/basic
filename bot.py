@@ -232,15 +232,14 @@ def unbannn(id):
 
 pokemonlist=['dildak','loshod','penis','zaluper','pikachu','pedro','bulbazaur','mayt','psyduck','zhopa','moxnatka','charmander',
             'diglet','golem','sidot','traxer', 'pizdak','tyxlomon','morzh','penisdetrov','gandonio','spermostrel','yebator','egg',
-            'graveler','tirog']
+            'graveler','tirog','eldro4illo','vyper','sizor']
 
 basepokes=['dildak','loshod','penis','zaluper','zhopa','sidot']
 
 elita=['pikachu','pedro','bulbazaur','psyduck', 'moxnatka','charmander','diglet','golem','sidot','traxer','tyxlomon','morzh',
-       'penisdetrov','gandonio','spermostrel','yebator','egg','graveler','tirog']
+       'penisdetrov','gandonio','spermostrel','yebator','egg','graveler','tirog','eldro4illo','vyper','sizor']
 
-elitaweak=['moxnatka',
-            'diglet','traxer','penis','gandonio','egg']
+elitaweak=['moxnatka','diglet','traxer','penis','gandonio','egg','sizor']
 
 
 
@@ -314,7 +313,13 @@ pokemons={'dildak':{'cool':10,
           'graveler':{'cool':340,
                    'name':'Гравелер'},
           'tirog':{'cool':182,
-                   'name':'Тирог'}
+                   'name':'Тирог'},
+          'eldro4illo':{'cool':703,
+                   'name':'Эль Дрочилло'},
+          'vyper':{'cool':155,
+                   'name':'Вуппер'},
+          'sizor':{'cool':79,
+                   'name':'Сизор'}
           
 
           
@@ -433,7 +438,7 @@ def poke(id):
 
 
 def dailypoke(id):
-      x=random.randint(600,3000)
+      x=random.randint(600,2700)
       t=threading.Timer(x, dailypoke, args=[id])
       t.start()
       gold=random.randint(1,100)
