@@ -61,14 +61,6 @@ def spammm(m):
           print('yes')
 
 
-pokemonlist=['dildak','loshod','penis','zaluper','pikachu','pedro','bulbazaur','mayt','psyduck','zhopa','moxnatka','charmander',
-            'diglet','golem','sidot','traxer', 'pizdak','tyxlomon','morzh','penisdetrov','gandonio','spermostrel']
-basepokes=['dildak','loshod','penis','zaluper','zhopa']
-elita=['pikachu','pedro','bulbazaur','psyduck', 'moxnatka','charmander',
-            'diglet','golem','sidot','traxer','tyxlomon','morzh','penisdetrov','gandonio','spermostrel']
-elitaweak=['moxnatka',
-            'diglet','traxer','penis','gandonio']
-
 
 def huntt(id, chatid, pokemon):
     x=users.find_one({'id':id})
@@ -98,7 +90,7 @@ def huntt(id, chatid, pokemon):
         earned=earned*2
         level='да'
     bot.send_message(chatid, 'Покемон '+pokemon['name']+' пользователя '+x['name']+' вернулся с охоты!\nПринесённое золото: '+str(earned)+'\n'+
-                    'Количество попыток: '+str(chances)+'\nКоличество побед: '+str(win)+'\nУмножено ли золото на 2 (только для золотых): '+level)
+                'Умножено ли золото на 2 (только для золотых): '+level)
     users.update_one({'id':id},{'$inc':{'money':earned}})
    
 
@@ -238,66 +230,45 @@ def unbannn(id):
       except:
            pass
 
+pokemonlist=['dildak','loshod','penis','zaluper','pikachu','pedro','bulbazaur','mayt','psyduck','zhopa','moxnatka','charmander',
+            'diglet','golem','sidot','traxer', 'pizdak','tyxlomon','morzh','penisdetrov','gandonio','spermostrel','yebator','egg',
+            'graveler','tirog']
+
+basepokes=['dildak','loshod','penis','zaluper','zhopa','sidot']
+
+elita=['pikachu','pedro','bulbazaur','psyduck', 'moxnatka','charmander','diglet','golem','sidot','traxer','tyxlomon','morzh',
+       'penisdetrov','gandonio','spermostrel','yebator','egg','graveler','tirog']
+
+elitaweak=['moxnatka',
+            'diglet','traxer','penis','gandonio','egg']
+
+
+
+
 pokemons={'dildak':{'cool':10,
-                   'name':'Дилдак',
-                   'lvl':1,
-                   'atk':1,
-                   'def':1},
+                   'name':'Дилдак'},
           'loshod':{'cool':25,
-                   'name':'Лошод',
-                   'lvl':1,
-                   'atk':1,
-                   'def':1},
+                   'name':'Лошод'},
           'penis':{'cool':37,
-                   'name':'Пенис',
-                   'lvl':1,
-                   'atk':1,
-                   'def':1},
+                   'name':'Пенис'},
           'zaluper':{'cool':13,
-                   'name':'Залупер',
-                   'lvl':1,
-                   'atk':1,
-                   'def':1},
+                   'name':'Залупер'},
           'pikachu':{'cool':100,
-                   'name':'Пикачу',
-                   'lvl':1,
-                   'atk':1,
-                   'def':1},
+                   'name':'Пикачу'},
           'ruinmon':{'cool':-1,
-                   'name':'Руинмон',
-                   'lvl':1,
-                   'atk':1,
-                   'def':1},
+                   'name':'Руинмон'},
           'pedro':{'cool':68,
-                   'name':'Педро',
-                   'lvl':1,
-                   'atk':1,
-                   'def':1},
+                   'name':'Педро'},
           'bulbazaur':{'cool':112,
-                   'name':'Бульбазавр',
-                   'lvl':1,
-                   'atk':1,
-                   'def':1},
+                   'name':'Бульбазавр'},
           'mayt':{'cool':41,
-                   'name':'Мяут',
-                   'lvl':1,
-                   'atk':1,
-                   'def':1},
+                   'name':'Мяут'},
           'psyduck':{'cool':131,
-                   'name':'Псайдак',
-                   'lvl':1,
-                   'atk':1,
-                   'def':1},
+                   'name':'Псайдак'},
           'zhopa':{'cool':16,
-                   'name':'Жопа',
-                   'lvl':1,
-                   'atk':1,
-                   'def':1},
+                   'name':'Жопа'},
           'catchermon':{'cool':200,
-                   'name':'Кэтчермон',
-                   'lvl':1,
-                   'atk':1,
-                   'def':1},
+                   'name':'Кэтчермон'},
           'moxnatka':{'cool':75,
                    'name':'Мохнатка'},
           'charmander':{'cool':82,
@@ -335,11 +306,30 @@ pokemons={'dildak':{'cool':10,
           'sharingan':{'cool':100,
                    'name':'Шаринган'},
           'shadowmew':{'cool':100,
-                   'name':'Shadow Mewtwo'}
+                   'name':'Shadow Mewtwo'},
+          'yebator':{'cool':127,
+                   'name':'Уебатор'},
+          'egg':{'cool':66,
+                   'name':'Яичко'},
+          'graveler':{'cool':340,
+                   'name':'Гравелер'},
+          'tirog':{'cool':182,
+                   'name':'Тирог'}
           
 
           
 }
+
+#@bot.message_handler(commands=['evolve'])
+#def evolve(m):
+#    x=users.find_one({'id':m.from_user.id})
+#    if x!=None:
+#     if x['money']>=500:
+#      kb=types.InlineKeyboardMarkup()
+#      for ids in x['pokemons']:
+#        kb.add(types.InlineKeyboardButton(text=pokemons[ids]['name'], callback_data=str(m.from_user.id)+' evolve'+ids))
+#      bot.send_message(m.chat.id, m.from_user.first_name+', какого покемона вы хотите попытаться эволюционировать? Цена: 500 голды. Шанс: 15%.', reply_markup=kb)
+
 
 @bot.message_handler(commands=['upgrade'])
 def upgradee(m):
