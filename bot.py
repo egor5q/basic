@@ -85,7 +85,7 @@ def huntt(id, chatid, pokemon):
                 i-=1
     z=random.randint(1,100)
     level='нет'
-    if z<=10:
+    if z<=25:
       if pokemon['golden']==1:
         earned=earned*2
         level='да'
@@ -664,6 +664,7 @@ if True:
         users.update_one({'id':ids['id']},{'$set':{'pokemons.'+idss+'.hunting':0}})
    t=threading.Timer(300,dailypoke,args=[-1001256539790])
    t.start()
+   bot.send_message(-1001256539790,'Бот был перезагружен!')
    bot.polling(none_stop=True,timeout=600)
  except:
         print('!!! READTIME OUT !!!')           
