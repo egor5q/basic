@@ -395,7 +395,7 @@ def summon(m):
      if y['money']>=100:
         x=random.randint(1,100)
         users.update_one({'id':y['id']},{'$inc':{'money':-100}})
-        if x<=10:
+        if x<=20:
            bot.send_message(m.chat.id, 'Вы потратили 100 монет. Вам удалось призвать покемона!!!')
            poke(m.chat.id)
         else:
