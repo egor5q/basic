@@ -583,7 +583,7 @@ def inline(call):
             bonus=random.randint(1,10)
             name='Крутость'
     
-      if z<=15:
+      if z<=22:
         users.update_one({'id':call.from_user.id},{'$inc':{'pokemons.'+text+'.'+attribute:bonus}})
         medit('Вы успешно улучшили покемона '+x['pokemons'][text]['name']+'! Улучшено:\n\n'+name+': '+str(bonus)+'\nПотрачено 200 голды.', call.message.chat.id, call.message.message_id)
       else:
