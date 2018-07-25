@@ -408,9 +408,16 @@ def upchance(m):
       else:
         bot.send_message(m.chat.id, 'Не хватает золота (нужно '+str(z)+').')
         
-            
+   
+@bot.message_handler(commands=['createteam'])
+def createteam(m):
+    pass
+
            
-           
+@bot.message_handler(commands=['jointeam'])
+def jointeam(m):
+    pass
+
            
 @bot.message_handler(commands=['summon'])
 def summon(m):
@@ -586,11 +593,11 @@ def inline(call):
   elif 'upgrade' in call.data:
     text=call.data.split(' ')
     if int(text[0])==call.from_user.id:
+     text=text[1]
+     text=text[7:]
      x=users.find_one({'id':call.from_user.id})
      cost=int(200+(x['pokemons'][text]['cool']/3))
      if x['money']>=cost:
-      text=text[1]
-      text=text[7:]
       users.update_one({'id':call.from_user.id},{'$inc':{'money':-cost}})
       z=random.randint(1,100)
       bonus=0
