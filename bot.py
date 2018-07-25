@@ -232,14 +232,15 @@ def unbannn(id):
 
 pokemonlist=['dildak','loshod','penis','zaluper','pikachu','pedro','bulbazaur','mayt','psyduck','zhopa','moxnatka','charmander',
             'diglet','golem','sidot','traxer', 'pizdak','tyxlomon','morzh','penisdetrov','gandonio','spermostrel','yebator','egg',
-            'graveler','tirog','eldro4illo','vyper','sizor']
+            'graveler','tirog','eldro4illo','vyper','sizor','myavs','bulatpidor','ebusobak','slagma']
 
 basepokes=['dildak','loshod','penis','zaluper','zhopa','sidot']
 
 elita=['pikachu','pedro','bulbazaur','psyduck', 'moxnatka','charmander','diglet','golem','sidot','traxer','tyxlomon','morzh',
-       'penisdetrov','gandonio','spermostrel','yebator','egg','graveler','tirog','eldro4illo','vyper','sizor']
+       'penisdetrov','gandonio','spermostrel','yebator','egg','graveler','tirog','eldro4illo','vyper','sizor','myavs','bulatpidor','ebusobak',
+      'slagma']
 
-elitaweak=['moxnatka','diglet','traxer','penis','gandonio','egg','sizor']
+elitaweak=['moxnatka','diglet','traxer','penis','gandonio','egg','sizor','ebusobak']
 
 
 
@@ -319,7 +320,15 @@ pokemons={'dildak':{'cool':10,
           'vyper':{'cool':155,
                    'name':'Вуппер'},
           'sizor':{'cool':79,
-                   'name':'Сизор'}
+                   'name':'Сизор'},
+          'myavs':{'cool':587,
+                   'name':'Мявс'},
+          'bulatpidor':{'cool':291,
+                   'name':'Булат пидор'},
+          'ebusobak':{'cool':75,
+                   'name':'Ебусобакен'},
+          'slagma':{'cool':311,
+                   'name':'Слагма'}
           
 
           
