@@ -353,7 +353,7 @@ def upgradee(m):
       kb=types.InlineKeyboardMarkup()
       for ids in x['pokemons']:
         kb.add(types.InlineKeyboardButton(text=pokemons[ids]['name'], callback_data=str(m.from_user.id)+' upgrade'+ids))
-      bot.send_message(m.chat.id, m.from_user.first_name+', какого покемона вы хотите попытаться улучшить? Цена: 200 голды. Шанс: 22%.', reply_markup=kb)
+      bot.send_message(m.chat.id, m.from_user.first_name+', какого покемона вы хотите попытаться улучшить? Цена: 200 голды + крутость покемона/3. Шанс: 30%.', reply_markup=kb)
      else:
            bot.send_message(m.chat.id, 'Недостаточно золота!')
     else:
@@ -612,9 +612,9 @@ def inline(call):
             bonus=random.randint(1,10)
             name='Крутость'
     
-      if z<=22:
+      if z<=30:
         users.update_one({'id':call.from_user.id},{'$inc':{'pokemons.'+text+'.'+attribute:bonus}})
-        medit('Вы успешно улучшили покемона '+x['pokemons'][text]['name']+'! Улучшено:\n\n'+name+': '+str(bonus)+'\nПотрачено 200 голды.', call.message.chat.id, call.message.message_id)
+        medit('Вы успешно улучшили покемона '+x['pokemons'][text]['name']+'! Улучшено:\n\n'+name+': '+str(bonus)+'\nПотрачено '+str(cost)+' голды.', call.message.chat.id, call.message.message_id)
       else:
         medit('У вас не получилось улучшить покемона! Потрачено '+str(cost)+' голды.', call.message.chat.id, call.message.message_id)
      else:
