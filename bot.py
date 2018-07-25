@@ -400,7 +400,7 @@ def toppp(m):
 def upchance(m):
      x=users.find_one({'id':m.from_user.id})
      if x!=None:
-      z=(x['chancetocatch']*200000)+20000
+      z=int((x['chancetocatch']*200000)+20000)
       if x['money']>=z:
         users.update_one({'id':m.from_user.id},{'$inc':{'money':-z}})
         users.update_one({'id':m.from_user.id},{'$inc':{'chancetocatch':0.1}})
