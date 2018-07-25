@@ -85,7 +85,7 @@ def huntt(id, chatid, pokemon):
                 i-=1
     z=random.randint(1,100)
     level='нет'
-    if z<=25:
+    if z<=100:
       if pokemon['golden']==1:
         earned=earned*2
         level='да'
