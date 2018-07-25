@@ -395,6 +395,14 @@ def toppp(m):
     bot.send_message(m.chat.id, 'Топ-3 по крутости:\n\n'+'1 место: '+top1['name']+' - '+str(cool1)+'\n'+'2 место: '+top2['name']+' - '+str(cool2)+'\n'+'3 место: '+top3['name']+' - '+str(cool3)+'\n')        
      
           
+
+@bot.message_handler(commands=['upchance'])
+def upchance(m):
+     x=users.find_one({'id':m.from_user.id})
+     if x!=None:
+        z=random.randint(1,100)
+        if z<=25:
+            pass
            
            
            
