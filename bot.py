@@ -401,7 +401,7 @@ def upchance(m):
      x=users.find_one({'id':m.from_user.id})
      if x!=None:
       z=(x['chancetocatch']*200000)+20000
-      if x['money']>=z
+      if x['money']>=z:
         users.update_one({'id':m.from_user.id},{'$inc':{'money':-z}})
         users.update_one({'id':m.from_user.id},{'$inc':{'chancetocatch':0.1}})
         bot.send_message(m.chat.id, 'Вы потратили '+str(z)+' золота. Шанс поймать покемона увеличен на 10%.')
