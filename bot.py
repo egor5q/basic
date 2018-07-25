@@ -587,10 +587,11 @@ def inline(call):
     text=call.data.split(' ')
     if int(text[0])==call.from_user.id:
      x=users.find_one({'id':call.from_user.id})
-     if x['money']>=200:
-      users.update_one({'id':call.from_user.id},{'$inc':{'money':-200}})
+     cost=int(200+(x['pokemons'][text]['cool']/3))
+     if x['money']>=cost:
       text=text[1]
       text=text[7:]
+      users.update_one({'id':call.from_user.id},{'$inc':{'money':-cost}})
       z=random.randint(1,100)
       bonus=0
       abc=['atk','def','agility','cool']
@@ -615,9 +616,9 @@ def inline(call):
         users.update_one({'id':call.from_user.id},{'$inc':{'pokemons.'+text+'.'+attribute:bonus}})
         medit('Вы успешно улучшили покемона '+x['pokemons'][text]['name']+'! Улучшено:\n\n'+name+': '+str(bonus)+'\nПотрачено 200 голды.', call.message.chat.id, call.message.message_id)
       else:
-        medit('У вас не получилось улучшить покемона! Потрачено 200 голды.', call.message.chat.id, call.message.message_id)
+        medit('У вас не получилось улучшить покемона! Потрачено '+str(cost)+' голды.', call.message.chat.id, call.message.message_id)
      else:
-       medit('Недостаточно золота!', call.message.chat.id, call.message.message_id)           
+       medit('Недостаточно золота (нужно '+str(cost)+').', call.message.chat.id, call.message.message_id)           
     else:
         bot.answer_callback_query(call.id, 'Это не ваше меню!')
         
