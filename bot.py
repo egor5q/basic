@@ -385,6 +385,19 @@ def upgradee(m):
     else:
        bot.send_message(m.chat.id, 'Ошибка!')
     
+@bot.message_handler(commands=['sellpoke'])
+def sellpoke(m):
+    x=users.find_one({'id':m.from_user.id})
+    if x!=None:
+      kb=types.InlineKeyboardMarkup()
+      for ids in x['pokemons']:
+        kb.add(types.InlineKeyboardButton(text=pokemons[ids]['name'], callback_data=str(m.from_user.id)+' sell'+ids))
+      bot.send_message(m.chat.id, m.from_user.first_name+', какого покемона вы хотите продать? Цена=крутость покемона*5 (если золотой, то *50).', reply_markup=kb)
+    else:
+       bot.send_message(m.chat.id, 'Ошибка!')
+           
+           
+           
 
 @bot.message_handler(commands=['top'])
 def toppp(m):
@@ -614,6 +627,20 @@ def inline(call):
         t.start()
       else:
            medit('Покемон уже на охоте!', call.message.chat.id, call.message.message_id)
+    else:
+        bot.answer_callback_query(call.id, 'Это не ваше меню!')
+  elif 'sell' in call.data:
+    text=call.data.split(' ')
+    if int(text[0])==call.from_user.id:
+      x=users.find_one({'id':call.from_user.id})
+      text=text[1]
+      text=text[4:]
+      gold=x['pokemons'][text]['cool']*5
+      if x['pokemons'][text]['golden']==1:
+        gold=x['pokemons'][text]['cool']*50
+      users.update_one({'id':call.from_user.id},{'$pull':{'pokemons.'+text}})
+      users.update_one({'id':call.from_user.id},{'$inc':{'money':gold}})
+      medit('Вы продали покемона '+pokemons[text]['name']+'!', call.message.chat.id, call.message.message_id)
     else:
         bot.answer_callback_query(call.id, 'Это не ваше меню!')
   elif 'upgrade' in call.data:
