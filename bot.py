@@ -572,7 +572,7 @@ def rebootclick():
 def inline(call):
  global notclick
  if notclick==0:
-  if 'earn' not in call.data and 'upgrade' not in call.data:
+  if 'earn' not in call.data and 'upgrade' not in call.data and 'sell' not in call.data:
    notclick=1
    t=threading.Timer(3,rebootclick)
    t.start()
