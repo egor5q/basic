@@ -394,6 +394,9 @@ def traderuby(m):
                     bot.send_message(m.chat.id, 'Вы успешно обменяли '+str(i)+' золота на '+str(ruby)+' рубинов!')
                 else:
                     bot.send_message(m.chat.id, 'Недостаточно золота! (курс: 100000 золота за 1 рубин).')
+            except:
+                 bot.send_message(m.chat.id, 'Неверный формат!')
+                      
 
 
 @bot.message_handler(commands=['upgrade'])
