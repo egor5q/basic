@@ -503,10 +503,10 @@ def dailypoke(id):
       i=0
       for ids in pokemons:
           i+=1   
-      pokechance=40/(i*0.06)
+      pokechance=95/(i*0.06)
       come=[]
       for ids in pokemonlist:
-            chance=pokechance/(pokemons[ids]['cool']*0.03)
+            chance=pokechance/(pokemons[ids]['cool']*0.01)
             x=random.randint(1,100)
             if x<=chance:
                 come.append(ids)
