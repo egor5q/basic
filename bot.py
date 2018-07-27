@@ -643,7 +643,7 @@ def inline(call):
            users.update_one({'id':call.from_user.id},{'$inc':{'money':gold}})
            medit('Вы продали покемона '+pokemons[text]['name']+'!', call.message.chat.id, call.message.message_id)
       except:
-           medit('У вас нет этого покемона!' call.message.chat.id, call.message.message_id)
+           medit('У вас нет этого покемона!', call.message.chat.id, call.message.message_id)
     else:
         bot.answer_callback_query(call.id, 'Это не ваше меню!')
   elif 'upgrade' in call.data:
