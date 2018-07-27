@@ -737,7 +737,7 @@ def createuser(id):
              'pokemons':{},
              'chancetocatch':0,
              'money':0,
-             'pokemons2={},
+             'pokemons2':{},
              'ruby':0
             }
   
