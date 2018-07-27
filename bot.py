@@ -101,8 +101,14 @@ def huntt(id, chatid, pokemon):
       if pokemon['golden']==1:
         earned=earned*2
         level='да'
+    pupa=''
+    if pokemon['code']=='pupa':
+       f=random.randint(1,100)
+       if f<=35:
+           earned+=25000
+           pupa='Пупа и Лупа ходили за голдой. Но Пасюк перепутал их крутость, и Лупа принес голду за Пупу, а Пупа ЗА ЛУПУ!!! Получено 25к голды.'
     bot.send_message(chatid, 'Покемон '+pokemon['name']+' пользователя '+x['name']+' вернулся с охоты!\nПринесённое золото: '+str(earned)+'\n'+
-                'Умножено ли золото на 2 (только для золотых): '+level)
+                'Умножено ли золото на 2 (только для золотых): '+level+'\n'+pupa)
     users.update_one({'id':id},{'$inc':{'money':earned}})
    
 
@@ -244,13 +250,13 @@ def unbannn(id):
 
 pokemonlist=['dildak','loshod','penis','zaluper','pikachu','pedro','bulbazaur','mayt','psyduck','zhopa','moxnatka','charmander',
             'diglet','golem','sidot','traxer', 'pizdak','tyxlomon','morzh','penisdetrov','gandonio','spermostrel','yebator','egg',
-            'graveler','tirog','eldro4illo','vyper','sizor','myavs','bulatpidor','ebusobak','slagma']
+            'graveler','tirog','eldro4illo','vyper','sizor','myavs','bulatpidor','ebusobak','slagma','pupa','lupa']
 
 basepokes=['dildak','loshod','penis','zaluper','zhopa','sidot']
 
 elita=['pikachu','pedro','bulbazaur','psyduck', 'moxnatka','charmander','diglet','golem','sidot','traxer','tyxlomon','morzh',
        'penisdetrov','gandonio','spermostrel','yebator','egg','graveler','tirog','eldro4illo','vyper','sizor','myavs','bulatpidor','ebusobak',
-      'slagma']
+      'slagma','pupa','lupa']
 
 elitaweak=['moxnatka','diglet','traxer','penis','gandonio','egg','sizor','ebusobak']
 
@@ -340,7 +346,11 @@ pokemons={'dildak':{'cool':10,
           'ebusobak':{'cool':75,
                    'name':'Ебусобакен'},
           'slagma':{'cool':311,
-                   'name':'Слагма'}
+                   'name':'Слагма'},
+          'pupa':{'cool':1500,
+                   'name':'Пупа'}
+          'lupa':{'cool':1500,
+                   'name':'Лупа'}
           
 
           
@@ -558,7 +568,7 @@ def inline(call):
             text=call.data[4:]
             golden=1
         chancetocatch=(100*(x['chancetocatch']+1))/(pokemons[text]['cool']*0.03)
-        z=random.randint(1,100)
+        z=random.randint(0,100)
         if z<=chancetocatch:
          i=0
          for ids in x['pokemons']:
