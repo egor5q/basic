@@ -91,6 +91,8 @@ def huntt(id, chatid, pokemon):
         if z<=5+pokemon['agility']:
                 earned+=1
         z=random.randint(1,100)
+        if pokemon['def']>=100:
+           pokemon['def']=99
         if z<=pokemon['def']:
                 i-=1
     z=random.randint(1,100)
