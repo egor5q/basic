@@ -258,7 +258,7 @@ basepokes=['dildak','loshod','penis','zaluper','zhopa','sidot']
 
 elita=['pikachu','pedro','bulbazaur','psyduck', 'moxnatka','charmander','diglet','golem','sidot','traxer','tyxlomon','morzh',
        'penisdetrov','gandonio','spermostrel','yebator','egg','graveler','tirog','eldro4illo','vyper','sizor','myavs','bulatpidor','ebusobak',
-      'slagma','pupa','lupa']
+      'slagma','pupa','lupa','isma']
 
 elitaweak=['moxnatka','diglet','traxer','penis','gandonio','egg','sizor','ebusobak','ultrapoke']
 
@@ -354,7 +354,9 @@ pokemons={'dildak':{'cool':10,
           'lupa':{'cool':1500,
                    'name':'Лупа'},
           'ultrapoke':{'cool':1000,
-                   'name':'Ультрапокес'}
+                   'name':'Ультрапокес'},
+          'isma':{'cool':299,
+                   'name':'Исмащук'}
           
 
           
@@ -584,7 +586,7 @@ def inline(call):
         if call.data[0]=='g' and call.data[1]=='o' and call.data[2]=='l' and call.data[3]=='d':
             text=call.data[4:]
             golden=1
-        chancetocatch=(100*(x['chancetocatch']+1))/(pokemons[text]['cool']*0.03)
+        chancetocatch=(100*(x['chancetocatch']+1))/(pokemons[text]['cool']*0.015)
         z=random.randint(0,100)
         if z<=chancetocatch:
          i=0
