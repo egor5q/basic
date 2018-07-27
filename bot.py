@@ -353,7 +353,7 @@ pokemons={'dildak':{'cool':10,
                    'name':'Пупа'},
           'lupa':{'cool':1500,
                    'name':'Лупа'},
-          'ultrapoke':{'cool':100000,
+          'ultrapoke':{'cool':1000,
                    'name':'Ультрапокес'}
           
 
