@@ -258,7 +258,7 @@ elita=['pikachu','pedro','bulbazaur','psyduck', 'moxnatka','charmander','diglet'
        'penisdetrov','gandonio','spermostrel','yebator','egg','graveler','tirog','eldro4illo','vyper','sizor','myavs','bulatpidor','ebusobak',
       'slagma','pupa','lupa']
 
-elitaweak=['moxnatka','diglet','traxer','penis','gandonio','egg','sizor','ebusobak']
+elitaweak=['moxnatka','diglet','traxer','penis','gandonio','egg','sizor','ebusobak','ultrapoke']
 
 
 
@@ -350,7 +350,9 @@ pokemons={'dildak':{'cool':10,
           'pupa':{'cool':1500,
                    'name':'Пупа'},
           'lupa':{'cool':1500,
-                   'name':'Лупа'}
+                   'name':'Лупа'},
+          'ultrapoke':{'cool':100000,
+                   'name':'Ультрапокес'}
           
 
           
