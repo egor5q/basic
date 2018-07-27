@@ -60,6 +60,16 @@ def spammm(m):
    #                 users.update_one({'id':ids['id']},{'$set':{'pokemons.'+idss+'.agility':1}})
           print('yes')
 
+@bot.message_handler(commands=['stats'])
+def statssss(m):
+    x=users.find_one({'id':m.from_user.id})
+    if x!=None:
+        try:
+            y=x['pokemons']['graveler']
+            bot.send_message(m.chat.id,'Статы вашего Гравелера:\nАтака: '+str(y['atk'])+'\nЗащита: '+str(y['def']))
+        except:
+            bot.send_message(m.chat.id, 'У вас нет Гравелера!')
+
 
 
 def huntt(id, chatid, pokemon):
