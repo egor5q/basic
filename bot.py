@@ -693,7 +693,8 @@ def inline(call):
       if attribute=='atk':
             bonus=1
             name='Атака'
-            
+
+                      
       elif attribute=='def':
             bonus=random.randint(1,3)
             name='Защита'
