@@ -635,9 +635,12 @@ def inline(call):
       x=users.find_one({'id':call.from_user.id})
       text=text[1]
       text=text[4:]
-      gold=x['pokemons'][text]['cool']*5
-      if x['pokemons'][text]['golden']==1:
-        gold=x['pokemons'][text]['cool']*50
+      try:
+        gold=x['pokemons'][text]['cool']*5
+        if x['pokemons'][text]['golden']==1:
+          gold=x['pokemons'][text]['cool']*50
+      except:
+         gold=0
       try:
            users.update_one({'id':call.from_user.id},{'$unset':{'pokemons.'+text:1}})
            users.update_one({'id':call.from_user.id},{'$inc':{'money':gold}})
