@@ -638,9 +638,12 @@ def inline(call):
       gold=x['pokemons'][text]['cool']*5
       if x['pokemons'][text]['golden']==1:
         gold=x['pokemons'][text]['cool']*50
-      users.update_one({'id':call.from_user.id},{'$unset':{'pokemons.'+text:1}})
-      users.update_one({'id':call.from_user.id},{'$inc':{'money':gold}})
-      medit('Вы продали покемона '+pokemons[text]['name']+'!', call.message.chat.id, call.message.message_id)
+      try:
+           users.update_one({'id':call.from_user.id},{'$unset':{'pokemons.'+text:1}})
+           users.update_one({'id':call.from_user.id},{'$inc':{'money':gold}})
+           medit('Вы продали покемона '+pokemons[text]['name']+'!', call.message.chat.id, call.message.message_id)
+      except:
+           medit('У вас нет этого покемона!' call.message.chat.id, call.message.message_id)
     else:
         bot.answer_callback_query(call.id, 'Это не ваше меню!')
   elif 'upgrade' in call.data:
