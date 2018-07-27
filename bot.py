@@ -116,7 +116,7 @@ def huntt(id, chatid, pokemon):
 @bot.message_handler(commands=['huntall'])
 def huntallll(m):
  if m.from_user.id not in ban:
-   x=banns(m.from_user.id, m.chat.id, m.from_user.first_name)
+   x=banns(m.from_user.id, m.from_user.id, m.from_user.first_name)
    if x==0:
         x=users.find_one({'id':m.from_user.id})
         if x!=None:
@@ -623,7 +623,7 @@ def inline(call):
       if x['pokemons'][text]['hunting']==0:
         users.update_one({'id':call.from_user.id},{'$set':{'pokemons.'+text+'.hunting':1}})
         medit('Вы отправили покемона '+pokemons[text]['name']+' на охоту. Он вернётся через пол часа.', call.message.chat.id, call.message.message_id)
-        t=threading.Timer(1800,huntt,args=[call.from_user.id, call.message.chat.id, text])
+        t=threading.Timer(1800,huntt,args=[call.from_user.id, call.from_user.id, text])
         t.start()
       else:
            medit('Покемон уже на охоте!', call.message.chat.id, call.message.message_id)
