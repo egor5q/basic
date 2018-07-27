@@ -53,7 +53,8 @@ def medit(message_text,chat_id, message_id,reply_markup=None,parse_mode='Markdow
 @bot.message_handler(commands=['update'])
 def spammm(m):
       if m.from_user.id==441399484:
-          users.update_many({'money':{'$lt':0}},{'$set':{'money':0}})
+          users.update_many({},{'$set':{'ruby':0}})
+          users.update_many({},{'$set':{'pokemons2':{}}})
 #           x=users.find({})
  #          for ids in x:
   #           for idss in ids['pokemons']:
@@ -144,6 +145,7 @@ def goldd(m):
 #        bot.send_message(m.chat.id, 'Вы успешно отсосали хуйца и потратили 10 монет.')
 #     except:
 #        pass
+
 
 
 @bot.message_handler(commands=['extra'])
@@ -707,7 +709,9 @@ def createuser(id):
              'name':None,
              'pokemons':{},
              'chancetocatch':0,
-             'money':0
+             'money':0,
+             'pokemons2={},
+             'ruby':0
             }
   
 if True:
