@@ -373,30 +373,6 @@ pokemons={'dildak':{'cool':10,
 #      bot.send_message(m.chat.id, m.from_user.first_name+', какого покемона вы хотите попытаться эволюционировать? Цена: 500 голды. Шанс: 15%.', reply_markup=kb)
 
 
-@bot.message_handler(commands=['goldtoruby'])
-def traderuby(m):
-    x=users.find_one({'id':m.from_user.id})
-    if x!=None:
-        y=m.text.split(' ')
-        if len(y)==2:
-            try:
-                gold=int(y[1])
-                if x['money']>=y[1]:
-                    ruby=0
-                    i=0
-                    while i<=y[1]*100000:
-                        i+=100000
-                        ruby+=1
-                    i-=100000
-                    ruby-=1
-                    users.update_one({'id':m.from_user.id},{'inc':{'money':-i}})
-                    users.update_one({'id':m.from_user.id},{'inc':{'ruby':ruby}})
-                    bot.send_message(m.chat.id, 'Вы успешно обменяли '+str(i)+' золота на '+str(ruby)+' рубинов!')
-                else:
-                    bot.send_message(m.chat.id, 'Недостаточно золота! (курс: 100000 золота за 1 рубин).')
-            except:
-                 bot.send_message(m.chat.id, 'Неверный формат!')
-                      
 
 
 @bot.message_handler(commands=['upgrade'])
