@@ -76,7 +76,14 @@ def statssss(m):
 def huntt(id, chatid, pokemon):
     x=users.find_one({'id':id})
     earned=0
-    users.update_one({'id':id},{'$set':{'pokemons.'+pokemon+'.hunting':0}})
+    i=0
+    try:
+           zz=x['pokemons'][pokemon]['golden']
+           i=1
+    except:
+           pass
+    if i==1:
+           users.update_one({'id':id},{'$set':{'pokemons.'+pokemon+'.hunting':0}})
     i=0
     chances=0
     win=0
