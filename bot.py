@@ -603,6 +603,7 @@ def inline(call):
         if z<=chancetocatch:
          i=0
          for ids in x['pokemons']:
+            print(x['pokemons'][ids])
             if x['pokemons'][ids]['code']==text:
                 i=1
          if i!=1:
