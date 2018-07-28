@@ -81,6 +81,7 @@ def huntt(id, chatid, pokemon):
     chances=0
     win=0
     pokemon=x['pokemons'][pokemon]
+    print(pokemon)
     while i<pokemon['cool']:
         i+=1
         chances+=1
@@ -126,6 +127,19 @@ def huntallll(m):
                          t=threading.Timer(1800,huntt,args=[m.from_user.id, m.chat.id, ids])
                          t.start()
             bot.send_message(m.chat.id, 'Вы отправили всех готовых покемонов на охоту. Вернутся через 30 минут.')
+            
+            
+@bot.message_handler(commands=['testhuntall'])
+def huntallll(m):
+ if m.from_user.id==441399484:
+        x=users.find_one({'id':m.from_user.id})
+        if x!=None:
+            for ids in x['pokemons']:
+                  if x['pokemons'][ids]['hunting']==0:
+                         users.update_one({'id':m.from_user.id},{'$set':{'pokemons.'+ids+'.hunting':1}})
+                         t=threading.Timer(10,huntt,args=[m.from_user.id, m.chat.id, ids])
+                         t.start()
+            bot.send_message(m.chat.id, 'Вы отправили всех готовых покемонов на охоту. Вернутся через 10 сек.')
 
 
 @bot.message_handler(commands=['gold'])
