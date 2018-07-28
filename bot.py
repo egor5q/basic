@@ -123,7 +123,7 @@ def huntallll(m):
             for ids in x['pokemons']:
                   if x['pokemons'][ids]['hunting']==0:
                          users.update_one({'id':m.from_user.id},{'$set':{'pokemons.'+ids+'.hunting':1}})
-                         t=threading.Timer(1800,huntt,args=[m.from_user.id, m.from_user.id, ids])
+                         t=threading.Timer(1800,huntt,args=[m.from_user.id, m.chat.id, ids])
                          t.start()
             bot.send_message(m.chat.id, 'Вы отправили всех готовых покемонов на охоту. Вернутся через 30 минут.')
 
@@ -258,7 +258,7 @@ basepokes=['dildak','loshod','penis','zaluper','zhopa','sidot']
 
 elita=['pikachu','pedro','bulbazaur','psyduck', 'moxnatka','charmander','diglet','golem','sidot','traxer','tyxlomon','morzh',
        'penisdetrov','gandonio','spermostrel','yebator','egg','graveler','tirog','eldro4illo','vyper','sizor','myavs','bulatpidor','ebusobak',
-      'slagma','pupa','lupa','isma']
+      'slagma','pupa','lupa']
 
 elitaweak=['moxnatka','diglet','traxer','penis','gandonio','egg','sizor','ebusobak','ultrapoke']
 
@@ -354,9 +354,7 @@ pokemons={'dildak':{'cool':10,
           'lupa':{'cool':1500,
                    'name':'Лупа'},
           'ultrapoke':{'cool':1000,
-                   'name':'Ультрапокес'},
-          'isma':{'cool':299,
-                   'name':'Исмащук'}
+                   'name':'Ультрапокес'}
           
 
           
@@ -371,8 +369,6 @@ pokemons={'dildak':{'cool':10,
 #      for ids in x['pokemons']:
 #        kb.add(types.InlineKeyboardButton(text=pokemons[ids]['name'], callback_data=str(m.from_user.id)+' evolve'+ids))
 #      bot.send_message(m.chat.id, m.from_user.first_name+', какого покемона вы хотите попытаться эволюционировать? Цена: 500 голды. Шанс: 15%.', reply_markup=kb)
-
-
 
 
 @bot.message_handler(commands=['upgrade'])
@@ -588,7 +584,7 @@ def inline(call):
         if call.data[0]=='g' and call.data[1]=='o' and call.data[2]=='l' and call.data[3]=='d':
             text=call.data[4:]
             golden=1
-        chancetocatch=(100*(x['chancetocatch']+1))/(pokemons[text]['cool']*0.015)
+        chancetocatch=(100*(x['chancetocatch']+1))/(pokemons[text]['cool']*0.03)
         z=random.randint(0,100)
         if z<=chancetocatch:
          i=0
