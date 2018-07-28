@@ -53,12 +53,15 @@ def medit(message_text,chat_id, message_id,reply_markup=None,parse_mode='Markdow
 @bot.message_handler(commands=['update'])
 def spammm(m):
       if m.from_user.id==441399484:
-          users.update_many({},{'$set':{'ruby':0}})
-          users.update_many({},{'$set':{'pokemons2':{}}})
-#           x=users.find({})
- #          for ids in x:
-  #           for idss in ids['pokemons']:
-   #                 users.update_one({'id':ids['id']},{'$set':{'pokemons.'+idss+'.agility':1}})
+       #   users.update_many({},{'$set':{'ruby':0}})
+         # users.update_many({},{'$set':{'pokemons2':{}}})
+          x=users.find({})
+          for ids in x:
+            for idss in ids['pokemons']:
+                 try:
+                   zzz=ids['pokemons'][idss]['golden']
+                 except:
+                   users.update_one({'id':ids['id']},{'$unset':{'pokemons.'+idss:1}})
           print('yes')
 
 @bot.message_handler(commands=['stats'])
