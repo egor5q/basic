@@ -682,9 +682,9 @@ def pokesfgtd(m):
                   text+='*Золотой* '
             text+=x['pokemons'][ids]['name']+' - крутость: '+str(x['pokemons'][ids]['cool'])+'\n'
         for ids in x['pokemons2']:
-            if x['pokemons'][ids]['golden']==1:
+            if x['pokemons2'][ids]['golden']==1:
                   text+='*Золотой* '
-            text+=x['pokemons'][ids]['name']+' - крутость: '+str(x['pokemons'][ids]['cool'])+'\n'
+            text+=x['pokemons2'][ids]['name']+' - крутость: '+str(x['pokemons2'][ids]['cool'])+'\n'
         bot.send_message(m.chat.id, 'Ваши покемоны:\n\n'+text,parse_mode='markdown')
       else:
             bot.send_message(m.chat.id, 'Сначала напишите в чат что-нибудь (не команду!).')
