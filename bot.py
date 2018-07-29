@@ -783,7 +783,7 @@ def inline(call):
     if int(text[0])==call.from_user.id:
       x=users.find_one({'id':call.from_user.id})
       text=text[1]
-      text=text[4:]
+      text=text[3:]
       if x['ruby']>=100:
             users.update_one({'id':x['id']},{'$inc':{'ruby':-100}})
             users.update_one({'id':x['id']},{'$set':{'pokemons2.'+text:createruby(text,0)}})
