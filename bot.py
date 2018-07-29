@@ -169,8 +169,8 @@ def huntallll(m):
                          t=threading.Timer(1800,huntt,args=[m.from_user.id, m.from_user.id, ids])
                          t.start()
             for ids2 in x['pokemons2']:
-                  if x['pokemons'][ids2]['hunting']==0:
-                         users.update_one({'id':m.from_user.id},{'$set':{'pokemons.'+ids2+'.hunting':1}})
+                  if x['pokemons2'][ids2]['hunting']==0:
+                         users.update_one({'id':m.from_user.id},{'$set':{'pokemons2.'+ids2+'.hunting':1}})
                          t=threading.Timer(1800,huntt,args=[m.from_user.id, m.from_user.id, ids2])
                          t.start()
             bot.send_message(m.chat.id, 'Вы отправили всех готовых покемонов на охоту. Вернутся через 30 минут.')
