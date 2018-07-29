@@ -134,7 +134,7 @@ def huntallll(m):
             for ids in x['pokemons']:
                   if x['pokemons'][ids]['hunting']==0:
                          users.update_one({'id':m.from_user.id},{'$set':{'pokemons.'+ids+'.hunting':1}})
-                         t=threading.Timer(1800,huntt,args=[m.from_user.id, m.chat.id, ids])
+                         t=threading.Timer(1800,huntt,args=[m.from_user.id, m.from_user.id, ids])
                          t.start()
             bot.send_message(m.chat.id, 'Вы отправили всех готовых покемонов на охоту. Вернутся через 30 минут.')
             
@@ -421,7 +421,26 @@ def sellpoke(m):
        bot.send_message(m.chat.id, 'Ошибка!')
            
            
-           
+     
+@bot.message_handler(commands=['buyruby'])
+def traderuby(m):
+    x=users.find_one({'id':m.from_user.id})
+    if x!=None:
+        y=m.text.split(' ')
+        if len(y)==2:
+            try:
+                ruby=int(y[1])
+                i=ruby*100000
+                if x['money']>=i:
+                    users.update_one({'id':m.from_user.id},{'inc':{'money':-i}})
+                    users.update_one({'id':m.from_user.id},{'inc':{'ruby':ruby}})
+                    bot.send_message(m.chat.id, 'Вы успешно обменяли '+str(i)+' золота на '+str(ruby)+' рубинов!')
+                else:
+                    bot.send_message(m.chat.id, 'Недостаточно золота! (курс: 100000 золота за 1 рубин).')
+            except:
+                 bot.send_message(m.chat.id, 'Неверный формат!')
+
+
 
 @bot.message_handler(commands=['top'])
 def toppp(m):
