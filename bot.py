@@ -429,7 +429,8 @@ def traderuby(m):
         y=m.text.split(' ')
         if len(y)==2:
             try:
-                ruby=int(y[1])
+              ruby=int(y[1])
+              if ruby>0:
                 i=ruby*100000
                 if x['money']>=i:
                     users.update_one({'id':m.from_user.id},{'$inc':{'money':-i}})
@@ -437,6 +438,8 @@ def traderuby(m):
                     bot.send_message(m.chat.id, 'Вы успешно обменяли '+str(int(i/1000))+'к золота на '+str(ruby)+' рубин(ов)!')
                 else:
                     bot.send_message(m.chat.id, 'Недостаточно золота! (курс: 100к золота за 1 рубин).')
+              else:
+                  bot.send_message(m.chat.id, 'Введите число больше нуля!')
             except:
                  bot.send_message(m.chat.id, 'Неверный формат!')
 
