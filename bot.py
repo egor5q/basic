@@ -434,7 +434,7 @@ def traderuby(m):
                 if x['money']>=i:
                     users.update_one({'id':m.from_user.id},{'$inc':{'money':-i}})
                     users.update_one({'id':m.from_user.id},{'$inc':{'ruby':ruby}})
-                    bot.send_message(m.chat.id, 'Вы успешно обменяли '+str(i)+' золота на '+str(ruby)+' рубинов!')
+                    bot.send_message(m.chat.id, 'Вы успешно обменяли '+str(i/1000)+'к золота на '+str(ruby)+' рубин(ов)!')
                 else:
                     bot.send_message(m.chat.id, 'Недостаточно золота! (курс: 100к золота за 1 рубин).')
             except:
