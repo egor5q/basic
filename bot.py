@@ -420,7 +420,32 @@ def sellpoke(m):
     else:
        bot.send_message(m.chat.id, 'Ошибка!')
            
-           
+      
+@bot.message_handler(commands=['givegold'])
+def givegoldd(m):
+    x=m.text.split(' ')
+    try:
+      golden=''
+      i=0
+      if len(x)==2:
+        gold=int(x[1])
+        if gold>0:
+          y=users.find_one({'id':m.from_user.id})
+          if y!=None:
+           if y['money']>=gold:
+            users.update_one({'id':m.reply_to_message.from_user.id}, {'$inc':{'money':gold}})
+            users.update_one({'id':m.from_user.id}, {'$inc':{'money':-gold}})
+            bot.send_message(m.chat.id, 'Вы успешно передали '+str(gold)+' золота игроку '+m.reply_to_message.from_user.first_name+'!', parse_mode='markdown')
+           else:
+            bot.send_message(m.chat.id, 'Недостаточно золота!')
+          else:
+            bot.send_message(m.chat.id, 'Ошибка!')
+        else:
+            bot.send_message(m.chat.id, 'Введите число больше нуля!')
+    except:
+        pass
+
+
      
 @bot.message_handler(commands=['buyruby'])
 def traderuby(m):
