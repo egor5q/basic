@@ -436,7 +436,7 @@ def traderuby(m):
                     users.update_one({'id':m.from_user.id},{'inc':{'ruby':ruby}})
                     bot.send_message(m.chat.id, 'Вы успешно обменяли '+str(i)+' золота на '+str(ruby)+' рубинов!')
                 else:
-                    bot.send_message(m.chat.id, 'Недостаточно золота! (курс: 100000 золота за 1 рубин).')
+                    bot.send_message(m.chat.id, 'Недостаточно золота! (курс: 100к золота за 1 рубин).')
             except:
                  bot.send_message(m.chat.id, 'Неверный формат!')
 
