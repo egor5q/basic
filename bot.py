@@ -945,7 +945,7 @@ if True:
      for idss in ids['pokemons']:
         users.update_one({'id':ids['id']},{'$set':{'pokemons.'+idss+'.hunting':0}})
      for idsss in ids['pokemons2']:
-        users.update_one({'id':ids['id']},{'$set':{'pokemons.'+idsss+'.hunting':0}})
+        users.update_one({'id':ids['id']},{'$set':{'pokemons2.'+idsss+'.hunting':0}})
    t=threading.Timer(300,dailypoke,args=[-1001256539790])
    t.start()
    bot.send_message(-1001256539790,'Бот был перезагружен!')
