@@ -545,7 +545,7 @@ def toppp(m):
         for idss2 in ids2['pokemons']:
             summ2+=ids2['pokemons'][idss2]['cool']
         for idsss2 in ids2['pokemons2']:
-            summ2+=ids2['pokemons'][idsss2]['cool']
+            summ2+=ids2['pokemons2'][idsss2]['cool']
         if summ2>cool2 and summ2!=cool1:
             cool2=summ2
             top2=ids2
@@ -555,7 +555,7 @@ def toppp(m):
         for idss3 in ids3['pokemons']:
             summ3+=ids3['pokemons'][idss3]['cool']
         for idsss3 in ids3['pokemons2']:
-            summ3+=ids3['pokemons'][idsss3]['cool']
+            summ3+=ids3['pokemons2'][idsss3]['cool']
         if summ3>=cool3 and summ3!=cool2 and summ3!=cool1:
             cool3=summ3
             top3=ids3
