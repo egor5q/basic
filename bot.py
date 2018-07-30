@@ -49,8 +49,9 @@ symbollist=['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q',
 def medit(message_text,chat_id, message_id,reply_markup=None,parse_mode='Markdown'):
     return bot.edit_message_text(chat_id=chat_id,message_id=message_id,text=message_text,reply_markup=reply_markup,
                                  parse_mode=parse_mode)
-
-users.update_one({'id':441399484},{'$set':{'pokemons2.rubenis':createpoke('rubenis',0)}})
+@bot.message_handler(commands=['pokerub'])
+def poketyigfh(m):
+users.update_one({'id':441399484},{'$set':{'pokemons2.rubenis':createruby('rubenis',0)}})
 
 @bot.message_handler(commands=['update'])
 def spammm(m):
