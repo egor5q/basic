@@ -639,8 +639,10 @@ def poke(id):
       t=threading.Timer(random.randint(300,600),runpoke,args=[m.message_id,m.chat.id])
       t.start()
       timers.append('1')
-      bot.pin_chat_message(m.chat.id, m.message_id, disable_notification=False)
-
+      try:
+        bot.pin_chat_message(m.chat.id, m.message_id, disable_notification=False)
+      except:
+                      pass
 
 
 def dailypoke(id):
