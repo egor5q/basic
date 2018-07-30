@@ -51,7 +51,7 @@ def medit(message_text,chat_id, message_id,reply_markup=None,parse_mode='Markdow
                                  parse_mode=parse_mode)
 @bot.message_handler(commands=['pokerub'])
 def poketyigfh(m):
-users.update_one({'id':441399484},{'$set':{'pokemons2.rubenis':createruby('rubenis',0)}})
+  users.update_one({'id':441399484},{'$set':{'pokemons2.rubenis':createruby('rubenis',0)}})
 
 @bot.message_handler(commands=['update'])
 def spammm(m):
