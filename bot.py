@@ -215,11 +215,11 @@ def suckdick(m):
    x=banns(m.from_user.id, m.chat.id, m.from_user.first_name)
    if x==0:
      try:
-        users.update_one({'id':m.from_user.id},{'$inc':{'money':-100}}) 
-        bot.send_message(m.chat.id, 'Вы успешно отсосали хуйца и потратили 100 монет.')
+        users.update_one({'id':m.from_user.id},{'$inc':{'money':-1}}) 
+        bot.send_message(m.chat.id, 'Вы успешно отсосали хуйца и потратили 1 монету.')
         z=random.randint(1,100)
         if z<=10:
-           bot.send_message(m.chat.id, 'ТЫ ХУЕСОС ТЫ ХУЕСОС ТЫ ХУЕСОС ТЫ ХУЕСОС ТЫ ХУЕСОС')
+           bot.send_message(m.chat.id, 'Ебаный рот этого казино блять! Какого хуя они в другом порядке лежат, мудила ты гороховая?!')
      except:
         pass
 
