@@ -128,14 +128,14 @@ def huntt(id, chatid, pokemon):
     earned=0
     i=0
     try:
-           zz=x['pokemons'][pokemon]['golden']
+           zz=x['pokemons2'][pokemon]['golden']
            i=1
     except:
            pass
     if i==1:
-           users.update_one({'id':id},{'$set':{'pokemons.'+pokemon+'.hunting':0}})
+           users.update_one({'id':id},{'$set':{'pokemons2.'+pokemon+'.hunting':0}})
     i=0
-    pokemon=x['pokemons'][pokemon]
+    pokemon=x['pokemons2'][pokemon]
     print(pokemon)
     while i<(pokemon['atk']+int(pokemon['cool']/1000)):
         i+=1
