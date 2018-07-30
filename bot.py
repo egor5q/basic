@@ -331,7 +331,7 @@ elita=['pikachu','pedro','bulbazaur','psyduck', 'moxnatka','charmander','diglet'
 
 elitaweak=['moxnatka','diglet','traxer','penis','gandonio','egg','sizor','ebusobak','ultrapoke']
 
-rubypokes=['rubenis']
+rubypokes=['rubenis','crystaler','blyadomon']
 
 
 
@@ -430,7 +430,14 @@ pokemons={'dildak':{'cool':10,
 
 rubypokemons={
     'rubenis':{'cool':9000,
-                   'name':'Рубенис'}
+              'name':'Рубенис',
+              'cost':100},
+    'crystaler':{'cool':15000,
+              'name':'Кристалер',
+              'cost':180},
+    'blyadomon':{'cool':20000,
+              'name':'Блядомон',
+              'cost':260}
 
 
 }
@@ -525,7 +532,7 @@ def traderuby(m):
 def pokeshopp(m):
     kb=types.InlineKeyboardMarkup()
     for ids in rubypokes:
-        kb.add(types.InlineKeyboardButton(text=rubypokemons[ids]['name']+' (цена: 100♦️)', callback_data=str(m.from_user.id)+' buy'+ids))
+        kb.add(types.InlineKeyboardButton(text=rubypokemons[ids]['name']+' (цена: '+str(rubypokemons[ids]['cost']+'♦️)', callback_data=str(m.from_user.id)+' buy'+ids))
     bot.send_message(m.chat.id, 'Какого покемона вы хотите приобрести?', reply_markup=kb)
            
            
@@ -809,8 +816,8 @@ def inline(call):
          if x['pokemons2'][ids]['code']==text:
            i=1
       if i==0:
-        if x['ruby']>=100:
-            users.update_one({'id':x['id']},{'$inc':{'ruby':-100}})
+        if x['ruby']>=rubypokemons[text]['cost']:
+            users.update_one({'id':x['id']},{'$inc':{'ruby':-rubypokemons[text]['cost']}})
             users.update_one({'id':x['id']},{'$set':{'pokemons2.'+text:createruby(text,0)}})
             medit('Вы успешно купили покемона '+rubypokemons[text]['name']+'!', call.message.chat.id, call.message.message_id)
         else:
