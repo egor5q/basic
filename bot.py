@@ -800,15 +800,23 @@ def inline(call):
   elif 'buy' in call.data:
     text=call.data.split(' ')
     if int(text[0])==call.from_user.id:
-      x=users.find_one({'id':call.from_user.id})
+     x=users.find_one({'id':call.from_user.id})
+     if x!=None:
       text=text[1]
       text=text[3:]
-      if x['ruby']>=100:
+      i=0
+      for ids in x['pokemons2']:
+         if x['pokemons2'][ids]['code']==text:
+           i=1
+      if i==0:
+        if x['ruby']>=100:
             users.update_one({'id':x['id']},{'$inc':{'ruby':-100}})
             users.update_one({'id':x['id']},{'$set':{'pokemons2.'+text:createruby(text,0)}})
             medit('Вы успешно купили покемона '+rubypokemons[text]['name']+'!', call.message.chat.id, call.message.message_id)
+        else:
+          medit('Недостаточно рубинов!', call.message.chat.id, call.message.message_id)
       else:
-        medit('Недостаточно рубинов!', call.message.chat.id, call.message.message_id)
+          medit('У вас уже есть этот покемон!', call.message.chat.id, call.message.message_id)
     else:
         bot.answer_callback_query(call.id, 'Это не ваше меню!')
         
