@@ -218,7 +218,7 @@ def suckdick(m):
         users.update_one({'id':m.from_user.id},{'$inc':{'money':-1}}) 
         bot.send_message(m.chat.id, 'Вы успешно отсосали хуйца и потратили 1 монету.')
         z=random.randint(1,100)
-        if z<=10:
+        if z<=1:
            bot.send_message(m.chat.id, 'Ебаный рот этого казино блять! Какого хуя они в другом порядке лежат, мудила ты гороховая?!')
      except:
         pass
