@@ -589,9 +589,9 @@ def jointeam(m):
            
 @bot.message_handler(commands=['summon'])
 def summon(m):
-  if m.from_user.id not in ban:
-   x=banns(m.from_user.id, m.from_user.id, m.from_user.first_name)
-   if x==0:
+ # if m.from_user.id not in ban:
+#   x=banns(m.from_user.id, m.from_user.id, m.from_user.first_name)
+#   if x==0:
      y=users.find_one({'id':m.from_user.id})
      if y['money']>=100:
         x=random.randint(1,100)
