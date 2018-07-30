@@ -532,7 +532,7 @@ def traderuby(m):
 def pokeshopp(m):
     kb=types.InlineKeyboardMarkup()
     for ids in rubypokes:
-        kb.add(types.InlineKeyboardButton(text=rubypokemons[ids]['name']+' (цена: '+str(rubypokemons[ids]['cost']+'♦️)', callback_data=str(m.from_user.id)+' buy'+ids))
+        kb.add(types.InlineKeyboardButton(text=rubypokemons[ids]['name']+' (цена: '+str(rubypokemons[ids]['cost'])+'♦️)', callback_data=str(m.from_user.id)+' buy'+ids))
     bot.send_message(m.chat.id, 'Какого покемона вы хотите приобрести?', reply_markup=kb)
            
            
