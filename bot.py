@@ -219,7 +219,7 @@ def suckdick(m):
         bot.send_message(m.chat.id, 'Вы успешно отсосали хуйца и потратили 1 монету.')
         z=random.randint(1,100)
         if z<=1:
-           bot.send_message(m.chat.id, 'Ебаный рот этого казино блять! Какого хуя они в другом порядке лежат, мудила ты гороховая?!')
+           bot.send_message(m.chat.id, 'Ебаный рот этого казино блять!')
      except:
         pass
 
