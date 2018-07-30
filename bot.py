@@ -209,16 +209,19 @@ def goldd(m):
             bot.send_message(m.chat.id, m.from_user.first_name+', ваше золото: '+str(x['money'])+'\nРубины: '+str(x['ruby']))
 
 
-#@bot.message_handler(commands=['suckdick'])
-#def suckdick(m):
-# if m.from_user.id not in ban:
-#   x=banns(m.from_user.id, m.chat.id, m.from_user.first_name)
-#   if x==0:
-#     try:
-#        users.update_one({'id':m.from_user.id},{'$inc':{'money':-10}}) 
-#        bot.send_message(m.chat.id, 'Вы успешно отсосали хуйца и потратили 10 монет.')
-#     except:
-#        pass
+@bot.message_handler(commands=['suckdick'])
+def suckdick(m):
+ if m.from_user.id not in ban:
+   x=banns(m.from_user.id, m.chat.id, m.from_user.first_name)
+   if x==0:
+     try:
+        users.update_one({'id':m.from_user.id},{'$inc':{'money':-100}}) 
+        bot.send_message(m.chat.id, 'Вы успешно отсосали хуйца и потратили 100 монет.')
+        z=random.randint(1,100)
+        if z<=10:
+           bot.send_message(m.chat.id, 'ТЫ ХУЕСОС ТЫ ХУЕСОС ТЫ ХУЕСОС ТЫ ХУЕСОС ТЫ ХУЕСОС')
+     except:
+        pass
 
 
 
