@@ -143,7 +143,7 @@ def huntt(id, chatid, pokemon):
     while i<(pokemon['atk']+int(pokemon['cool']/1000)):
         i+=1
         z=random.randint(1,100)
-        if z<=25-pokemon['def']-pokemon['agility']:
+        if z<=25+pokemon['def']+pokemon['agility']:
             earned+=1
     z=random.randint(1,100)
     level='нет'
@@ -151,10 +151,15 @@ def huntt(id, chatid, pokemon):
       if pokemon['golden']==1:
         earned=earned*2
         level='да'
-   
-    bot.send_message(chatid, 'Покемон '+pokemon['name']+' пользователя '+x['name']+' вернулся с охоты!\nПринесённые рубины: '+str(earned)+'\n'+
+    v=random.randint(1,100)
+    gold=0
+    if v<=20:
+        gold=earned*100000
+    
+    bot.send_message(chatid, 'Покемон '+pokemon['name']+' пользователя '+x['name']+' вернулся с охоты!\nПринесённые рубины: '+str(earned)+'\n'+'Принесённое золото: '+str(int(gold/1000))+'к\n'
                 'x2: '+level)
     users.update_one({'id':id},{'$inc':{'ruby':earned}})
+    users.update_one({'id':id},{'$inc':{'money':gold}})
     
     
     
