@@ -906,7 +906,7 @@ def inline(call):
     
             if z<=60:
                 users.update_one({'id':call.from_user.id},{'$inc':{'pokemons2.'+text+'.'+attribute:bonus}})
-                medit('Вы успешно улучшили покемона '+x['pokemons2'][text]['name']+'! Улучшено:\n\n'+name+': '+str(bonus)+'\nПотрачено '+str(cost)+' голды.', call.message.chat.id, call.message.message_id)
+                medit('Вы успешно улучшили покемона '+x['pokemons2'][text]['name']+'! Улучшено:\n\n'+name+': '+str(bonus)+'\nПотрачено '+str(cost)+' рубинов.', call.message.chat.id, call.message.message_id)
             else:
                 medit('У вас не получилось улучшить покемона! Потрачено '+str(cost)+' рубинов.', call.message.chat.id, call.message.message_id)
         else:
