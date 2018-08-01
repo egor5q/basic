@@ -901,7 +901,7 @@ def inline(call):
                 name='Ловкость'
             
             elif attribute=='cool':
-                bonus=random.randint(100,400)
+                bonus=random.randint(200,800)
                 name='Крутость'
     
             if z<=60:
