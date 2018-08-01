@@ -143,8 +143,11 @@ def huntt(id, chatid, pokemon):
     while i<(pokemon['atk']+int(pokemon['cool']/1000)):
         i+=1
         z=random.randint(1,100)
-        if z<=25+pokemon['def']+pokemon['agility']:
+        if z<=25+pokemon['agility']:
             earned+=1
+        z=random.randint(1,100)
+        if z<=pokemon['def']:
+            i-=1
     z=random.randint(1,100)
     level='нет'
     if z<=100:
@@ -432,7 +435,9 @@ pokemons={'dildak':{'cool':10,
           'lupa':{'cool':1500,
                    'name':'Лупа'},
           'ultrapoke':{'cool':1000,
-                   'name':'Ультрапокес'}
+                   'name':'Ультрапокес'},
+          'pasyuk':{'cool':100,
+                   'name':'Пасюк'}
                    
 }
 
@@ -470,6 +475,8 @@ def upgradee(m):
       kb=types.InlineKeyboardMarkup()
       for ids in x['pokemons']:
         kb.add(types.InlineKeyboardButton(text=pokemons[ids]['name'], callback_data=str(m.from_user.id)+' upgrade'+ids))
+      for ids in x['pokemons2']:
+        kb.add(types.InlineKeyboardButton(text=pokemons[ids]['name']+' (♦️)', callback_data=str(m.from_user.id)+' upgrade'+ids))
       bot.send_message(m.chat.id, m.from_user.first_name+', какого покемона вы хотите попытаться улучшить? Цена: 200 голды + крутость покемона/3. Шанс: 40%.', reply_markup=kb)
      else:
            bot.send_message(m.chat.id, 'Недостаточно золота!')
@@ -840,37 +847,70 @@ def inline(call):
     if int(text[0])==call.from_user.id:
      text=text[1]
      text=text[7:]
-     x=users.find_one({'id':call.from_user.id})
-     cost=int(200+(x['pokemons'][text]['cool']/3))
-     if x['money']>=cost:
-      users.update_one({'id':call.from_user.id},{'$inc':{'money':-cost}})
-      z=random.randint(1,100)
-      bonus=0
-      abc=['atk','def','agility','cool']
-      attribute=random.choice(abc)
-      if attribute=='atk':
-            bonus=random.randint(1,2)
-            name='Атака'
+     if text not in rubypokes:
+        x=users.find_one({'id':call.from_user.id})
+        cost=int(200+(x['pokemons'][text]['cool']/3))
+        if x['money']>=cost:
+            users.update_one({'id':call.from_user.id},{'$inc':{'money':-cost}})
+            z=random.randint(1,100)
+            bonus=0
+            abc=['atk','def','agility','cool']
+            attribute=random.choice(abc)
+            if attribute=='atk':
+                bonus=random.randint(1,2)
+                name='Атака'
             
-      elif attribute=='def':
-            bonus=random.randint(2,3)
-            name='Защита'
+            elif attribute=='def':
+                bonus=random.randint(2,3)
+                name='Защита'
             
-      elif attribute=='agility':
-            bonus=random.randint(2,3)
-            name='Ловкость'
+            elif attribute=='agility':
+                bonus=random.randint(2,3)
+                name='Ловкость'
             
-      elif attribute=='cool':
-            bonus=random.randint(5,15)
-            name='Крутость'
+            elif attribute=='cool':
+                bonus=random.randint(5,15)
+                name='Крутость'
     
-      if z<=40:
-        users.update_one({'id':call.from_user.id},{'$inc':{'pokemons.'+text+'.'+attribute:bonus}})
-        medit('Вы успешно улучшили покемона '+x['pokemons'][text]['name']+'! Улучшено:\n\n'+name+': '+str(bonus)+'\nПотрачено '+str(cost)+' голды.', call.message.chat.id, call.message.message_id)
-      else:
-        medit('У вас не получилось улучшить покемона! Потрачено '+str(cost)+' голды.', call.message.chat.id, call.message.message_id)
+            if z<=40:
+                users.update_one({'id':call.from_user.id},{'$inc':{'pokemons.'+text+'.'+attribute:bonus}})
+                medit('Вы успешно улучшили покемона '+x['pokemons'][text]['name']+'! Улучшено:\n\n'+name+': '+str(bonus)+'\nПотрачено '+str(cost)+' голды.', call.message.chat.id, call.message.message_id)
+            else:
+                medit('У вас не получилось улучшить покемона! Потрачено '+str(cost)+' голды.', call.message.chat.id, call.message.message_id)
+        else:
+            medit('Недостаточно золота (нужно '+str(cost)+').', call.message.chat.id, call.message.message_id) 
      else:
-       medit('Недостаточно золота (нужно '+str(cost)+').', call.message.chat.id, call.message.message_id)           
+        x=users.find_one({'id':call.from_user.id})
+        cost=int(15+(x['pokemons'][text]['cool']/1000))
+        if x['ruby']>=cost:
+            users.update_one({'id':call.from_user.id},{'$inc':{'ruby':-cost}})
+            z=random.randint(1,100)
+            bonus=0
+            abc=['atk','def','agility','cool']
+            attribute=random.choice(abc)
+            if attribute=='atk':
+                bonus=random.randint(1,2)
+                name='Атака'
+            
+            elif attribute=='def':
+                bonus=random.randint(2,3)
+                name='Защита'
+            
+            elif attribute=='agility':
+                bonus=random.randint(2,3)
+                name='Ловкость'
+            
+            elif attribute=='cool':
+                bonus=random.randint(100,400)
+                name='Крутость'
+    
+            if z<=40:
+                users.update_one({'id':call.from_user.id},{'$inc':{'pokemons.'+text+'.'+attribute:bonus}})
+                medit('Вы успешно улучшили покемона '+x['pokemons'][text]['name']+'! Улучшено:\n\n'+name+': '+str(bonus)+'\nПотрачено '+str(cost)+' голды.', call.message.chat.id, call.message.message_id)
+            else:
+                medit('У вас не получилось улучшить покемона! Потрачено '+str(cost)+' рубинов.', call.message.chat.id, call.message.message_id)
+        else:
+            medit('Недостаточно рубинов (нужно '+str(cost)+').', call.message.chat.id, call.message.message_id) 
     else:
         bot.answer_callback_query(call.id, 'Это не ваше меню!')
         
