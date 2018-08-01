@@ -476,7 +476,7 @@ def upgradee(m):
       for ids in x['pokemons']:
         kb.add(types.InlineKeyboardButton(text=pokemons[ids]['name'], callback_data=str(m.from_user.id)+' upgrade'+ids))
       for ids in x['pokemons2']:
-        kb.add(types.InlineKeyboardButton(text=pokemons[ids]['name']+' (♦️)', callback_data=str(m.from_user.id)+' upgrade'+ids))
+        kb.add(types.InlineKeyboardButton(text=rubypokes[ids]['name']+' (♦️)', callback_data=str(m.from_user.id)+' upgrade'+ids))
       bot.send_message(m.chat.id, m.from_user.first_name+', какого покемона вы хотите попытаться улучшить? Цена: 200 голды + крутость покемона/3. Шанс: 40%.', reply_markup=kb)
      else:
            bot.send_message(m.chat.id, 'Недостаточно золота!')
