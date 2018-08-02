@@ -557,8 +557,11 @@ def upgradee(m):
                         name='Ловкость'
             
                     elif attribute=='cool':
+                      if number=='':
                         bonus=random.randint(5,15)
-                        name='Крутость'
+                      elif number=='2':
+                        bonus=random.randint(200,800)         
+                      name='Крутость'
     
                     if g<=constt:
                         success+=1
