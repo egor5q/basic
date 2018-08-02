@@ -810,7 +810,7 @@ def inline(call):
       r=''
       if text in rubypokes:
            r='2'
-      medit('Статы покемона '+x['pokemons'+r][text]['name']+':\nКрутость: '+str(x['pokemons'+r][text]['cool'])+'\nАтака: '+str(x['pokemons'+r][text]['atk'])+'\n'+
+      medit(x['name']+', статы покемона '+x['pokemons'+r][text]['name']+':\nКрутость: '+str(x['pokemons'+r][text]['cool'])+'\nАтака: '+str(x['pokemons'+r][text]['atk'])+'\n'+
                  'Защита: '+str(x['pokemons'+r][text]['def'])+'\nЛовкость: '+str(x['pokemons'+r][text]['agility']), call.message.chat.id, call.message.message_id)
     else:
         bot.answer_callback_query(call.id, 'Это не ваше меню!')
