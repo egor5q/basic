@@ -475,6 +475,8 @@ rubypokemons={
 
 @bot.message_handler(commands=['upgrade'])
 def upgradee(m):
+  word=m.text.split(' ')
+  if len(word)!=3:
     x=users.find_one({'id':m.from_user.id})
     if x!=None:
      if x['money']>=200:
@@ -492,6 +494,83 @@ def upgradee(m):
            bot.send_message(m.chat.id, 'Недостаточно золота!')
     else:
        bot.send_message(m.chat.id, 'Ошибка!')
+  else:
+    x=users.find_one({'id':m.from_user.id})
+    if x!=None:
+      try:
+         yes=0
+         for ids in pokemons:
+            if word[1]==pokemons[ids]['name']:
+                yes=1
+                number=''
+                pokemon=pokemons[ids]['code']
+         if yes==0:
+            for ids in rubypokemons:
+              if word[1]==rubypokemons[ids]['name']:
+                yes=1
+                number='2'
+                pokemon=rubypokemons[ids]['code']
+         if yes!=0:
+            if number=='':
+                cost=int(200+(x['pokemons'+number][pokemon]['cool']/3))
+            elif number=='2':
+                cost=int(15+(x['pokemons'+number][pokemon]['cool']/1000))
+            z=int(word[2])
+            i=0
+            finalcost=0
+            while i<z:
+                finalcost+=cost
+            if number=='':
+              zz='money'
+              constt=40
+            elif number=='2':
+              zz='ruby'
+              constt=60
+            if x[zz]>=finalcost:
+                i=0
+                atk=0
+                deff=0
+                agility=0
+                cool=0
+                success=0
+                while i<z:       
+                    g=random.randint(1,100)
+                    bonus=0
+                    abc=['atk','def','agility','cool']
+                    attribute=random.choice(abc)
+                    if attribute=='atk':
+                        bonus=random.randint(1,2)
+                        name='Атака'
+            
+                    elif attribute=='def':
+                        bonus=random.randint(2,3)
+                        name='Защита'
+            
+                    elif attribute=='agility':
+                        bonus=random.randint(2,3)
+                        name='Ловкость'
+            
+                    elif attribute=='cool':
+                        bonus=random.randint(5,15)
+                        name='Крутость'
+    
+                    if g<=constt:
+                        success+=1
+                        users.update_one({'id':call.from_user.id},{'$inc':{'pokemons'+number+'.'+pokemon+'.'+attribute:bonus}})
+                        if attribute=='atk':
+                            atk+=bonus
+                        elif attribute=='def':
+                            deff+=bonus
+                        elif attribute=='agility':
+                            agility+=bonus
+                        elif attribute=='cool':
+                            cool+=bonus
+                bot.send_message(m.chat.id, 'Вы улучшили покемона '+word[1]+' '+str(z)+' раз! Из них успешных попыток было '+str(success)+'. Улучшенные характеристики:\n'+
+                                 'Крутость: '+str(cool)+'\nАтака: '+str(atk)+'\nЗащита: '+str(deff)+'\nЛовкость: '+str(agility))
+            else:
+                bot.send_message(m.chat.id, 'Недостаточно золота! (нужно '+str(finalcost)+')')
+            
+                    
     
 @bot.message_handler(commands=['sellpoke'])
 def sellpoke(m):
