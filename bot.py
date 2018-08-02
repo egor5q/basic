@@ -503,7 +503,7 @@ def upgradee(m):
             if word[1]==pokemons[ids]['name']:
                 yes=1
                 number=''
-                pokemon=pokemons[ids]['code']
+                pokemon=ids
          if yes==0:
             for ids in rubypokemons:
               if word[1]==rubypokemons[ids]['name']:
