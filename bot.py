@@ -69,13 +69,16 @@ def spammm(m):
 
 @bot.message_handler(commands=['stats'])
 def statssss(m):
+    kb=types.InlineKeyboardMarkup()
     x=users.find_one({'id':m.from_user.id})
     if x!=None:
-        try:
-            y=x['pokemons']['graveler']
-            bot.send_message(m.chat.id,'Статы вашего Гравелера:\nАтака: '+str(y['atk'])+'\nЗащита: '+str(y['def']))
-        except:
-            bot.send_message(m.chat.id, 'У вас нет Гравелера!')
+     for ids in x['pokemons']:
+        kb.add(types.InlineKeyboardButton(text=pokemons[ids]['name'], callback_data=str(m.from_user.id)+' stats'+ids))
+     for ids in x['pokemons2']:
+        kb.add(types.InlineKeyboardButton(text=rubypokemons[ids]['name'], callback_data=str(m.from_user.id)+' stats'+ids))
+     bot.send_message(m.chat.id, m.from_user.first_name+', Статы какого покемона хотите посмотреть?', reply_markup=kb)
+    else:
+           bot.send_message(m.chat.id, 'Ошибка!')
 
 
 
@@ -740,7 +743,7 @@ def rebootclick():
 def inline(call):
  global notclick
  if notclick==0:
-  if 'earn' not in call.data and 'upgrade' not in call.data and 'sell' not in call.data and 'buy' not in call.data:
+  if 'earn' not in call.data and 'upgrade' not in call.data and 'sell' not in call.data and 'buy' not in call.data and 'stats' not in call.data:
    notclick=1
    t=threading.Timer(3,rebootclick)
    t.start()
@@ -796,6 +799,19 @@ def inline(call):
         t.start()
       else:
            medit('Покемон уже на охоте!', call.message.chat.id, call.message.message_id)
+    else:
+        bot.answer_callback_query(call.id, 'Это не ваше меню!')
+  elif 'stats' in call.data:
+    text=call.data.split(' ')
+    if int(text[0])==call.from_user.id:
+      x=users.find_one({'id':call.from_user.id})
+      text=text[1]
+      text=text[4:]
+      r=''
+      if text in rubypokes:
+           r='2'
+      medit('Статы покемона '+x['pokemons'+r][text]['name']+':\nКрутость: '+str(x['pokemons'+r][text]['cool'])+'\nАтака: '+str(x['pokemons'+r][text]['atk']+'\n'+
+                 'Защита: '+str(x['pokemons'+r][text]['def'])+'\nЛовкость: '+str(x['pokemons'+r][text]['agility']), call.message.chat.id, call.message.message_id)
     else:
         bot.answer_callback_query(call.id, 'Это не ваше меню!')
   elif 'sell' in call.data:
