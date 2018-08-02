@@ -806,7 +806,7 @@ def inline(call):
     if int(text[0])==call.from_user.id:
       x=users.find_one({'id':call.from_user.id})
       text=text[1]
-      text=text[4:]
+      text=text[5:]
       r=''
       if text in rubypokes:
            r='2'
