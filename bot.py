@@ -521,6 +521,7 @@ def upgradee(m):
             i=0
             finalcost=0
             while i<z:
+                i+=1
                 finalcost+=cost
             if number=='':
               zz='money'
@@ -537,7 +538,8 @@ def upgradee(m):
                 agility=0
                 cool=0
                 success=0
-                while i<z:       
+                while i<z:    
+                    i+=1
                     g=random.randint(1,100)
                     bonus=0
                     abc=['atk','def','agility','cool']
