@@ -500,18 +500,19 @@ def upgradee(m):
       #try:
          yes=0
          print(word[1])
-         for ids in pokemons:
-            if word[1]==pokemons[ids]['name']:
+         for ids in x['pokemons']:
+            if word[1]==x['pokemons'][ids]['name']:
                 yes=1
                 number=''
                 pokemon=ids
          if yes==0:
-            for ids in rubypokemons:
-              if word[1]==rubypokemons[ids]['name']:
+            for ids in x['pokemons2']:
+              if word[1]==x['pokemons2'][ids]['name']:
                 yes=1
                 number='2'
                 pokemon=rubypokemons[ids]['code']
          if yes!=0:
+            print('yes!=0')
             if number=='':
                 cost=int(200+(x['pokemons'+number][pokemon]['cool']/3))
             elif number=='2':
