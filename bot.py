@@ -564,12 +564,13 @@ def pokeshopp(m):
            
 @bot.message_handler(commands=['top'])
 def toppp(m):
-    x=users.find({})
-    cool1=0
-    cool2=0
-    cool3=0
-    top2={'name':'Не определено'}
-    top3={'name':'Не определено'}
+  x=users.find({})
+  cool1=0
+  cool2=0
+  cool3=0
+  top2={'name':'Не определено'}
+  top3={'name':'Не определено'}
+  if x['id']!=441399484:
     for ids in x:
         summ1=0
         for idss in ids['pokemons']:
