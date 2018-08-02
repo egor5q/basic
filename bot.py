@@ -510,7 +510,7 @@ def upgradee(m):
               if word[1]==x['pokemons2'][ids]['name']:
                 yes=1
                 number='2'
-                pokemon=rubypokemons[ids]['code']
+                pokemon=ids
          if yes!=0:
             print('yes!=0')
             if number=='':
