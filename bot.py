@@ -497,7 +497,7 @@ def upgradee(m):
   else:
     x=users.find_one({'id':m.from_user.id})
     if x!=None:
-      try:
+      #try:
          yes=0
          for ids in pokemons:
             if word[1]==pokemons[ids]['name']:
@@ -571,8 +571,8 @@ def upgradee(m):
                                  'Крутость: '+str(cool)+'\nАтака: '+str(atk)+'\nЗащита: '+str(deff)+'\nЛовкость: '+str(agility)+'\n\nПотрачено '+str(finalcost)+' '+valuta)
             else:
                 bot.send_message(m.chat.id, 'Недостаточно золота! (нужно '+str(finalcost)+')')
-      except:
-           pass
+      #except:
+      #     pass
                     
     
 @bot.message_handler(commands=['sellpoke'])
