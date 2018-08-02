@@ -476,8 +476,12 @@ def upgradee(m):
     if x!=None:
      if x['money']>=200:
       kb=types.InlineKeyboardMarkup()
+      star=emojize(':star:',use_aliases=True)
       for ids in x['pokemons']:
-        kb.add(types.InlineKeyboardButton(text=pokemons[ids]['name'], callback_data=str(m.from_user.id)+' upgrade'+ids))
+        gold=''
+        if x['pokemons'][ids]['golden']==1:
+           gold=' ('+star+')'
+        kb.add(types.InlineKeyboardButton(text=pokemons[ids]['name']+gold, callback_data=str(m.from_user.id)+' upgrade'+ids))
       for ids in x['pokemons2']:
         kb.add(types.InlineKeyboardButton(text=rubypokemons[ids]['name']+' (♦️)', callback_data=str(m.from_user.id)+' upgrade'+ids))
       bot.send_message(m.chat.id, m.from_user.first_name+', какого покемона вы хотите попытаться улучшить? Цена: 200 голды + крутость покемона/3. Шанс: 40%.', reply_markup=kb)
