@@ -562,7 +562,7 @@ def upgradee(m):
     
                     if g<=constt:
                         success+=1
-                        users.update_one({'id':call.from_user.id},{'$inc':{'pokemons'+number+'.'+pokemon+'.'+attribute:bonus}})
+                        users.update_one({'id':m.from_user.id},{'$inc':{'pokemons'+number+'.'+pokemon+'.'+attribute:bonus}})
                         if attribute=='atk':
                             atk+=bonus
                         elif attribute=='def':
