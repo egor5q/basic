@@ -571,7 +571,8 @@ def upgradee(m):
                                  'Крутость: '+str(cool)+'\nАтака: '+str(atk)+'\nЗащита: '+str(deff)+'\nЛовкость: '+str(agility)+'\n\nПотрачено '+str(finalcost)+' '+valuta)
             else:
                 bot.send_message(m.chat.id, 'Недостаточно золота! (нужно '+str(finalcost)+')')
-            
+      except:
+           pass
                     
     
 @bot.message_handler(commands=['sellpoke'])
