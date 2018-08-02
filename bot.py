@@ -345,7 +345,7 @@ elita=['pikachu','pedro','bulbazaur','psyduck', 'moxnatka','charmander','diglet'
 
 elitaweak=['moxnatka','diglet','traxer','penis','gandonio','egg','sizor','ebusobak','ultrapoke']
 
-rubypokes=['rubenis','crystaler','blyadomon']
+rubypokes=['rubenis','crystaler','blyadomon','moldres']
 
 
 
@@ -453,7 +453,10 @@ rubypokemons={
               'cost':180},
     'blyadomon':{'cool':20000,
               'name':'Блядомон',
-              'cost':260}
+              'cost':260},
+    'moldres':{'cool':65000,
+              'name':'Молдрес',
+              'cost':820}
 
 
 }
