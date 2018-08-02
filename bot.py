@@ -526,11 +526,11 @@ def upgradee(m):
             if number=='':
               zz='money'
               constt=40
-              valuta='голды.'
+              valuta='голды'
             elif number=='2':
               zz='ruby'
               constt=60
-              valuta='рубинов.'
+              valuta='рубинов'
             if x[zz]>=finalcost:
                 i=0
                 atk=0
@@ -572,10 +572,10 @@ def upgradee(m):
                         elif attribute=='cool':
                             cool+=bonus
                 bot.send_message(m.chat.id, 'Вы улучшили покемона '+word[1]+' '+str(z)+' раз! Из них успешных попыток было '+str(success)+'. Улучшенные характеристики:\n'+
-                                 'Крутость: '+str(cool)+'\nАтака: '+str(atk)+'\nЗащита: '+str(deff)+'\nЛовкость: '+str(agility)+'\n\nПотрачено '+str(finalcost)+' '+valuta)
+                                 'Крутость: '+str(cool)+'\nАтака: '+str(atk)+'\nЗащита: '+str(deff)+'\nЛовкость: '+str(agility)+'\n\nПотрачено '+str(finalcost)+' '+valuta+'.')
                 users.update_one({'id':m.from_user.id},{'$inc':{zz:-finalcost}})
             else:
-                bot.send_message(m.chat.id, 'Недостаточно золота! (нужно '+str(finalcost)+')')
+                bot.send_message(m.chat.id, 'Недостаточно '+valuta+'! (нужно '+str(finalcost)+')')
          else:
            bot.send_message(m.chat.id, 'not')
       except:
