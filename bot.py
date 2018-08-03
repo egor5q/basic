@@ -87,7 +87,7 @@ def tests(m):
    if m.from_user.id==441399484:
            i=0
            z=0
-           x=10000
+           x=400000
            while i<x:
               i+=1
               z+=2
