@@ -82,6 +82,20 @@ def statssss(m):
 
 
 
+@bot.message_handler(commands=['tests'])
+def tests(m):
+   if m.from_user.id==441399484:
+           i=0
+           z=0
+           x=10000
+           while i<x:
+              i+=1
+              z+=2
+              g=random.randint(1,100)
+              if g!=1:
+                   i-=1
+           print(z)
+           
 def huntt(id, chatid, pokemon):
   x=users.find_one({'id':id})
   if pokemon not in rubypokes:
