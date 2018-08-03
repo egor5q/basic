@@ -345,7 +345,7 @@ elita=['pikachu','pedro','bulbazaur','psyduck', 'moxnatka','charmander','diglet'
 
 elitaweak=['moxnatka','diglet','traxer','penis','gandonio','egg','sizor','ebusobak','ultrapoke']
 
-rubypokes=['rubenis','crystaler','blyadomon','moldres']
+rubypokes=['rubenis','crystaler','blyadomon','moldres','pupitar','aron','sfil']
 
 
 
@@ -456,7 +456,16 @@ rubypokemons={
               'cost':260},
     'moldres':{'cool':65000,
               'name':'Молдрес',
-              'cost':820}
+              'cost':820},
+    'pupitar':{'cool':45000,
+              'name':'Пупитар',
+              'cost':575},
+    'aron':{'cool':34000,
+              'name':'Арон',
+              'cost':440},
+    'sfil':{'cool':1000000,
+              'name':'Сфил',
+              'cost':13000},
 
 
 }
@@ -584,7 +593,9 @@ def upgradee(m):
       except:
            pass
                     
-    
+
+
+
 @bot.message_handler(commands=['sellpoke'])
 def sellpoke(m):
     x=users.find_one({'id':m.from_user.id})
@@ -1088,6 +1099,8 @@ def createruby(pokemon, gold):
              'agility':1,
              'hunting':0
             }
+
+
 
 def createchat(id):
     return{'id':id
