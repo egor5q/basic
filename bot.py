@@ -475,7 +475,7 @@ rubypokemons={
 
 @bot.message_handler(commands=['upgrade'])
 def upgradee(m):
-  word=m.text.split(' ')
+  word=m.text.split('"')
   if len(word)!=3:
     x=users.find_one({'id':m.from_user.id})
     if x!=None:
