@@ -574,7 +574,6 @@ def upgradee(m):
     
                     if g<=constt:
                         success+=1
-                        users.update_one({'id':m.from_user.id},{'$inc':{'pokemons'+number+'.'+pokemon+'.'+attribute:bonus}})
                         if attribute=='atk':
                             atk+=bonus
                         elif attribute=='def':
@@ -583,6 +582,10 @@ def upgradee(m):
                             agility+=bonus
                         elif attribute=='cool':
                             cool+=bonus
+                users.update_one({'id':m.from_user.id},{'$inc':{'pokemons'+number+'.'+pokemon+'.'+'atk':atk}})
+                users.update_one({'id':m.from_user.id},{'$inc':{'pokemons'+number+'.'+pokemon+'.'+'def':deff}})
+                users.update_one({'id':m.from_user.id},{'$inc':{'pokemons'+number+'.'+pokemon+'.'+'agility':agility}})
+                users.update_one({'id':m.from_user.id},{'$inc':{'pokemons'+number+'.'+pokemon+'.'+'cool':cool}})
                 bot.send_message(m.chat.id, 'Вы улучшили покемона '+word[1]+' '+str(z)+' раз! Из них успешных попыток было '+str(success)+'. Улучшенные характеристики:\n'+
                                  'Крутость: '+str(cool)+'\nАтака: '+str(atk)+'\nЗащита: '+str(deff)+'\nЛовкость: '+str(agility)+'\n\nПотрачено '+str(finalcost)+' '+valuta+'.')
                 users.update_one({'id':m.from_user.id},{'$inc':{zz:-finalcost}})
