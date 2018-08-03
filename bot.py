@@ -1147,8 +1147,11 @@ if True:
    bot.send_message(-1001256539790,'Бот был перезагружен!')
    bot.polling(none_stop=True,timeout=600)
  except:
-        print('!!! READTIME OUT !!!')           
-        bot.stop_polling()
+        print('!!! READTIME OUT !!!') 
+        try:
+           bot.stop_polling()
+        except:
+           pass
         time.sleep(1)
         check = True
         while check==True:
