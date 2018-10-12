@@ -76,6 +76,7 @@ def begin(id):
         sendacts(games[id]['players'][ids])
         
     t=threading.Timer(90, endturn, args=[id])
+    t.start()
         
 def endturn(id):
     for ids in games[id]['players']:
@@ -111,32 +112,68 @@ def endturn(id):
                 if games[id]['players'][idss]['lastloc']==player['location'] and games[id]['players'][idss]['location']==player['lastloc']:
                     text+='Шпион и охранник столкнулись в корридоре! Шпион нейтрализован!\n'
                     games[id]['players'][idss]['disarmed']=1
-                    
-                
-       
-        
-                
+         
+        if player['location']=='treasure':
+            loclist=['rightcorridor','leftcorridor']     
+        elif player['location']=='spystart':
+            loclist=['rightcorridor','leftcorridor']
+        elif player['location']=='leftcorridor':
+            loclist=['leftpass','treasure', 'spystart']
+        elif player['location']=='rightcorridor':
+            loclist=['rightpass','treasure','spystart']
+        elif player['location']=='leftpass':
+            loclist=['leftcorridor','treasure']
+        elif player['location']=='rightpass':
+            loclist=['rightcorridor','treasure']
+        else:
+            loclist=[]
             
+        locs=''
+        for idss in loclist:
+            locs+=loctoname(idss)+'\n'
+        hearinfo='Прослушиваемые вами локации в данный момент:\n'+locs+'\n'    
+        for idss in games[id]['players']:
+            if games[id]['players'][idss]['location'] in loclist and \
+            games[id]['players'][idss]['location']!=games[id]['players'][idss]['lastloc'] and \
+            games[id]['players'][idss]['silent']!=1:
+                hearinfo+='Вы слышите движение в локации: '+loctoname(games[id]['players'][idss]['location'])+'!\n'
+        bot.send_message(player['id'],hearinfo)
+        if player['treasure']==1 and player['disarmed']==0 and player['location']=='spystart':
+            games[id]['treasurestealed']=1
+                    
+    if text='':
+        text='Ничего необычного...'
+    bot.send_message(id, 'Ход '+str(games[id]['turn'])+'. Ситуация в здании:\n\n'+text)
         
-
-return{
-        'id':id,
-        'name':name,
-        'location':None,
-        'team':None,
-        'items':[],
-        'ready':0,
-        'messagetoedit':None,
-        'cameras':[],
-        'chatid':chatid,
-        'stealing':0,
-        'glasses':0,
-        'setupcamera':0,
-        'destroycamera':0,
-        'currentmessage':None,
-        'silent':0
-    }
-                   
+    endgame=0    
+    spyalive=0    
+    for ids in games[id]['players']:
+        if games[id]['players'][ids]['disarmed']==0 and games[id]['players'][ids]['role']=='spy':
+            spyalive+=1
+    if spyalive<=0:
+        endgame=1
+        winner='security'
+    if games[id]['turn']>=15:
+        endgame=1
+        winner='security'
+    if games[id]['treasurestealed']==1:
+        endgame=1
+        winner='spy'
+    if endgame==0:
+        for ids in games[id]['players']:
+        sendacts(games[id]['players'][ids])
+        t=threading.Timer(90, endturn, args=[id])
+        t.start()
+        games[id]['turn']+=1
+    else:
+        if winner='security':
+            bot.send_message(id, 'Победа охраны!')
+        else:
+            bot.send_message(id, 'Победа шпионов!')
+        del games[id]
+                        
+                    
+      
                    
                    
 def sendacts(player):  
@@ -438,7 +475,8 @@ def creategame(id):
         'security':0,
         'timer':None,
         'locs':['treasure','spystart','leftcorridor','rightcorridor','leftpass','rightpass','antiflashroom'],
-        'flashed':[]
+        'flashed':[],
+        'treasurestealed':0
     }
 
 def createplayer(id,name,chatid):
