@@ -47,8 +47,8 @@ def startg(m):
             
             
 def begin(id):
-    securityitems=['glasses','pistol','tizer']
-    spyitems=['camera','camera','camera','flash','costume']
+    securityitems=['glasses','pistol','tizer', 'glasses']
+    spyitems=['camera','camera','camera','flash','costume', 'flash']
     for ids in games[id]['players']:
         if games[id]['spies']>games[id]['security']:
             games[id]['players'][ids]['role']='security'
@@ -201,15 +201,87 @@ def inline(call):
         if x=='leftpass' or x=='spystart' or x=='treasure':
             medit('Вы перемещаетесь в локацию: '+loctoname(call.data)+'.',call.message.chat.id, call.message.message_id)
             player['location']=call.data
+            player['ready']=1
             
     elif call.data=='rightcorridor':
         x=player['location']
         if x=='rightpass' or x=='spystart' or x=='treasure':
             medit('Вы перемещаетесь в локацию: '+loctoname(call.data)+'.',call.message.chat.id, call.message.message_id)
-            player['location']=call.data        
-    
+            player['location']=call.data   
+            player['ready']=1
             
+    elif call.data=='rightpass':
+        x=player['location']
+        if x=='rightcorridor' or x=='spystart' or x=='treasure':
+            medit('Вы перемещаетесь в локацию: '+loctoname(call.data)+'.',call.message.chat.id, call.message.message_id)
+            player['location']=call.data   
+            player['ready']=1
+           
+    elif call.data=='leftpass':
+        x=player['location']
+        if x=='leftcorridor' or x=='spystart' or x=='treasure':
+            medit('Вы перемещаетесь в локацию: '+loctoname(call.data)+'.',call.message.chat.id, call.message.message_id)
+            player['location']=call.data   
+            player['ready']=1
+            
+    elif call.data=='treasure':
+        x=player['location']
+        if x!='spystart':
+            if player['role']=='security':
+                medit('Вы перемещаетесь в локацию: '+loctoname(call.data)+'.',call.message.chat.id, call.message.message_id)
+                player['location']=call.data   
+                player['ready']=1
+            elif player['role']=='spy':
+                medit('Вы пытаетесь украсть сокровище...',call.message.chat.id, call.message.message_id)
+                player['ready']=1
+                player['location']=call.data   
+                player['stealing']=1
+                
+    elif call.data=='antiflashroom':
+        x=player['location']
+        if x=='treasure':
+            medit('Вы перемещаетесь в локацию: '+loctoname(call.data)+'.',call.message.chat.id, call.message.message_id)
+            player['location']=call.data   
+            player['ready']=1
+            
+    elif call.data=='spystart':
+        x=player['location']
+        if x=='leftcorridor' or x=='rightcorridor' or x=='leftpass' or x=='rightpass':
+            medit('Вы перемещаетесь в локацию: '+loctoname(call.data)+'.',call.message.chat.id, call.message.message_id)
+            player['location']=call.data
+            player['ready']=1
+            
+    elif call.data=='glasses':
+        if 'glasses' in player['items']:
+            player['items'].remove('glasses')
+            player['glasses']=1
+            bot.answer_callback_query(call.id,'Вы успешно надели очки! На этот ход вы защищены от флэшек!')
+            kb=types.InlineKeyboardMarkup()
+            for ids in player['items']:
+                x=itemtoname(ids)
+                if x!=None:
+                    kb.add(types.InlineKeyboardButton(text=x, callback_data=ids))
+            kb.add(types.InlineKeyboardButton(text='Назад', callback_data='back'))
+            medit('Выберите предмет.', call.message.chat.id, call.message.message_id, reply_markup=kb)
+            
+    elif call.data=='pistol':
+        if 'pistol' in player['items']:
+            player['destroycamera']=1
+            medit('Выбрано действие: уничтожение вражеских камер.', call.message.chat.id, call.message.message_id)
+            
+    elif call.data=='camera':
+        if 'camera' in player['items']:
+            player['items'].remove('camera')
+            player['setupcamera']=1
+            medit('Выбрано действие: установка камеры.', call.message.chat.id, call.message.message_id)
+            
+    elif call.data=='flash':
+        if 'flash' in player['items']:
+            medit('Выберите, куда будете кидать флэшку.', call.message.chat.id, call.message.message_id)
 
+            ['camera','camera','camera','flash','costume', 'flash']
+            
+            
 def loctoname(x):
     if x=='leftcorridor':
         return 'Левый корридор'
@@ -267,7 +339,11 @@ def createplayer(id,name,chatid):
         'ready':0,
         'messagetoedit':None,
         'cameras':[],
-        'chatid':chatid
+        'chatid':chatid,
+        'stealing':0,
+        'glasses':0,
+        'setupcamera':0,
+        'destroycamera':0
     }
 
 
