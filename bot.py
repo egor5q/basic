@@ -205,27 +205,7 @@ def endturn(id):
         else:
             bot.send_message(id, 'Победа шпионов!')
         del games[id]
-                        
-         'id':id,
-        'name':name,
-        'location':None,
-        'team':None,
-        'items':[],
-        'ready':0,
-        'messagetoedit':None,
-        'cameras':[],
-        'chatid':chatid,
-        'stealing':0,
-        'glasses':0,
-        'setupcamera':0,
-        'destroycamera':0,
-        'currentmessage':None,
-        'silent':0,
-        'flashed':0,
-        'lastloc':None,
-        'treasure':0,
-        'disarmed':0           
-      
+
                    
                    
 def sendacts(player):  
