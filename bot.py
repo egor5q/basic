@@ -151,7 +151,7 @@ def endturn(id):
         if player['role']=='security' and player['flashed']==0 and player['lastloc']!=player['location']:
             for idss in games[id]['players']: 
                 if games[id]['players'][idss]['lastloc']==player['location'] and games[id]['players'][idss]['location']==player['lastloc']:
-                    text+='Шпион и охранник столкнулись в корридоре! Шпион нейтрализован!\n'
+                    text+='Шпион и охранник столкнулись в коридоре! Шпион нейтрализован!\n'
                     games[id]['players'][idss]['disarmed']=1
          
         if player['location']=='treasure':
@@ -274,12 +274,12 @@ def inline(call):
         else:
             textt='Комната с сокровищем'
         if player['location']=='spystart':
-            kb.add(types.InlineKeyboardButton(text='Левый корридор', callback_data='leftcorridor'),types.InlineKeyboardButton(text='Правый корридор', callback_data='rightcorridor'))
+            kb.add(types.InlineKeyboardButton(text='Левый коридор', callback_data='leftcorridor'),types.InlineKeyboardButton(text='Правый корридор', callback_data='rightcorridor'))
             kb.add(types.InlineKeyboardButton(text='Левый обход', callback_data='leftpass'),types.InlineKeyboardButton(text='Правый обход', callback_data='rightpass'))
             kb.add(types.InlineKeyboardButton(text='Назад', callback_data='back'))
             
         if player['location']=='treasure':
-            kb.add(types.InlineKeyboardButton(text='Левый корридор', callback_data='leftcorridor'),types.InlineKeyboardButton(text='Правый корридор', callback_data='rightcorridor'))
+            kb.add(types.InlineKeyboardButton(text='Левый коридор', callback_data='leftcorridor'),types.InlineKeyboardButton(text='Правый корридор', callback_data='rightcorridor'))
             kb.add(types.InlineKeyboardButton(text='Левый обход', callback_data='leftpass'),types.InlineKeyboardButton(text='Правый обход', callback_data='rightpass'))
             kb.add(types.InlineKeyboardButton(text='Светозащитная комната', callback_data='antiflashroom'))
             kb.add(types.InlineKeyboardButton(text='Назад', callback_data='back'))
@@ -328,9 +328,9 @@ def inline(call):
                 elif ids=='treasure':
                     text+='*Комната с сокровищем*:\n'
                 elif ids=='leftcorridor':
-                    text+='*Левый корридор*:\n'
+                    text+='*Левый коридор*:\n'
                 elif ids=='rightcorridor':
-                    text+='*Правый корридор*:\n'
+                    text+='*Правый коридор*:\n'
                 elif ids=='leftpass':
                     text+='*Левый обход*:\n'
                 elif ids=='rightpass':
@@ -512,15 +512,15 @@ def inline(call):
             
 def loctoname(x):
     if x=='leftcorridor':
-        return 'Левый корридор'
+        return 'Левый коридор'
     if x=='rightcorridor':
-        return 'Правый корридор'
+        return 'Правый коридор'
     if x=='spystart':
         return 'Старт шпионов'
     if x=='treasure':
         return 'Комната с сокровищем'
     if x=='leftcorridor':
-        return 'Левый корридор'
+        return 'Левый коридор'
     if x=='leftpass':
         return 'Левый обход'
     if x=='rightpass':
