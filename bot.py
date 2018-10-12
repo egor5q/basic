@@ -41,7 +41,9 @@ def creategamee(m):
 @bot.message_handler(commands=['startgame'])
 def startg(m):
     if m.chat.id in games:
+      if games[m.chat.id]['started']==0:
         if len(games[m.chat.id]['players'])==2:
+            games[m.chat.id]['started']=1
             games[m.chat.id]['timer'].cancel()
             begin(m.chat.id)
     
@@ -49,6 +51,7 @@ def startg(m):
 def join(m):
     no=0
     if m.chat.id in games:
+      if games[m.chat.id]['started']==0:
         for ids in games[m.chat.id]['players']:
             if games[m.chat.id]['players'][ids]['id']==m.from_user.id:
                 no=1
@@ -547,7 +550,8 @@ def creategame(id):
         'locs':['treasure','spystart','leftcorridor','rightcorridor','leftpass','rightpass','antiflashroom'],
         'flashed':[],
         'treasurestealed':0,
-        'gametimer':None
+        'gametimer':None,
+        'started':0
           }
      }
     
