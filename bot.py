@@ -435,10 +435,12 @@ def inline(call):
             medit('Выберите, куда будете кидать флэшку.', call.message.chat.id, call.message.message_id, reply_markup=kb)
             
     elif 'flash' in call.data:
+      print (call.data)
       if 'flash' in player['items']:
         kb=types.InlineKeyboardMarkup()
         x=call.data.split(' ')
         location=x[1]
+        print(location)
         player['items'].remove('flash')
         games[player['chatid']]['flashed'].append(location)
         medit(player['id'],'Вы бросили флэшку в локацию: '+loctoname(location)+'.', call.message.chat.id, call.message.message_id)
