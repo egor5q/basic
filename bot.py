@@ -319,6 +319,7 @@ def inline(call):
     elif call.data=='wait':
         player['ready']=1
         medit('Вы пропускаете ход. Ожидайте следующего хода...',call.message.chat.id, call.message.message_id)
+        player['lastloc']=player['location']
         
     elif call.data=='leftcorridor':
         x=player['location']
@@ -425,7 +426,7 @@ def inline(call):
             for ids in locs:
                 kb.add(types.InlineKeyboardButton(text=loctoname(ids), callback_data='flash '+ids))
             kb.add(types.InlineKeyboardButton(text='Назад', callback_data='back'))
-            medit('Выберите, куда будете кидать флэшку.', call.message.chat.id, call.message.message_id)
+            medit('Выберите, куда будете кидать флэшку.', call.message.chat.id, call.message.message_id, reply_markup=kb)
             
     elif 'flash' in call.data:
       if 'flash' in player['items']:
