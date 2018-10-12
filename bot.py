@@ -423,7 +423,7 @@ def inline(call):
                 kb.add(types.InlineKeyboardButton(text='Инфо с камер', callback_data='camerainfo'))
         kb.add(types.InlineKeyboardButton(text='Ожидать', callback_data='wait'))
         medit(player['id'],'Вы бросили флэшку в локацию: '+loctoname(location)+'.', call.message.chat.id, call.message.message_id)
-        msg=bot.send_message(player['id'],'Выберите действие.' reply_markup=kb)
+        msg=bot.send_message(player['id'],'Выберите действие.', reply_markup=kb)
         player['currentmessage']=msg
         player['messagetoedit']=msg
         
