@@ -277,8 +277,29 @@ def inline(call):
             
     elif call.data=='flash':
         if 'flash' in player['items']:
+            kb=types.InlineKeyboardMarkup()
+            if player['location']=='leftcorridor':
+                locs=['spystart','treasure', 'leftpass']
+            if player['location']=='rightcorridor':
+                locs=['spystart','treasure', 'rightpass']
+            if player['location']=='rightpass':
+                locs=['treasure', 'rightcorridor']
+            if player['location']=='leftpass':
+                locs=['treasure', 'leftcorridor']
+            if player['location']=='treasure':
+                locs=['leftpass','rightpass','leftcorridor','rightcorridor']
+            if player['location']=='spystart':
+                locs=['leftcorridor','rightcorridor']
+            for ids in locs:
+                kb.add(types.InlineKeyboardButton(text=loctoname(ids), callback_data='flash '+ids))
             medit('Выберите, куда будете кидать флэшку.', call.message.chat.id, call.message.message_id)
+            
+    elif 'flash' in call.data:
+        x=call.data.split(' ')
+        
 
+            
+            
             ['camera','camera','camera','flash','costume', 'flash']
             
             
