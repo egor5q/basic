@@ -222,6 +222,8 @@ def sendacts(player):
     if player['flashed']==0:
       msg=bot.send_message(player['id'],'Выберите действие.',reply_markup=kb)
       player['messagetoedit']=msg
+    else:
+      player['ready']=1
                
      
                
