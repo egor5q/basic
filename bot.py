@@ -157,7 +157,7 @@ def endturn(id):
         if player['treasure']==1 and player['disarmed']==0 and player['location']=='spystart':
             games[id]['treasurestealed']=1
                     
-    if text='':
+    if text=='':
         text='Ничего необычного...'
     bot.send_message(id, 'Ход '+str(games[id]['turn'])+'. Ситуация в здании:\n\n'+text)
         
