@@ -437,7 +437,7 @@ def inline(call):
             if player['role']=='spy':
                 kb.add(types.InlineKeyboardButton(text='Инфо с камер', callback_data='camerainfo'))
             kb.add(types.InlineKeyboardButton(text='Ожидать', callback_data='wait'))
-            msg=bot.send_message(player['id'],'Выберите действие.' reply_markup=kb)
+            msg=bot.send_message(player['id'],'Выберите действие.', reply_markup=kb)
             player['currentmessage']=msg
             player['messagetoedit']=msg
         
