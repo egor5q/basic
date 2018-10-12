@@ -336,6 +336,7 @@ def inline(call):
         player['ready']=1
         medit('Вы пропускаете ход. Ожидайте следующего хода...',call.message.chat.id, call.message.message_id)
         player['lastloc']=player['location']
+        testturn(player['chatid'])
         
     elif call.data=='leftcorridor':
         x=player['location']
@@ -344,7 +345,7 @@ def inline(call):
             medit('Вы перемещаетесь в локацию: '+loctoname(call.data)+'.',call.message.chat.id, call.message.message_id)
             player['location']=call.data
             player['ready']=1
-            testturn()
+            testturn(player['chatid'])
             
     elif call.data=='rightcorridor':
         x=player['location']
@@ -353,6 +354,7 @@ def inline(call):
             medit('Вы перемещаетесь в локацию: '+loctoname(call.data)+'.',call.message.chat.id, call.message.message_id)
             player['location']=call.data   
             player['ready']=1
+            testturn(player['chatid'])
             
     elif call.data=='rightpass':
         x=player['location']
@@ -361,6 +363,7 @@ def inline(call):
             medit('Вы перемещаетесь в локацию: '+loctoname(call.data)+'.',call.message.chat.id, call.message.message_id)
             player['location']=call.data   
             player['ready']=1
+            testturn(player['chatid'])
            
     elif call.data=='leftpass':
         x=player['location']
@@ -368,7 +371,8 @@ def inline(call):
             player['lastloc']=player['location']
             medit('Вы перемещаетесь в локацию: '+loctoname(call.data)+'.',call.message.chat.id, call.message.message_id)
             player['location']=call.data   
-            player['ready']=1
+            player['ready']=1        
+            testturn(player['chatid'])
             
     elif call.data=='treasure':
         x=player['location']
@@ -384,6 +388,7 @@ def inline(call):
                 player['ready']=1
                 player['location']=call.data   
                 player['stealing']=1
+            testturn(player['chatid'])
                 
     elif call.data=='antiflashroom':
         x=player['location']
@@ -392,6 +397,7 @@ def inline(call):
             medit('Вы перемещаетесь в локацию: '+loctoname(call.data)+'.',call.message.chat.id, call.message.message_id)
             player['location']=call.data   
             player['ready']=1
+            testturn(player['chatid'])
             
     elif call.data=='spystart':
         x=player['location']
@@ -400,6 +406,7 @@ def inline(call):
             medit('Вы перемещаетесь в локацию: '+loctoname(call.data)+'.',call.message.chat.id, call.message.message_id)
             player['location']=call.data
             player['ready']=1
+            testturn(player['chatid'])
             
     elif call.data=='glasses':
         if 'glasses' in player['items']:
@@ -417,12 +424,16 @@ def inline(call):
     elif call.data=='pistol':
         if 'pistol' in player['items']:
             player['destroycamera']=1
+            player['ready']=1
+            testturn(player['chatid'])
             medit('Выбрано действие: уничтожение вражеских камер.', call.message.chat.id, call.message.message_id)
             
     elif call.data=='camera':
         if 'camera' in player['items']:
             player['items'].remove('camera')
             player['setupcamera']=1
+            player['ready']=1
+            testturn(player['chatid'])
             medit('Выбрано действие: установка камеры.', call.message.chat.id, call.message.message_id)
             
     elif call.data=='flash':
