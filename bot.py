@@ -97,6 +97,7 @@ def begin(id):
             games[id]['players'][ids]['location']='spystart'
             
     for ids in games[id]['players']:
+        games[id]['players'][ids]['lastloc']=games[id]['players'][ids]['location']
         sendacts(games[id]['players'][ids])
         
     t=threading.Timer(90, endturn, args=[id])
