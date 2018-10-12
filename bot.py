@@ -67,7 +67,8 @@ def testturn(id):
         if games[id]['players'][ids]['ready']==1:
            i+=1
     if i==len(games[id]['players']):
-           pass
+           games[id]['gametimer'].cancel()
+           endturn(id)
             
 def begin(id):
     securityitems=['glasses','pistol','tizer', 'glasses']
@@ -109,6 +110,7 @@ def begin(id):
         
     t=threading.Timer(90, endturn, args=[id])
     t.start()
+    games[id]['gametimer']=t
         
 def endturn(id):
     for ids in games[id]['players']:
@@ -197,6 +199,7 @@ def endturn(id):
             sendacts(games[id]['players'][ids])
         t=threading.Timer(90, endturn, args=[id])
         t.start()
+        gamse[id]['gametimer']=t
         games[id]['turn']+=1
         games[id]['flashed']=[]
         for ids in games[id]['players']:
@@ -532,7 +535,8 @@ def creategame(id):
         'timer':None,
         'locs':['treasure','spystart','leftcorridor','rightcorridor','leftpass','rightpass','antiflashroom'],
         'flashed':[],
-        'treasurestealed':0
+        'treasurestealed':0,
+        'gametimer':None
           }
      }
     
