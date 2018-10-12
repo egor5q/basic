@@ -177,7 +177,7 @@ def endturn(id):
         winner='spy'
     if endgame==0:
         for ids in games[id]['players']:
-        sendacts(games[id]['players'][ids])
+            sendacts(games[id]['players'][ids])
         t=threading.Timer(90, endturn, args=[id])
         t.start()
         games[id]['turn']+=1
