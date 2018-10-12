@@ -306,7 +306,7 @@ def inline(call):
                         text+=games[player['chatid']]['players'][idss]['name']+' был замечен на камерах!\n'
             if text=='':
                 text='У вас не установлено ни одной камеры!'
-            bot.answer_callback_query(call.id,text)
+            bot.answer_callback_query(call.id,text, show_alert=True)
             
     elif call.data=='wait':
         player['ready']=1
