@@ -69,16 +69,24 @@ def begin(id):
         if games[id]['spies']>games[id]['security']:
             games[id]['players'][ids]['role']='security'
             games[id]['security']+=1
+            bot.send_message(games[id]['players'][ids]['id'], 'Вы - охранник! Ваша цель - не дать шпионам украсть сокровище!'+\
+                             'Если продержитесь 15 ходов - вам на помощь приедет спецназ, и вы победите!')
         elif games[id]['spies']<games[id]['security']:
             games[id]['players'][ids]['role']='spy'
             games[id]['spies']+=1
+            bot.send_message(games[id]['players'][ids]['id'], 'Вы - шпион! Ваша цель - украсть сокровище!'+\
+                             'Не попадитесь на глаза охраннику и сделайте всё меньше, чем за 16 ходов, иначе проиграете!')
         elif games[id]['spies']==games[id]['security']:
             x=random.choice(['spy','security'])
             games[id]['players'][ids]['role']=x
             if x=='spy':
                 games[id]['spies']+=1
+                bot.send_message(games[id]['players'][ids]['id'], 'Вы - шпион! Ваша цель - украсть сокровище!'+\
+                             'Не попадитесь на глаза охраннику и сделайте всё меньше, чем за 16 ходов, иначе проиграете!')
             elif x=='security':
                 games[id]['security']+=1
+                bot.send_message(games[id]['players'][ids]['id'], 'Вы - охранник! Ваша цель - не дать шпионам украсть сокровище!'+\
+                             'Если продержитесь 15 ходов - вам на помощь приедет спецназ, и вы победите!')
                 
     for ids in games[id]['players']:
         if games[id]['players'][ids]['role']=='security':
