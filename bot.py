@@ -113,30 +113,139 @@ def inline(call):
   yes=0
   for ids in games:
     for idss in games[ids]['players']:
-        if games[ids]['players'][idss]['id']==call.from_user.id:
+        if games[ids]['players'][idss]['id']==call.from_user.id and games[ids]['players'][idss]['ready']==0:
             yes=1
             player=games[ids]['players'][idss]
   if yes==1:
     kb=types.InlineKeyboardMarkup()
     if call.data=='move':
+        if player['role']=='spy':
+            textt='Украсть сокровище'
+        else:
+            textt='Комната с сокровищем'
         if player['location']=='spystart':
             kb.add(types.InlineKeyboardButton(text='Левый корридор', callback_data='leftcorridor'),types.InlineKeyboardButton(text='Правый корридор', callback_data='rightcorridor'))
             kb.add(types.InlineKeyboardButton(text='Левый обход', callback_data='leftpass'),types.InlineKeyboardButton(text='Правый обход', callback_data='rightpass'))
+            kb.add(types.InlineKeyboardButton(text='Назад', callback_data='back'))
             
         if player['location']=='treasure':
             kb.add(types.InlineKeyboardButton(text='Левый корридор', callback_data='leftcorridor'),types.InlineKeyboardButton(text='Правый корридор', callback_data='rightcorridor'))
             kb.add(types.InlineKeyboardButton(text='Левый обход', callback_data='leftpass'),types.InlineKeyboardButton(text='Правый обход', callback_data='rightpass'))
             kb.add(types.InlineKeyboardButton(text='Светозащитная комната', callback_data='antiflashroom'))
+            kb.add(types.InlineKeyboardButton(text='Назад', callback_data='back'))
             
         if player['location']=='leftcorridor':
             kb.add(types.InlineKeyboardButton(text='Левый обход', callback_data='leftpass'),types.InlineKeyboardButton(text='Старт шпионов', callback_data='spystart'))
+            kb.add(types.InlineKeyboardButton(text=textt, callback_data='treasure'))
+            kb.add(types.InlineKeyboardButton(text='Назад', callback_data='back'))
             
         if player['location']=='rightcorridor':
             kb.add(types.InlineKeyboardButton(text='Правый обход', callback_data='rightpass'),types.InlineKeyboardButton(text='Старт шпионов', callback_data='spystart'))
+            kb.add(types.InlineKeyboardButton(text=textt, callback_data='treasure'))
+            kb.add(types.InlineKeyboardButton(text='Назад', callback_data='back'))
+            
+        if player['location']=='rightpass':
+            kb.add(types.InlineKeyboardButton(text='Левый обход', callback_data='leftpass'),types.InlineKeyboardButton(text='Старт шпионов', callback_data='spystart'))
+            kb.add(types.InlineKeyboardButton(text=textt, callback_data='treasure'))
+            kb.add(types.InlineKeyboardButton(text='Назад', callback_data='back'))
+            
+        if player['location']=='leftpass':
+            kb.add(types.InlineKeyboardButton(text='Правый обход', callback_data='rightpass'),types.InlineKeyboardButton(text='Старт шпионов', callback_data='spystart'))
+            kb.add(types.InlineKeyboardButton(text=textt, callback_data='treasure'))
+            kb.add(types.InlineKeyboardButton(text='Назад', callback_data='back'))
+            
+        if player['location']=='antiflashroom':
+            kb.add(types.InlineKeyboardButton(text=textt, callback_data='treasure'))
+            kb.add(types.InlineKeyboardButton(text='Назад', callback_data='back'))
+            
+        medit('Куда вы хотите направиться?',call.message.chat.id,call.message.message_id, reply_markup=kb)
+        
+    elif call.data=='items':
+        kb=types.InlineKeyboardMarkup()
+        for ids in player['items']:
+            x=itemtoname(ids)
+            if x!=None:
+                kb.add(types.InlineKeyboardButton(text=x, callback_data=ids))
+        kb.add(types.InlineKeyboardButton(text='Назад', callback_data='back'))
+        medit('Выберите предмет.', call.message.chat.id, call.message.message_id, reply_markup=kb)
+        
+    elif call.data=='camerainfo':
+        if player['role']=='spy':
+            text=''
+            for ids in player['cameras']:
+                if ids=='spystart':
+                    text+='*Старт шпионов*:\n'
+                elif ids=='treasure':
+                    text+='*Комната с сокровищем*:\n'
+                elif ids=='leftcorridor':
+                    text+='*Левый корридор*:\n'
+                elif ids=='rightcorridor':
+                    text+='*Правый корридор*:\n'
+                elif ids=='leftpass':
+                    text+='*Левый обход*:\n'
+                elif ids=='rightpass':
+                    text+='*Правый обход*:\n'
+                for idss in games[player['chatid']]['players']:
+                    if games[player['chatid']]['players'][idss]['location']==ids and games[player['chatid']]['players'][idss]['id']!=player['id']:
+                        text+=games[player['chatid']]['players'][idss]['name']+' был замечен на камерах!\n'
+            if text=='':
+                text='У вас не установлено ни одной камеры!'
+            bot.answer_callback_query(call.id,text)
+            
+    elif call.data=='wait':
+        player['ready']=1
+        medit('Вы пропускаете ход. Ожидайте следующего хода...',call.message.chat.id, call.message.message_id)
+        
+    elif call.data=='leftcorridor':
+        x=player['location']
+        if x=='leftpass' or x=='spystart' or x=='treasure':
+            medit('Вы перемещаетесь в локацию: '+loctoname(call.data)+'.',call.message.chat.id, call.message.message_id)
+            player['location']=call.data
+            
+    elif call.data=='rightcorridor':
+        x=player['location']
+        if x=='rightpass' or x=='spystart' or x=='treasure':
+            medit('Вы перемещаетесь в локацию: '+loctoname(call.data)+'.',call.message.chat.id, call.message.message_id)
+            player['location']=call.data        
+    
+            
+
+def loctoname(x):
+    if x=='leftcorridor':
+        return 'Левый корридор'
+    if x=='rightcorridor':
+        return 'Правый корридор'
+    if x=='spystart':
+        return 'Старт шпионов'
+    if x=='treasure':
+        return 'Комната с сокровищем'
+    if x=='leftcorridor':
+        return 'Левый корридор'
+    if x=='leftpass':
+        return 'Левый обход'
+    if x=='rightpass':
+        return 'Правый обход'
+    if x=='antiflashroom':
+        return 'Светозащитная комната'
+            
+def itemtoname(x):
+    if x=='flash':
+        return 'Флэшка'
+    elif x=='costume':
+        return 'Маскировочный костюм'
+    elif x=='glasses':
+        return 'Защитные очки'
+    elif x=='pistol':
+        return 'Пистолет'
+    elif x=='camera':
+        return 'Камера'
+    else:
+        return None
+        
         
 
-
-
+            
+            
 def creategame(id):
     return{
         'chatid':id,
@@ -148,7 +257,7 @@ def creategame(id):
         'locs':['treasure','spystart','leftcorridor','rightcorridor','leftpass','rightpass','antiflashroom']
     }
 
-def createplayer(id,name):
+def createplayer(id,name,chatid):
     return{
         'id':id,
         'name':name,
@@ -156,7 +265,9 @@ def createplayer(id,name):
         'team':None,
         'items':[],
         'ready':0,
-        'messagetoedit':None
+        'messagetoedit':None,
+        'cameras':[],
+        'chatid':chatid
     }
 
 
