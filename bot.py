@@ -443,7 +443,7 @@ def inline(call):
         print(location)
         player['items'].remove('flash')
         games[player['chatid']]['flashed'].append(location)
-        medit(player['id'],'Вы бросили флэшку в локацию: '+loctoname(location)+'.', call.message.chat.id, call.message.message_id)
+        medit('Вы бросили флэшку в локацию: '+loctoname(location)+'.', call.message.chat.id, call.message.message_id)
         kb.add(types.InlineKeyboardButton(text='Перемещение', callback_data='move'),types.InlineKeyboardButton(text='Предметы', callback_data='items'))
         if player['role']=='spy':
                 kb.add(types.InlineKeyboardButton(text='Инфо с камер', callback_data='camerainfo'))
