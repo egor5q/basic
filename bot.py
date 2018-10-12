@@ -189,6 +189,16 @@ def endturn(id):
         t=threading.Timer(90, endturn, args=[id])
         t.start()
         games[id]['turn']+=1
+        for ids in games[id]['players']:
+            games[id]['players'][ids]['ready']=0
+            games[id]['players'][ids]['stealing']=0
+            if games[id]['players'][ids]['glasses']>0:
+                games[id]['players'][ids]['glasses']-=1
+            games[id]['players'][ids]['setupcamera']=0
+            games[id]['players'][ids]['destroycamera']=0
+            games[id]['players'][ids]['silent']=0
+            if games[id]['players'][ids]['flashed']>0:
+                games[id]['players'][ids]['flashed']-=1
     else:
         if winner=='security':
             bot.send_message(id, 'Победа охраны!')
@@ -196,7 +206,25 @@ def endturn(id):
             bot.send_message(id, 'Победа шпионов!')
         del games[id]
                         
-                    
+         'id':id,
+        'name':name,
+        'location':None,
+        'team':None,
+        'items':[],
+        'ready':0,
+        'messagetoedit':None,
+        'cameras':[],
+        'chatid':chatid,
+        'stealing':0,
+        'glasses':0,
+        'setupcamera':0,
+        'destroycamera':0,
+        'currentmessage':None,
+        'silent':0,
+        'flashed':0,
+        'lastloc':None,
+        'treasure':0,
+        'disarmed':0           
       
                    
                    
