@@ -448,7 +448,14 @@ def inline(call):
             msg=bot.send_message(player['id'],'Выберите действие.', reply_markup=kb)
             player['currentmessage']=msg
             player['messagetoedit']=msg
-        
+            
+    elif call.data=='back':
+        kb=types.InlineKeyboardMarkup()
+        kb.add(types.InlineKeyboardButton(text='Перемещение', callback_data='move'),types.InlineKeyboardButton(text='Предметы', callback_data='items'))
+        if player['role']=='spy':
+            kb.add(types.InlineKeyboardButton(text='Инфо с камер', callback_data='camerainfo'))
+        kb.add(types.InlineKeyboardButton(text='Ожидать', callback_data='wait'))
+        medit('Выберите действие.', call.message.chat.id, call.message.message_id, reply_markup=kb)
 
             
             
