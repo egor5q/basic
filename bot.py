@@ -61,8 +61,13 @@ def join(m):
             bot.send_message(m.chat.id, 'Для начала напишите боту @Spy_VS_Security_Bot что-нибудь!')
     
  
-def testturn():
-    pass
+def testturn(id):
+    i=0
+    for ids in games[id]['players']:
+        if games[id]['players'][ids]['ready']==1:
+           i+=1
+    if i==len(games[id]['players']):
+           pass
             
 def begin(id):
     securityitems=['glasses','pistol','tizer', 'glasses']
