@@ -116,7 +116,7 @@ def endturn(id):
         if player['setupcamera']==1:
             player['cameras'].append(player['location'])
         if player['role']=='security' and player['glasses']==0 and player['location'] in games[id]['flashed']:
-            player['flashed']=1         
+            player['flashed']=2         
         if player['destroycamera']==1:
             if player['flashed']!=1:
                 for idss in games[id]['players']:
@@ -219,8 +219,9 @@ def sendacts(player):
     if player['role']=='spy':
         kb.add(types.InlineKeyboardButton(text='Инфо с камер', callback_data='camerainfo'))
     kb.add(types.InlineKeyboardButton(text='Ожидать', callback_data='wait'))
-    msg=bot.send_message(player['id'],'Выберите действие.',reply_markup=kb)
-    player['messagetoedit']=msg
+    if player['flashed']==0:
+      msg=bot.send_message(player['id'],'Выберите действие.',reply_markup=kb)
+      player['messagetoedit']=msg
                
      
                
