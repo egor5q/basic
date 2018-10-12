@@ -182,7 +182,7 @@ def endturn(id):
         t.start()
         games[id]['turn']+=1
     else:
-        if winner='security':
+        if winner=='security':
             bot.send_message(id, 'Победа охраны!')
         else:
             bot.send_message(id, 'Победа шпионов!')
