@@ -483,7 +483,7 @@ def itemtoname(x):
             
             
 def creategame(id):
-    return{
+    return{id:{
         'chatid':id,
         'players':{},
         'turn':1,
@@ -493,7 +493,9 @@ def creategame(id):
         'locs':['treasure','spystart','leftcorridor','rightcorridor','leftpass','rightpass','antiflashroom'],
         'flashed':[],
         'treasurestealed':0
-    }
+          }
+     }
+    
 
 def createplayer(id,name,chatid):
     return{
