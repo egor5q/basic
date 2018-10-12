@@ -81,9 +81,60 @@ def endturn(id):
     for ids in games[id]['players']:
         if games[id]['players'][ids]['ready']==0:
             medit('Время вышло!',games[id]['players'][ids]['messagetoedit'].chat.id, games[id]['players'][ids]['messagetoedit'].message_id)
-    pass
+    text=''        
+    for ids in games[id]['players']:
+        player=games[id]['players'][ids]
+        if player['setupcamera']==1:
+            player['cameras'].append(player['location'])
+        if player['role']=='security' and player['glasses']==0 and player['location'] in games[id]['flashed']:
+            player['flashed']=1         
+        if player['destroycamera']==1:
+            if player['flashed']!=1:
+                for idss in games[id]['players']:
+                    if player['location'] in games[id]['players'][idss]['cameras']:
+                        games[id]['players'][idss]['cameras'].remove(player['location'])
+                        text+='Охранник уничтожил камеру шпиона в локации: '+player['location']+'!\n'
+            else:
+                bot.send_message(player['id'],'Вы были ослеплены! Камеры шпионов обнаружить не удалось.')
+                
+        if player['stealing']==1:
+            player['treasure']=1
+        
+        if player['role']=='security' and player['flashed']==0:
+            for idss in games[id]['players']:
+                if player['location']==games[id]['players'][idss]['location']:
+                    games[id]['players'][idss]['disarmed']=1
+                    text+='Охранник нейтрализовал шпиона в локации: '+loctoname(player['location'])+'!'
+                     
+        if player['role']=='security' and player['flashed']==0 and player['lastloc']!=player['location']:
+            for idss in games[id]['players']: 
+                
+       
+        
+                
+            
+        
 
-
+return{
+        'id':id,
+        'name':name,
+        'location':None,
+        'team':None,
+        'items':[],
+        'ready':0,
+        'messagetoedit':None,
+        'cameras':[],
+        'chatid':chatid,
+        'stealing':0,
+        'glasses':0,
+        'setupcamera':0,
+        'destroycamera':0,
+        'currentmessage':None,
+        'silent':0
+    }
+                   
+                   
+                   
 def sendacts(player):  
     kb=types.InlineKeyboardMarkup()
     kb.add(types.InlineKeyboardButton(text='Перемещение', callback_data='move'),types.InlineKeyboardButton(text='Предметы', callback_data='items'))
@@ -199,6 +250,7 @@ def inline(call):
     elif call.data=='leftcorridor':
         x=player['location']
         if x=='leftpass' or x=='spystart' or x=='treasure':
+            player['lastloc']=player['location']
             medit('Вы перемещаетесь в локацию: '+loctoname(call.data)+'.',call.message.chat.id, call.message.message_id)
             player['location']=call.data
             player['ready']=1
@@ -206,6 +258,7 @@ def inline(call):
     elif call.data=='rightcorridor':
         x=player['location']
         if x=='rightpass' or x=='spystart' or x=='treasure':
+            player['lastloc']=player['location']
             medit('Вы перемещаетесь в локацию: '+loctoname(call.data)+'.',call.message.chat.id, call.message.message_id)
             player['location']=call.data   
             player['ready']=1
@@ -213,6 +266,7 @@ def inline(call):
     elif call.data=='rightpass':
         x=player['location']
         if x=='rightcorridor' or x=='spystart' or x=='treasure':
+            player['lastloc']=player['location']
             medit('Вы перемещаетесь в локацию: '+loctoname(call.data)+'.',call.message.chat.id, call.message.message_id)
             player['location']=call.data   
             player['ready']=1
@@ -220,6 +274,7 @@ def inline(call):
     elif call.data=='leftpass':
         x=player['location']
         if x=='leftcorridor' or x=='spystart' or x=='treasure':
+            player['lastloc']=player['location']
             medit('Вы перемещаетесь в локацию: '+loctoname(call.data)+'.',call.message.chat.id, call.message.message_id)
             player['location']=call.data   
             player['ready']=1
@@ -228,10 +283,12 @@ def inline(call):
         x=player['location']
         if x!='spystart':
             if player['role']=='security':
+                player['lastloc']=player['location']
                 medit('Вы перемещаетесь в локацию: '+loctoname(call.data)+'.',call.message.chat.id, call.message.message_id)
                 player['location']=call.data   
                 player['ready']=1
             elif player['role']=='spy':
+                player['lastloc']=player['location']
                 medit('Вы пытаетесь украсть сокровище...',call.message.chat.id, call.message.message_id)
                 player['ready']=1
                 player['location']=call.data   
@@ -240,6 +297,7 @@ def inline(call):
     elif call.data=='antiflashroom':
         x=player['location']
         if x=='treasure':
+            player['lastloc']=player['location']
             medit('Вы перемещаетесь в локацию: '+loctoname(call.data)+'.',call.message.chat.id, call.message.message_id)
             player['location']=call.data   
             player['ready']=1
@@ -247,6 +305,7 @@ def inline(call):
     elif call.data=='spystart':
         x=player['location']
         if x=='leftcorridor' or x=='rightcorridor' or x=='leftpass' or x=='rightpass':
+            player['lastloc']=player['location']
             medit('Вы перемещаетесь в локацию: '+loctoname(call.data)+'.',call.message.chat.id, call.message.message_id)
             player['location']=call.data
             player['ready']=1
@@ -292,15 +351,42 @@ def inline(call):
                 locs=['leftcorridor','rightcorridor']
             for ids in locs:
                 kb.add(types.InlineKeyboardButton(text=loctoname(ids), callback_data='flash '+ids))
+            kb.add(types.InlineKeyboardButton(text='Назад', callback_data='back'))
             medit('Выберите, куда будете кидать флэшку.', call.message.chat.id, call.message.message_id)
             
     elif 'flash' in call.data:
+      if 'flash' in player['items']:
+        kb=types.InlineKeyboardMarkup()
         x=call.data.split(' ')
+        location=x[1]
+        player['items'].remove('flash')
+        games[player['chatid']]['flashed'].append(location)
+        kb.add(types.InlineKeyboardButton(text='Перемещение', callback_data='move'),types.InlineKeyboardButton(text='Предметы', callback_data='items'))
+        if player['role']=='spy':
+                kb.add(types.InlineKeyboardButton(text='Инфо с камер', callback_data='camerainfo'))
+        kb.add(types.InlineKeyboardButton(text='Ожидать', callback_data='wait'))
+        medit(player['id'],'Вы бросили флэшку в локацию: '+loctoname(location)+'.', call.message.chat.id, call.message.message_id)
+        msg=bot.send_message(player['id'],'Выберите действие.' reply_markup=kb)
+        player['currentmessage']=msg
+        player['messagetoedit']=msg
+        
+    elif call.data=='costume':
+        if 'costume' in player['items']:
+            kb=types.InlineKeyboardMarkup()
+            player['items'].remove('costume')
+            player['silent']=1
+            medit('Вы надели маскировочный костюм! На этом ходу ваши передвижения не будут услышаны.', call.message.chat.id, call.message.message_id)
+            kb.add(types.InlineKeyboardButton(text='Перемещение', callback_data='move'),types.InlineKeyboardButton(text='Предметы', callback_data='items'))
+            if player['role']=='spy':
+                kb.add(types.InlineKeyboardButton(text='Инфо с камер', callback_data='camerainfo'))
+            kb.add(types.InlineKeyboardButton(text='Ожидать', callback_data='wait'))
+            msg=bot.send_message(player['id'],'Выберите действие.' reply_markup=kb)
+            player['currentmessage']=msg
+            player['messagetoedit']=msg
         
 
             
             
-            ['camera','camera','camera','flash','costume', 'flash']
             
             
 def loctoname(x):
@@ -347,7 +433,8 @@ def creategame(id):
         'spies':0,
         'security':0,
         'timer':None,
-        'locs':['treasure','spystart','leftcorridor','rightcorridor','leftpass','rightpass','antiflashroom']
+        'locs':['treasure','spystart','leftcorridor','rightcorridor','leftpass','rightpass','antiflashroom'],
+        'flashed':[]
     }
 
 def createplayer(id,name,chatid):
@@ -364,7 +451,13 @@ def createplayer(id,name,chatid):
         'stealing':0,
         'glasses':0,
         'setupcamera':0,
-        'destroycamera':0
+        'destroycamera':0,
+        'currentmessage':None,
+        'silent':0,
+        'flashed':0,
+        'lastloc':None,
+        'treasure':0,
+        'disarmed':0
     }
 
 
