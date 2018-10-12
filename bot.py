@@ -498,7 +498,7 @@ def creategame(id):
     
 
 def createplayer(id,name,chatid):
-    return{
+    return{id:{
         'id':id,
         'name':name,
         'location':None,
@@ -518,6 +518,7 @@ def createplayer(id,name,chatid):
         'lastloc':None,
         'treasure':0,
         'disarmed':0
+          }
     }
 
 
