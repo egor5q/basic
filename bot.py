@@ -120,11 +120,20 @@ def inline(call):
     kb=types.InlineKeyboardMarkup()
     if call.data=='move':
         if player['location']=='spystart':
-            kb.add(types.InlineKeyboardMarkup())
-    
-      
+            kb.add(types.InlineKeyboardButton(text='Левый корридор', callback_data='leftcorridor'),types.InlineKeyboardButton(text='Правый корридор', callback_data='rightcorridor'))
+            kb.add(types.InlineKeyboardButton(text='Левый обход', callback_data='leftpass'),types.InlineKeyboardButton(text='Правый обход', callback_data='rightpass'))
+            
+        if player['location']=='treasure':
+            kb.add(types.InlineKeyboardButton(text='Левый корридор', callback_data='leftcorridor'),types.InlineKeyboardButton(text='Правый корридор', callback_data='rightcorridor'))
+            kb.add(types.InlineKeyboardButton(text='Левый обход', callback_data='leftpass'),types.InlineKeyboardButton(text='Правый обход', callback_data='rightpass'))
+            kb.add(types.InlineKeyboardButton(text='Светозащитная комната', callback_data='antiflashroom'))
+            
+        if player['location']=='leftcorridor':
+            kb.add(types.InlineKeyboardButton(text='Левый обход', callback_data='leftpass'),types.InlineKeyboardButton(text='Старт шпионов', callback_data='spystart'))
+            
+        if player['location']=='rightcorridor':
+            kb.add(types.InlineKeyboardButton(text='Правый обход', callback_data='rightpass'),types.InlineKeyboardButton(text='Старт шпионов', callback_data='spystart'))
         
-
 
 
 
@@ -135,7 +144,8 @@ def creategame(id):
         'turn':1,
         'spies':0,
         'security':0,
-        'timer':None
+        'timer':None,
+        'locs':['treasure','spystart','leftcorridor','rightcorridor','leftpass','rightpass','antiflashroom']
     }
 
 def createplayer(id,name):
