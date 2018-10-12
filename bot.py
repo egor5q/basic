@@ -60,7 +60,9 @@ def join(m):
         except:
             bot.send_message(m.chat.id, 'Для начала напишите боту @Spy_VS_Security_Bot что-нибудь!')
     
-    
+ 
+def testturn():
+    pass
             
 def begin(id):
     securityitems=['glasses','pistol','tizer', 'glasses']
