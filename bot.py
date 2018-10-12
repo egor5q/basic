@@ -199,7 +199,7 @@ def endturn(id):
             sendacts(games[id]['players'][ids])
         t=threading.Timer(90, endturn, args=[id])
         t.start()
-        gamse[id]['gametimer']=t
+        games[id]['gametimer']=t
         games[id]['turn']+=1
         games[id]['flashed']=[]
         for ids in games[id]['players']:
