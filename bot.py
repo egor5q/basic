@@ -104,10 +104,14 @@ def endturn(id):
             for idss in games[id]['players']:
                 if player['location']==games[id]['players'][idss]['location']:
                     games[id]['players'][idss]['disarmed']=1
-                    text+='Охранник нейтрализовал шпиона в локации: '+loctoname(player['location'])+'!'
+                    text+='Охранник нейтрализовал шпиона в локации: '+loctoname(player['location'])+'!\n'
                      
         if player['role']=='security' and player['flashed']==0 and player['lastloc']!=player['location']:
             for idss in games[id]['players']: 
+                if games[id]['players'][idss]['lastloc']==player['location'] and games[id]['players'][idss]['location']==player['lastloc']:
+                    text+='Шпион и охранник столкнулись в корридоре! Шпион нейтрализован!\n'
+                    games[id]['players'][idss]['disarmed']=1
+                    
                 
        
         
