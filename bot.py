@@ -190,6 +190,7 @@ def endturn(id):
         t=threading.Timer(90, endturn, args=[id])
         t.start()
         games[id]['turn']+=1
+        games[id]['flashed']=[]
         for ids in games[id]['players']:
             games[id]['players'][ids]['ready']=0
             games[id]['players'][ids]['stealing']=0
@@ -329,6 +330,7 @@ def inline(call):
             medit('Вы перемещаетесь в локацию: '+loctoname(call.data)+'.',call.message.chat.id, call.message.message_id)
             player['location']=call.data
             player['ready']=1
+            testturn()
             
     elif call.data=='rightcorridor':
         x=player['location']
@@ -436,11 +438,11 @@ def inline(call):
         location=x[1]
         player['items'].remove('flash')
         games[player['chatid']]['flashed'].append(location)
+        medit(player['id'],'Вы бросили флэшку в локацию: '+loctoname(location)+'.', call.message.chat.id, call.message.message_id)
         kb.add(types.InlineKeyboardButton(text='Перемещение', callback_data='move'),types.InlineKeyboardButton(text='Предметы', callback_data='items'))
         if player['role']=='spy':
                 kb.add(types.InlineKeyboardButton(text='Инфо с камер', callback_data='camerainfo'))
         kb.add(types.InlineKeyboardButton(text='Ожидать', callback_data='wait'))
-        medit(player['id'],'Вы бросили флэшку в локацию: '+loctoname(location)+'.', call.message.chat.id, call.message.message_id)
         msg=bot.send_message(player['id'],'Выберите действие.', reply_markup=kb)
         player['currentmessage']=msg
         player['messagetoedit']=msg
