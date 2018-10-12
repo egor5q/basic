@@ -109,6 +109,7 @@ def endturn(id):
     for ids in games[id]['players']:
         if games[id]['players'][ids]['ready']==0:
             medit('Время вышло!',games[id]['players'][ids]['messagetoedit'].chat.id, games[id]['players'][ids]['messagetoedit'].message_id)
+            games[id]['players'][ids]['lastloc']=games[id]['players'][ids]['location']
     text=''        
     for ids in games[id]['players']:
         player=games[id]['players'][ids]
