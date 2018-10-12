@@ -118,7 +118,10 @@ def begin(id):
 def endturn(id):
     for ids in games[id]['players']:
         if games[id]['players'][ids]['ready']==0:
-            medit('Время вышло!',games[id]['players'][ids]['messagetoedit'].chat.id, games[id]['players'][ids]['messagetoedit'].message_id)
+            try:
+              medit('Время вышло!',games[id]['players'][ids]['messagetoedit'].chat.id, games[id]['players'][ids]['messagetoedit'].message_id)
+            except:
+                 pass
             games[id]['players'][ids]['lastloc']=games[id]['players'][ids]['location']
     text=''        
     for ids in games[id]['players']:
@@ -199,14 +202,18 @@ def endturn(id):
         winner='spy'
     if endgame==0:
         for ids in games[id]['players']:
-            sendacts(games[id]['players'][ids])
+            if games[id]['players'][ids]['flashed']==0:
+                sendacts(games[id]['players'][ids])
+            else:
+                pass
         t=threading.Timer(90, endturn, args=[id])
         t.start()
         games[id]['gametimer']=t
         games[id]['turn']+=1
         games[id]['flashed']=[]
         for ids in games[id]['players']:
-            games[id]['players'][ids]['ready']=0
+            if games[id]['players'][ids]['flashed']==0:
+              games[id]['players'][ids]['ready']=0
             games[id]['players'][ids]['stealing']=0
             if games[id]['players'][ids]['glasses']>0:
                 games[id]['players'][ids]['glasses']-=1
