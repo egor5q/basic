@@ -44,7 +44,23 @@ def startg(m):
         if len(games[m.chat.id]['players'])==2:
             games[m.chat.id]['timer'].cancel()
             begin(m.chat.id)
-            
+    
+@bot.message_handler(commands=['join'])
+def join(m):
+    no=0
+    if m.chat.id in games:
+        for ids in games[m.chat.id]['players']:
+            if games[m.chat.id]['players'][ids]['id']==m.from_user.id:
+                no=1
+    if no==0:
+        try:
+            bot.send_message(m.from_user.id, 'Вы успешно присоединились!')
+            games[m.chat.id]['players'].update(createplayer(m.from_user.id, m.from_user.first_name, m.chat.id))
+            bot.send_message(m.chat.id, m.from_user.first_name+' присоединился!')
+        except:
+            bot.send_message(m.chat.id, 'Для начала напишите боту @Spy_VS_Security_Bot что-нибудь!')
+    
+    
             
 def begin(id):
     securityitems=['glasses','pistol','tizer', 'glasses']
