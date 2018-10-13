@@ -54,7 +54,7 @@ def join(m):
         for ids in games[m.chat.id]['players']:
             if games[m.chat.id]['players'][ids]['id']==m.from_user.id:
                 no=1
-    if no==0:
+    if no==0 and len(games[m.chat.id]['players'])<2:
         try:
             bot.send_message(m.from_user.id, 'Вы успешно присоединились!')
             games[m.chat.id]['players'].update(createplayer(m.from_user.id, m.from_user.first_name, m.chat.id))
