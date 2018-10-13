@@ -202,7 +202,10 @@ def endturn(id):
             games[id]['players'][idss]['silent']!=1:
                 hearinfo+='Вы слышите движение в локации: '+loctoname(games[id]['players'][idss]['location'])+'!\n'
         bot.send_message(player['id'],hearinfo)
-        if player['treasure']==1 and player['disarmed']==0 and player['location']=='spystart':
+    for ids in games[id]['players']:
+        if games[id]['players'][ids]['treasure']==1 and \
+        games[id]['players'][ids]['disarmed']==0 and \
+        games[id]['players'][ids]['location']=='spystart':
             games[id]['treasurestealed']=1
                     
     if text=='':
@@ -219,10 +222,10 @@ def endturn(id):
     if spyalive<=0:
         endgame=1
         winner='security'
-    if games[id]['turn']>=15:
+    if games[id]['turn']>=25:
         endgame=1
         winner='security'
-        games[id]['texttohistory']+='Победа охраны по причине: прошло 15 ходов!\n\n'
+        games[id]['texttohistory']+='Победа охраны по причине: прошло 25 ходов!\n\n'
     if games[id]['treasurestealed']==1:
         endgame=1
         winner='spy'
