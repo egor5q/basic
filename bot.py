@@ -158,13 +158,16 @@ def endturn(id):
             games[id]['texttohistory']+='Шпион '+player['name']+' украл сокровище!\n\n'
             bot.send_message(player['id'],'Вы успешно украли сокровище! Теперь выберитесь отсюда (Выход в той же локации, где вы начинали игру).')
         
-        if player['role']=='security' and player['flashed']==0:
+        if player['role']=='security':
             for idss in games[id]['players']:
                 if player['location']==games[id]['players'][idss]['location'] and games[id]['players'][idss]['role']!='security':
+                  if player['flashed']==0:
                     games[id]['players'][idss]['disarmed']=1
                     text+='Охранник нейтрализовал шпиона в локации: '+loctoname(player['location'])+'!\n'
                     games[id]['texttohistory']+='Охранник '+player['name']+' нейтрализовал шпиона в локации '+loctoname(player['location'])+'!\n\n'
                     bot.send_message(player['id'],'Вы нейтрализовали шпиона!')
+                  else:
+                    bot.send_message(games[id]['players'][idss]['id'], 'В вашей текущей локации вы видите ослеплённого охранника! Поторопитесь уйти...') 
                      
         if player['role']=='security' and player['flashed']==0 and player['lastloc']!=player['location']:
             for idss in games[id]['players']: 
