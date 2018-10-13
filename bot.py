@@ -665,10 +665,7 @@ def createplayer(id,name,chatid):
 @bot.message_handler()
 def jjhgh(m):
     print(m.chat.id)
-    try:
-        print(m.photo.file_id)
-    except:
-        pass
+        print(m['photo']['file_id'])
 
 
 
