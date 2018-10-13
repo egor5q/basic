@@ -357,23 +357,23 @@ def inline(call):
             text=''
             for ids in player['cameras']:
                 if ids=='spystart':
-                    text+='*Старт шпионов*:\n'
+                    text+='Старт шпионов:\n'
                 elif ids=='treasure':
-                    text+='*Комната с сокровищем*:\n'
+                    text+='Комната с сокровищем:\n'
                 elif ids=='leftcorridor':
-                    text+='*Левый коридор*:\n'
+                    text+='Левый коридор:\n'
                 elif ids=='rightcorridor':
-                    text+='*Правый коридор*:\n'
+                    text+='Правый коридор:\n'
                 elif ids=='leftpass':
-                    text+='*Левый обход*:\n'
+                    text+='Левый обход:\n'
                 elif ids=='rightpass':
-                    text+='*Правый обход*:\n'
+                    text+='Правый обход:\n'
                 for idss in games[player['chatid']]['players']:
                     if games[player['chatid']]['players'][idss]['location']==ids and games[player['chatid']]['players'][idss]['id']!=player['id']:
                         text+=games[player['chatid']]['players'][idss]['name']+' был замечен на камерах!\n'
             if text=='':
                 text='У вас не установлено ни одной камеры!'
-            bot.answer_callback_query(call.id,text, show_alert=True, parse_mode='markdown')
+            bot.answer_callback_query(call.id,text, show_alert=True)
             
     elif call.data=='wait':
         player['ready']=1
@@ -544,7 +544,7 @@ def inline(call):
     elif 'history' in call.data:
         x=call.data.split(' ')
         x=x[1]
-        bot.answer_callback_query(call.id,history[x], show_alert=True, parse_mode='markdown')
+        bot.answer_callback_query(call.id,history[x], show_alert=True)
 
             
             
