@@ -36,7 +36,11 @@ def creategamee(m):
         t.start()
         games[m.chat.id]['timer']=t
         
-        
+     
+@bot.message_handler(commands=['map'])
+def map(m):
+    bot.send_photo(m.chat.id, 'AgADAgAD06sxG7wwGEqukXmiDU8iF5zPtw4ABCn0Y60xUVfWDfgEAAEC')
+
 @bot.message_handler(commands=['startgame'])
 def startg(m):
     if m.chat.id in games:
