@@ -342,7 +342,6 @@ def inline(call):
             textt='Комната с сокровищем'
         if player['location']=='spystart':
             kb.add(types.InlineKeyboardButton(text='Левый коридор', callback_data='leftcorridor'),types.InlineKeyboardButton(text='Правый корридор', callback_data='rightcorridor'))
-            kb.add(types.InlineKeyboardButton(text='Левый обход', callback_data='leftpass'),types.InlineKeyboardButton(text='Правый обход', callback_data='rightpass'))
             kb.add(types.InlineKeyboardButton(text='Назад', callback_data='back'))
             
         if player['location']=='treasure':
@@ -362,12 +361,12 @@ def inline(call):
             kb.add(types.InlineKeyboardButton(text='Назад', callback_data='back'))
             
         if player['location']=='rightpass':
-            kb.add(types.InlineKeyboardButton(text='Левый обход', callback_data='leftpass'),types.InlineKeyboardButton(text='Старт шпионов', callback_data='spystart'))
+            kb.add(types.InlineKeyboardButton(text='Левый обход', callback_data='leftpass'))
             kb.add(types.InlineKeyboardButton(text=textt, callback_data='treasure'))
             kb.add(types.InlineKeyboardButton(text='Назад', callback_data='back'))
             
         if player['location']=='leftpass':
-            kb.add(types.InlineKeyboardButton(text='Правый обход', callback_data='rightpass'),types.InlineKeyboardButton(text='Старт шпионов', callback_data='spystart'))
+            kb.add(types.InlineKeyboardButton(text='Правый обход', callback_data='rightpass'))
             kb.add(types.InlineKeyboardButton(text=textt, callback_data='treasure'))
             kb.add(types.InlineKeyboardButton(text='Назад', callback_data='back'))
             
@@ -435,7 +434,7 @@ def inline(call):
             
     elif call.data=='rightpass':
         x=player['location']
-        if x=='rightcorridor' or x=='spystart' or x=='treasure':
+        if x=='rightcorridor' or x=='treasure':
             player['lastloc']=player['location']
             medit('Вы перемещаетесь в локацию: '+loctoname(call.data)+'.',call.message.chat.id, call.message.message_id)
             player['location']=call.data   
@@ -444,7 +443,7 @@ def inline(call):
            
     elif call.data=='leftpass':
         x=player['location']
-        if x=='leftcorridor' or x=='spystart' or x=='treasure':
+        if x=='leftcorridor' or x=='treasure':
             player['lastloc']=player['location']
             medit('Вы перемещаетесь в локацию: '+loctoname(call.data)+'.',call.message.chat.id, call.message.message_id)
             player['location']=call.data   
@@ -478,7 +477,7 @@ def inline(call):
             
     elif call.data=='spystart':
         x=player['location']
-        if x=='leftcorridor' or x=='rightcorridor' or x=='leftpass' or x=='rightpass':
+        if x=='leftcorridor' or x=='rightcorridor':
             player['lastloc']=player['location']
             medit('Вы перемещаетесь в локацию: '+loctoname(call.data)+'.',call.message.chat.id, call.message.message_id)
             player['location']=call.data
@@ -489,6 +488,7 @@ def inline(call):
         if 'glasses' in player['items']:
             player['items'].remove('glasses')
             player['glasses']=1
+            games[player['chatid']]['texttohistory']+='Охранник '+player['name']+' надел очко!\n\n'
             bot.answer_callback_query(call.id,'Вы успешно надели очки! На этот ход вы защищены от флэшек!')
             kb=types.InlineKeyboardMarkup()
             for ids in player['items']:
