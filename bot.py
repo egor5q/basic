@@ -231,7 +231,7 @@ def endturn(id):
             if games[id]['players'][ids]['flashed']==0:
                 sendacts(games[id]['players'][ids])
             else:
-                pass
+                games[id]['players'][ids]['lastloc']=games[id]['players'][ids]['location']
         t=threading.Timer(90, endturn, args=[id])
         t.start()
         games[id]['gametimer']=t
@@ -361,12 +361,12 @@ def inline(call):
             kb.add(types.InlineKeyboardButton(text='Назад', callback_data='back'))
             
         if player['location']=='rightpass':
-            kb.add(types.InlineKeyboardButton(text='Левый обход', callback_data='leftpass'))
+            kb.add(types.InlineKeyboardButton(text='Левый обход', callback_data='leftpass'),types.InlineKeyboardButton(text='Правый коридор', callback_data='rightcorridor'))
             kb.add(types.InlineKeyboardButton(text=textt, callback_data='treasure'))
             kb.add(types.InlineKeyboardButton(text='Назад', callback_data='back'))
             
         if player['location']=='leftpass':
-            kb.add(types.InlineKeyboardButton(text='Правый обход', callback_data='rightpass'))
+            kb.add(types.InlineKeyboardButton(text='Правый обход', callback_data='rightpass'),types.InlineKeyboardButton(text='Левый коридор', callback_data='leftcorridor'))
             kb.add(types.InlineKeyboardButton(text=textt, callback_data='treasure'))
             kb.add(types.InlineKeyboardButton(text='Назад', callback_data='back'))
             
@@ -434,7 +434,7 @@ def inline(call):
             
     elif call.data=='rightpass':
         x=player['location']
-        if x=='rightcorridor' or x=='treasure':
+        if x=='rightcorridor' or x=='treasure' or x=='leftpass':
             player['lastloc']=player['location']
             medit('Вы перемещаетесь в локацию: '+loctoname(call.data)+'.',call.message.chat.id, call.message.message_id)
             player['location']=call.data   
@@ -443,7 +443,7 @@ def inline(call):
            
     elif call.data=='leftpass':
         x=player['location']
-        if x=='leftcorridor' or x=='treasure':
+        if x=='leftcorridor' or x=='treasure' or x=='rightpass':
             player['lastloc']=player['location']
             medit('Вы перемещаетесь в локацию: '+loctoname(call.data)+'.',call.message.chat.id, call.message.message_id)
             player['location']=call.data   
