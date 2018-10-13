@@ -182,17 +182,21 @@ def endturn(id):
                     games[id]['players'][idss]['disarmed']=1
          
         if player['location']=='treasure':
-            loclist=['rightcorridor','leftcorridor']     
+            loclist=['rightcorridor','leftcorridor','stock']     
         elif player['location']=='spystart':
-            loclist=['rightcorridor','leftcorridor']
+            loclist=['rightcorridor','leftcorridor','midcorridor']
         elif player['location']=='leftcorridor':
             loclist=['leftpass','treasure', 'spystart']
         elif player['location']=='rightcorridor':
             loclist=['rightpass','treasure','spystart']
         elif player['location']=='leftpass':
-            loclist=['leftcorridor','treasure']
+            loclist=['leftcorridor','stock']
         elif player['location']=='rightpass':
-            loclist=['rightcorridor','treasure']
+            loclist=['rightcorridor','stock']
+        elif player['location']=='stock':
+            loclist=['rightpass','treasure','leftpass']
+        elif player['location']=='midcorridor':
+            loclist=['spystart','treasure']
         else:
             loclist=[]
             
@@ -349,12 +353,12 @@ def inline(call):
             textt='Комната с сокровищем'
         if player['location']=='spystart':
             kb.add(types.InlineKeyboardButton(text='Левый коридор', callback_data='leftcorridor'),types.InlineKeyboardButton(text='Правый корридор', callback_data='rightcorridor'))
+            kb.add(types.InlineKeyboardButton(text='Центральный коридор', callback_data='midcorridor'))
             kb.add(types.InlineKeyboardButton(text='Назад', callback_data='back'))
             
         if player['location']=='treasure':
             kb.add(types.InlineKeyboardButton(text='Левый коридор', callback_data='leftcorridor'),types.InlineKeyboardButton(text='Правый корридор', callback_data='rightcorridor'))
-            kb.add(types.InlineKeyboardButton(text='Левый обход', callback_data='leftpass'),types.InlineKeyboardButton(text='Правый обход', callback_data='rightpass'))
-            kb.add(types.InlineKeyboardButton(text='Светозащитная комната', callback_data='antiflashroom'))
+            kb.add(types.InlineKeyboardButton(text='Центральный корридор', callback_data='midcorridor'),types.InlineKeyboardButton(text='Склад', callback_data='stock'))
             kb.add(types.InlineKeyboardButton(text='Назад', callback_data='back'))
             
         if player['location']=='leftcorridor':
@@ -368,16 +372,19 @@ def inline(call):
             kb.add(types.InlineKeyboardButton(text='Назад', callback_data='back'))
             
         if player['location']=='rightpass':
-            kb.add(types.InlineKeyboardButton(text='Левый обход', callback_data='leftpass'),types.InlineKeyboardButton(text='Правый коридор', callback_data='rightcorridor'))
-            kb.add(types.InlineKeyboardButton(text=textt, callback_data='treasure'))
+            kb.add(types.InlineKeyboardButton(text='Склад', callback_data='stock'),types.InlineKeyboardButton(text='Правый коридор', callback_data='rightcorridor'))
             kb.add(types.InlineKeyboardButton(text='Назад', callback_data='back'))
             
         if player['location']=='leftpass':
-            kb.add(types.InlineKeyboardButton(text='Правый обход', callback_data='rightpass'),types.InlineKeyboardButton(text='Левый коридор', callback_data='leftcorridor'))
-            kb.add(types.InlineKeyboardButton(text=textt, callback_data='treasure'))
+            kb.add(types.InlineKeyboardButton(text='Склад', callback_data='stock'),types.InlineKeyboardButton(text='Левый коридор', callback_data='leftcorridor'))
             kb.add(types.InlineKeyboardButton(text='Назад', callback_data='back'))
             
-        if player['location']=='antiflashroom':
+        if player['location']=='midcorridor':
+            kb.add(types.InlineKeyboardButton(text='Старт шпионов', callback_data='spystart'),types.InlineKeyboardButton(text=textt, callback_data='treasure'))
+            kb.add(types.InlineKeyboardButton(text='Назад', callback_data='back'))
+        
+        if player['location']=='stock':
+            kb.add(types.InlineKeyboardButton(text='Левый обход', callback_data='leftpass'),types.InlineKeyboardButton(text='Правый обход', callback_data='rightpass'))
             kb.add(types.InlineKeyboardButton(text=textt, callback_data='treasure'))
             kb.add(types.InlineKeyboardButton(text='Назад', callback_data='back'))
             
@@ -408,6 +415,10 @@ def inline(call):
                     text+='Левый обход:\n'
                 elif ids=='rightpass':
                     text+='Правый обход:\n'
+                elif ids=='stock':
+                    text+='Склад:\n'
+                elif ids=='midcorridor':
+                    text+='Центральный корридор:\n'
                 for idss in games[player['chatid']]['players']:
                     if games[player['chatid']]['players'][idss]['location']==ids and games[player['chatid']]['players'][idss]['id']!=player['id']:
                         text+=games[player['chatid']]['players'][idss]['name']+' был замечен на камерах!\n'
@@ -441,7 +452,7 @@ def inline(call):
             
     elif call.data=='rightpass':
         x=player['location']
-        if x=='rightcorridor' or x=='treasure' or x=='leftpass':
+        if x=='rightcorridor' or x=='stock':
             player['lastloc']=player['location']
             medit('Вы перемещаетесь в локацию: '+loctoname(call.data)+'.',call.message.chat.id, call.message.message_id)
             player['location']=call.data   
@@ -450,7 +461,7 @@ def inline(call):
            
     elif call.data=='leftpass':
         x=player['location']
-        if x=='leftcorridor' or x=='treasure' or x=='rightpass':
+        if x=='leftcorridor' or x=='stock':
             player['lastloc']=player['location']
             medit('Вы перемещаетесь в локацию: '+loctoname(call.data)+'.',call.message.chat.id, call.message.message_id)
             player['location']=call.data   
@@ -459,7 +470,7 @@ def inline(call):
             
     elif call.data=='treasure':
         x=player['location']
-        if x!='spystart':
+        if x=='leftcorridor' or x=='rightcorridor' or x=='midcorridor' or x=='stock':
             if player['role']=='security':
                 player['lastloc']=player['location']
                 medit('Вы перемещаетесь в локацию: '+loctoname(call.data)+'.',call.message.chat.id, call.message.message_id)
@@ -473,9 +484,9 @@ def inline(call):
                 player['stealing']=1
             testturn(player['chatid'])
                 
-    elif call.data=='antiflashroom':
+    elif call.data=='midcorridor':
         x=player['location']
-        if x=='treasure':
+        if x=='spystart' or x=='treasure':
             player['lastloc']=player['location']
             medit('Вы перемещаетесь в локацию: '+loctoname(call.data)+'.',call.message.chat.id, call.message.message_id)
             player['location']=call.data   
@@ -484,7 +495,25 @@ def inline(call):
             
     elif call.data=='spystart':
         x=player['location']
-        if x=='leftcorridor' or x=='rightcorridor':
+        if x=='leftcorridor' or x=='rightcorridor' or x=='midcorridor':
+            player['lastloc']=player['location']
+            medit('Вы перемещаетесь в локацию: '+loctoname(call.data)+'.',call.message.chat.id, call.message.message_id)
+            player['location']=call.data
+            player['ready']=1
+            testturn(player['chatid'])
+            
+    elif call.data=='midcorridor':
+        x=player['location']
+        if x=='spystart' or x=='treasure':
+            player['lastloc']=player['location']
+            medit('Вы перемещаетесь в локацию: '+loctoname(call.data)+'.',call.message.chat.id, call.message.message_id)
+            player['location']=call.data
+            player['ready']=1
+            testturn(player['chatid'])
+            
+    elif call.data=='stock':
+        x=player['location']
+        if x=='leftpass' or x=='rightpass' or x=='treasure':
             player['lastloc']=player['location']
             medit('Вы перемещаетесь в локацию: '+loctoname(call.data)+'.',call.message.chat.id, call.message.message_id)
             player['location']=call.data
@@ -524,19 +553,26 @@ def inline(call):
         if 'flash' in player['items']:
             kb=types.InlineKeyboardMarkup()
             if player['location']=='leftcorridor':
-                locs=['spystart','treasure', 'leftpass','leftcorridor']
+                locs=['spystart','treasure','leftpass','leftcorridor']
             if player['location']=='rightcorridor':
                 locs=['spystart','treasure', 'rightpass','rightcorridor']
             if player['location']=='rightpass':
-                locs=['treasure', 'rightcorridor','rightpass']
+                locs=['rightcorridor','stock','rightpass']
             if player['location']=='leftpass':
-                locs=['treasure', 'leftcorridor','leftpass']
+                locs=['stock','leftcorridor','leftpass']
             if player['location']=='treasure':
-                locs=['leftpass','rightpass','leftcorridor','rightcorridor','treasure']
+                locs=['leftcorridor','rightcorridor','stock','treasure']
             if player['location']=='spystart':
-                locs=['leftcorridor','rightcorridor','spystart']
+                locs=['leftcorridor','rightcorridor','midcorridor','spystart']
+            if player['location']=='midcorridor':
+                locs=['spystart','treasure','midcorridor']
+            if player['location']=='stock':
+                locs=['rightpass','leftpass','treasure','stock']
             for ids in locs:
-                kb.add(types.InlineKeyboardButton(text=loctoname(ids), callback_data='flash '+ids))
+                if ids!=player['location']:
+                    kb.add(types.InlineKeyboardButton(text=loctoname(ids), callback_data='flash '+ids))
+                else:
+                    kb.add(types.InlineKeyboardButton(text='Эта локация', callback_data='flash '+ids))
             kb.add(types.InlineKeyboardButton(text='Назад', callback_data='back'))
             medit('Выберите, куда будете кидать флэшку.', call.message.chat.id, call.message.message_id, reply_markup=kb)
             
@@ -604,6 +640,10 @@ def loctoname(x):
         return 'Правый обход'
     if x=='antiflashroom':
         return 'Светозащитная комната'
+    if x=='midcorridor':
+        return 'Центральный корридор'
+    if x=='stock':
+        return 'Склад'
             
 def itemtoname(x):
     if x=='flash':
