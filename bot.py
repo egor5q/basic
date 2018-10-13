@@ -666,5 +666,6 @@ def jjhgh(m):
 
 if True:
    print('7777')
+   bot.send_message(-1001373723053, 'Бот был перезагружен!')
    bot.polling(none_stop=True,timeout=600)
 
