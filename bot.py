@@ -105,7 +105,7 @@ def begin(id):
     for ids in games[id]['players']:
         if games[id]['players'][ids]['role']=='security':
             games[id]['players'][ids]['items']=securityitems
-            games[id]['players'][ids]['location']='treasure'
+            games[id]['players'][ids]['location']='stock'
         elif games[id]['players'][ids]['role']=='spy':
             games[id]['players'][ids]['items']=spyitems
             games[id]['players'][ids]['location']='spystart'
