@@ -117,12 +117,12 @@ def begin(id):
 def endturn(id):
     texttohistory=''
     for ids in games[id]['players']:
-        games[id]['texttohistory']+='Начальная локация игрока '+ games[id]['players'][ids]['name']+': '+loctoname(games[id]['players'][ids]['lastloc'])+'\n'
-        games[id]['texttohistory']+='Конечная локация игрока '+ games[id]['players'][ids]['name']+': '+loctoname(games[id]['players'][ids]['location'])+'\n'
+        games[id]['texttohistory']+='Начальная локация игрока '+ games[id]['players'][ids]['name']+': '+loctoname(games[id]['players'][ids]['lastloc'])+'\n\n'
+        games[id]['texttohistory']+='Конечная локация игрока '+ games[id]['players'][ids]['name']+': '+loctoname(games[id]['players'][ids]['location'])+'\n\n'
         if games[id]['players'][ids]['ready']==0:
             try:
               medit('Время вышло!',games[id]['players'][ids]['messagetoedit'].chat.id, games[id]['players'][ids]['messagetoedit'].message_id)
-              games[id]['texttohistory']+=games[id]['players'][ids]['name']+' АФК!\n'
+              games[id]['texttohistory']+=games[id]['players'][ids]['name']+' АФК!\n\n'
             except:
                  pass
             games[id]['players'][ids]['lastloc']=games[id]['players'][ids]['location']
@@ -131,10 +131,10 @@ def endturn(id):
         player=games[id]['players'][ids]
         if player['setupcamera']==1:
             player['cameras'].append(player['location'])
-            games[id]['texttohistory']+='Шпион '+player['name']+' устанавливает камеру в локацию '+loctoname(player['location'])+'!\n'
+            games[id]['texttohistory']+='Шпион '+player['name']+' устанавливает камеру в локацию '+loctoname(player['location'])+'!\n\n'
         if player['role']=='security' and player['glasses']<=0 and player['location'] in games[id]['flashed']:
             player['flashed']=2    
-            games[id]['texttohistory']+='Охранник '+player['name']+' был ослеплен флэшкой!\n'
+            games[id]['texttohistory']+='Охранник '+player['name']+' был ослеплен флэшкой!\n\n'
             bot.send_message(player['id'],'Вы были ослеплены флэшкой! В следующий ход вы не сможете действовать.')
         if player['destroycamera']==1:
             if player['flashed']!=1:
@@ -142,15 +142,15 @@ def endturn(id):
                     if player['location'] in games[id]['players'][idss]['cameras']:
                         games[id]['players'][idss]['cameras'].remove(player['location'])
                         text+='Охранник уничтожил камеру шпиона в локации: '+player['location']+'!\n'
-                        games[id]['texttohistory']+='Охранник '+player['name']+' уничтожил камеру в локации '+loctoname(player['location'])+'!\n'
+                        games[id]['texttohistory']+='Охранник '+player['name']+' уничтожил камеру в локации '+loctoname(player['location'])+'!\n\n'
             else:
                 bot.send_message(player['id'],'Вы были ослеплены! Камеры шпионов обнаружить не удалось.')
-                games[id]['texttohistory']+='Охранник '+player['name']+' был ослеплён! Ему не удалось обнаружить камеры.\n'
+                games[id]['texttohistory']+='Охранник '+player['name']+' был ослеплён! Ему не удалось обнаружить камеры.\n\n'
                                                                                                                         
                 
         if player['stealing']==1:
             player['treasure']=1
-            games[id]['texttohistory']+='Шпион '+player['name']+' украл сокровище!\n'
+            games[id]['texttohistory']+='Шпион '+player['name']+' украл сокровище!\n\n'
             bot.send_message(player['id'],'Вы успешно украли сокровище! Теперь выберитесь отсюда (Выход в той же локации, где вы начинали игру).')
         
         if player['role']=='security' and player['flashed']==0:
@@ -158,14 +158,14 @@ def endturn(id):
                 if player['location']==games[id]['players'][idss]['location'] and games[id]['players'][idss]['role']!='security':
                     games[id]['players'][idss]['disarmed']=1
                     text+='Охранник нейтрализовал шпиона в локации: '+loctoname(player['location'])+'!\n'
-                    games[id]['texttohistory']+='Охранник '+player['name']+' нейтрализовал шпиона в локации '+loctoname(player['location'])+'!\n'
+                    games[id]['texttohistory']+='Охранник '+player['name']+' нейтрализовал шпиона в локации '+loctoname(player['location'])+'!\n\n'
                     bot.send_message(player['id'],'Вы нейтрализовали шпиона!')
                      
         if player['role']=='security' and player['flashed']==0 and player['lastloc']!=player['location']:
             for idss in games[id]['players']: 
                 if games[id]['players'][idss]['lastloc']==player['location'] and games[id]['players'][idss]['location']==player['lastloc']:
                     text+='Шпион и охранник столкнулись в коридоре! Шпион нейтрализован!\n'
-                    games[id]['texttohistory']+='Охранник '+player['name']+' нейтрализовал шпиона по пути в локацию '+loctoname(player['location'])+'!\n'
+                    games[id]['texttohistory']+='Охранник '+player['name']+' нейтрализовал шпиона по пути в локацию '+loctoname(player['location'])+'!\n\n'
                     bot.send_message(player['id'],'Вы нейтрализовали шпиона!')
                     games[id]['players'][idss]['disarmed']=1
          
@@ -517,7 +517,7 @@ def inline(call):
         player['items'].remove('flash')
         games[player['chatid']]['flashed'].append(location)
         medit('Вы бросили флэшку в локацию: '+loctoname(location)+'.', call.message.chat.id, call.message.message_id)
-        games[player['chatid']]['texttohistory']+='Шпион '+player['name']+' бросил флэшку в локацию '+loctoname(location)+'!\n'
+        games[player['chatid']]['texttohistory']+='Шпион '+player['name']+' бросил флэшку в локацию '+loctoname(location)+'!\n\n'
         kb.add(types.InlineKeyboardButton(text='Перемещение', callback_data='move'),types.InlineKeyboardButton(text='Предметы', callback_data='items'))
         if player['role']=='spy':
                 kb.add(types.InlineKeyboardButton(text='Инфо с камер', callback_data='camerainfo'))
@@ -531,7 +531,7 @@ def inline(call):
             kb=types.InlineKeyboardMarkup()
             player['items'].remove('costume')
             player['silent']=1
-            games[player['chatid']]['texttohistory']+='Шпион '+player['name']+' надел маскировочный костюм!\n'
+            games[player['chatid']]['texttohistory']+='Шпион '+player['name']+' надел маскировочный костюм!\n\n'
             medit('Вы надели маскировочный костюм! На этом ходу ваши передвижения не будут услышаны.', call.message.chat.id, call.message.message_id)
             kb.add(types.InlineKeyboardButton(text='Перемещение', callback_data='move'),types.InlineKeyboardButton(text='Предметы', callback_data='items'))
             if player['role']=='spy':
