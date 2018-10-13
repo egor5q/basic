@@ -250,7 +250,10 @@ def endturn(id):
             bot.send_message(id, 'Победа охраны!')
         else:
             bot.send_message(id, 'Победа шпионов!')
-        del games[id]
+        try:
+            del games[id]
+        except:
+            pass
 
                    
 def datagen(game,text):
