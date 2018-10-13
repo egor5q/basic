@@ -517,17 +517,17 @@ def inline(call):
         if 'flash' in player['items']:
             kb=types.InlineKeyboardMarkup()
             if player['location']=='leftcorridor':
-                locs=['spystart','treasure', 'leftpass']
+                locs=['spystart','treasure', 'leftpass','leftcorridor']
             if player['location']=='rightcorridor':
-                locs=['spystart','treasure', 'rightpass']
+                locs=['spystart','treasure', 'rightpass','rightcorridor']
             if player['location']=='rightpass':
-                locs=['treasure', 'rightcorridor']
+                locs=['treasure', 'rightcorridor','rightpass']
             if player['location']=='leftpass':
-                locs=['treasure', 'leftcorridor']
+                locs=['treasure', 'leftcorridor','leftpass']
             if player['location']=='treasure':
-                locs=['leftpass','rightpass','leftcorridor','rightcorridor']
+                locs=['leftpass','rightpass','leftcorridor','rightcorridor','treasure']
             if player['location']=='spystart':
-                locs=['leftcorridor','rightcorridor']
+                locs=['leftcorridor','rightcorridor','spystart']
             for ids in locs:
                 kb.add(types.InlineKeyboardButton(text=loctoname(ids), callback_data='flash '+ids))
             kb.add(types.InlineKeyboardButton(text='Назад', callback_data='back'))
