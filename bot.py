@@ -182,7 +182,7 @@ def endturn(id):
                     games[id]['players'][idss]['disarmed']=1
          
         if player['location']=='treasure':
-            loclist=['rightcorridor','leftcorridor','stock']     
+            loclist=['rightcorridor','leftcorridor','stock','midcorridor']     
         elif player['location']=='spystart':
             loclist=['rightcorridor','leftcorridor','midcorridor']
         elif player['location']=='leftcorridor':
