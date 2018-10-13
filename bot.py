@@ -658,7 +658,7 @@ def createplayer(id,name,chatid):
           }
     }
 
-@bot.message_handler()
+@bot.message_handler(content_types=['text'])
 def jjhgh(m):
     print(m.chat.id)
 
