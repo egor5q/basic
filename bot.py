@@ -665,7 +665,7 @@ def createplayer(id,name,chatid):
 @bot.message_handler(content_types=['photo'])
 def jjhgh(m):
     print(m.chat.id)
-    print(m.photo.file_id)
+    print(m.photo)
 
 
 
