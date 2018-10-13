@@ -308,6 +308,8 @@ def inline(call):
                 yes=1
     if yes==0:
       try:
+         print(history)
+         print(x)
          aa=history[x]
          try:
              bot.send_message(call.from_user.id,history[x])
@@ -316,7 +318,7 @@ def inline(call):
       except:
          medit('История этой игры больше недоступна!',call.message.chat.id,call.message.message_id)
     else:
-        bot.send_message(call.message.chat.id, 'Нельзя смотреть историю, находясь в игре!')
+        bot.send_message(call.message.chat.id, call.from_user.first_name+', нельзя смотреть историю, находясь в игре!')
         
   yes=0
   for ids in games:
