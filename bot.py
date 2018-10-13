@@ -544,7 +544,10 @@ def inline(call):
     elif 'history' in call.data:
         x=call.data.split(' ')
         x=x[1]
-        bot.answer_callback_query(call.id,history[x], show_alert=True)
+        try:
+           bot.send_message(call.from_user.id,history[x])
+        except:
+           bot.send_message(call.chat.id, call.from_user.first_name+', сначала отпишитесь боту в личку!')
 
             
             
