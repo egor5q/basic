@@ -308,10 +308,13 @@ def inline(call):
                 yes=1
     if yes==0:
       try:
-         bot.send_message(call.from_user.id,history[x])
+         aa=history[x]
+         try:
+             bot.send_message(call.from_user.id,history[x])
+         except:
+             bot.send_message(call.message.chat.id, call.from_user.first_name+', напишите боту в личку, чтобы я мог отправлять вам историю боя!')
       except:
-         bot.send_message(call.message.chat.id, call.from_user.first_name+', произошла ошибка. Либо вы не написали боту в личку, либо '+
-                         'история этой игры недоступна.')
+         medit('История этой игры больше недоступна!',call.message.chat.id,call.message.message_id)
     else:
         bot.send_message(call.message.chat.id, 'Нельзя смотреть историю, находясь в игре!')
         
