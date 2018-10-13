@@ -158,7 +158,7 @@ def endturn(id):
                 if player['location']==games[id]['players'][idss]['location'] and games[id]['players'][idss]['role']!='security':
                     games[id]['players'][idss]['disarmed']=1
                     text+='Охранник нейтрализовал шпиона в локации: '+loctoname(player['location'])+'!\n'
-                    games[id]['texttohistory']+='Охранник 'player['name']+' нейтрализовал шпиона в локации '+loctoname(player['location'])+'!\n'
+                    games[id]['texttohistory']+='Охранник '+player['name']+' нейтрализовал шпиона в локации '+loctoname(player['location'])+'!\n'
                     bot.send_message(player['id'],'Вы нейтрализовали шпиона!')
                      
         if player['role']=='security' and player['flashed']==0 and player['lastloc']!=player['location']:
