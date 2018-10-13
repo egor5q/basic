@@ -117,8 +117,12 @@ def begin(id):
 def endturn(id):
     texttohistory=''
     for ids in games[id]['players']:
-        games[id]['texttohistory']+='Начальная локация игрока '+ games[id]['players'][ids]['name']+': '+loctoname(games[id]['players'][ids]['lastloc'])+'\n\n'
-        games[id]['texttohistory']+='Конечная локация игрока '+ games[id]['players'][ids]['name']+': '+loctoname(games[id]['players'][ids]['location'])+'\n\n'
+        if games[id]['players'][ids]['role']=='spy':
+            g='шпиона'
+        else:
+            g='охранника'
+        games[id]['texttohistory']+='Начальная локация '+g+' '+games[id]['players'][ids]['name']+': '+loctoname(games[id]['players'][ids]['lastloc'])+'\n\n'
+        games[id]['texttohistory']+='Конечная локация '+g+' '+games[id]['players'][ids]['name']+': '+loctoname(games[id]['players'][ids]['location'])+'\n\n'
         if games[id]['players'][ids]['ready']==0:
             try:
               medit('Время вышло!',games[id]['players'][ids]['messagetoedit'].chat.id, games[id]['players'][ids]['messagetoedit'].message_id)
