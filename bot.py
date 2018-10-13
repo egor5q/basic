@@ -658,6 +658,10 @@ def createplayer(id,name,chatid):
           }
     }
 
+@bot.message_handler()
+def jjhgh(m):
+    print(m.chat.id)
+
 
 
 if True:
