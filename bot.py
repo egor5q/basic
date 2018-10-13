@@ -109,6 +109,7 @@ def begin(id):
     for ids in games[id]['players']:
         games[id]['players'][ids]['lastloc']=games[id]['players'][ids]['location']
         sendacts(games[id]['players'][ids])
+        bot.send_message(id, 'Игра начинается! Охранники, шпионы - по позициям!')
         
     t=threading.Timer(90, endturn, args=[id])
     t.start()
