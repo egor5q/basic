@@ -255,9 +255,10 @@ def datagen(game,text):
         word+=random.choice(symbollist)
         i+=1
     if word in history:
-        datagen(game,text)
+        return datagen(game,text)
     else:
         history.update({word:text})
+        return word
   
                                       
                                       
