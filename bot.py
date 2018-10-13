@@ -627,7 +627,7 @@ def creategame(id):
         'spies':0,
         'security':0,
         'timer':None,
-        'locs':['treasure','spystart','leftcorridor','rightcorridor','leftpass','rightpass','antiflashroom'],
+        'locs':['treasure','spystart','leftcorridor','rightcorridor','leftpass','rightpass','antiflashroom','midcorridor','stock'],
         'flashed':[],
         'treasurestealed':0,
         'gametimer':None,
@@ -661,9 +661,14 @@ def createplayer(id,name,chatid):
           }
     }
 
-@bot.message_handler(content_types=['text'])
+
+@bot.message_handler()
 def jjhgh(m):
     print(m.chat.id)
+    try:
+        print(m.photo.file_id)
+    except:
+        pass
 
 
 
