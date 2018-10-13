@@ -311,7 +311,7 @@ def inline(call):
          bot.send_message(call.from_user.id,history[x])
       except:
          bot.send_message(call.message.chat.id, call.from_user.first_name+', произошла ошибка. Либо вы не написали боту в личку, либо '+
-                         'история этой игры больше не доступна.')
+                         'история этой игры недоступна.')
     else:
         bot.send_message(call.message.chat.id, 'Нельзя смотреть историю, находясь в игре!')
         
