@@ -165,7 +165,7 @@ def endturn(id):
             for idss in games[id]['players']: 
                 if games[id]['players'][idss]['lastloc']==player['location'] and games[id]['players'][idss]['location']==player['lastloc']:
                     text+='Шпион и охранник столкнулись в коридоре! Шпион нейтрализован!\n'
-                    games[id]['texttohistory']+='Охранник 'player['name']+' нейтрализовал шпиона по пути в локацию '+loctoname(player['location'])+'!\n'
+                    games[id]['texttohistory']+='Охранник '+player['name']+' нейтрализовал шпиона по пути в локацию '+loctoname(player['location'])+'!\n'
                     bot.send_message(player['id'],'Вы нейтрализовали шпиона!')
                     games[id]['players'][idss]['disarmed']=1
          
