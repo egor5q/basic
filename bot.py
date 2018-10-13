@@ -142,7 +142,7 @@ def endturn(id):
             player['cameras'].append(player['location'])
             games[id]['texttohistory']+='Шпион '+player['name']+' устанавливает камеру в локацию '+loctoname(player['location'])+'!\n\n'
         if player['role']=='security' and player['glasses']<=0 and player['location'] in games[id]['flashed']:
-            player['flashed']=2    
+            player['flashed']=1  
             games[id]['texttohistory']+='Охранник '+player['name']+' был ослеплен флэшкой!\n\n'
             bot.send_message(player['id'],'Вы были ослеплены флэшкой! В следующий ход вы не сможете действовать.')
         if player['destroycamera']==1:
