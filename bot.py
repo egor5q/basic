@@ -131,7 +131,7 @@ def endturn(id):
         player=games[id]['players'][ids]
         if player['setupcamera']==1:
             player['cameras'].append(player['location'])
-            games[id]['texttohistory']+='Шпион 'player['name']+' устанавливает камеру в локацию '+loctoname(player['location'])+'!\n'
+            games[id]['texttohistory']+='Шпион '+player['name']+' устанавливает камеру в локацию '+loctoname(player['location'])+'!\n'
         if player['role']=='security' and player['glasses']<=0 and player['location'] in games[id]['flashed']:
             player['flashed']=2    
             games[id]['texttohistory']+='Охранник '+player['name']+' был ослеплен флэшкой!\n'
