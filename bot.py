@@ -219,6 +219,7 @@ def endturn(id):
     if games[id]['turn']>=15:
         endgame=1
         winner='security'
+        games[id]['texttohistory']+='Победа охраны по причине: прошло 15 ходов!\n\n'
     if games[id]['treasurestealed']==1:
         endgame=1
         winner='spy'
