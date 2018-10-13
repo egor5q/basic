@@ -292,6 +292,8 @@ def sendacts(player):
     kb.add(types.InlineKeyboardButton(text='Перемещение', callback_data='move'),types.InlineKeyboardButton(text='Предметы', callback_data='items'))
     if player['role']=='spy':
         kb.add(types.InlineKeyboardButton(text='Инфо с камер', callback_data='camerainfo'))
+    if player['role']=='security':
+        kb.add(types.InlineKeyboardButton(text='Камера в сокровищнице', callback_data='treasureinfo'))
     kb.add(types.InlineKeyboardButton(text='Ожидать', callback_data='wait'))
     if player['flashed']==0:
       msg=bot.send_message(player['id'],'Выберите действие.',reply_markup=kb)
@@ -591,6 +593,8 @@ def inline(call):
         kb.add(types.InlineKeyboardButton(text='Перемещение', callback_data='move'),types.InlineKeyboardButton(text='Предметы', callback_data='items'))
         if player['role']=='spy':
                 kb.add(types.InlineKeyboardButton(text='Инфо с камер', callback_data='camerainfo'))
+        if player['role']=='security':
+            kb.add(types.InlineKeyboardButton(text='Камера в сокровищнице', callback_data='treasureinfo'))
         kb.add(types.InlineKeyboardButton(text='Ожидать', callback_data='wait'))
         msg=bot.send_message(player['id'],'Выберите действие.', reply_markup=kb)
         player['currentmessage']=msg
@@ -606,6 +610,8 @@ def inline(call):
             kb.add(types.InlineKeyboardButton(text='Перемещение', callback_data='move'),types.InlineKeyboardButton(text='Предметы', callback_data='items'))
             if player['role']=='spy':
                 kb.add(types.InlineKeyboardButton(text='Инфо с камер', callback_data='camerainfo'))
+            if player['role']=='security':
+                kb.add(types.InlineKeyboardButton(text='Камера в сокровищнице', callback_data='treasureinfo'))
             kb.add(types.InlineKeyboardButton(text='Ожидать', callback_data='wait'))
             msg=bot.send_message(player['id'],'Выберите действие.', reply_markup=kb)
             player['currentmessage']=msg
@@ -616,11 +622,24 @@ def inline(call):
         kb.add(types.InlineKeyboardButton(text='Перемещение', callback_data='move'),types.InlineKeyboardButton(text='Предметы', callback_data='items'))
         if player['role']=='spy':
             kb.add(types.InlineKeyboardButton(text='Инфо с камер', callback_data='camerainfo'))
+        if player['role']=='security':
+            kb.add(types.InlineKeyboardButton(text='Камера в сокровищнице', callback_data='treasureinfo'))
         kb.add(types.InlineKeyboardButton(text='Ожидать', callback_data='wait'))
         medit('Выберите действие.', call.message.chat.id, call.message.message_id, reply_markup=kb)
         
-
-            
+    elif call.data=='treasureinfo':
+        stealed=0
+        text='Сокровищница:\n'
+        for idss in games[player['chatid']]['players']:
+            if games[player['chatid']]['players'][idss]['treasure']==1:
+                stealed=1
+            if games[player['chatid']]['players'][idss]['location']=='treasure' and games[player['chatid']]['players'][idss]['id']!=player['id']:
+                text+=games[player['chatid']]['players'][idss]['name']+' был замечен на камере!\n'
+        if stealed==1:
+            text+='В комнате нет сокровища!!!'
+        else:
+            text+='Сокровище на месте.'
+        bot.answer_callback_query(call.id,text, show_alert=True)         
             
             
             
