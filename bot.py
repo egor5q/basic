@@ -293,6 +293,14 @@ def medit(message_text,chat_id, message_id,reply_markup=None,parse_mode='Markdow
 
 @bot.callback_query_handler(func=lambda call:True)
 def inline(call):
+  if 'history' in call.data:
+    x=call.data.split(' ')
+    x=x[1]
+    try:
+       bot.send_message(call.from_user.id,history[x])
+    except:
+       bot.send_message(call.message.chat.id, call.from_user.first_name+', произошла ошибка. Либо вы не написали боту в личку, либо '+
+                       'история этой игры больше не доступна.')
   yes=0
   for ids in games:
     for idss in games[ids]['players']:
@@ -541,14 +549,6 @@ def inline(call):
         kb.add(types.InlineKeyboardButton(text='Ожидать', callback_data='wait'))
         medit('Выберите действие.', call.message.chat.id, call.message.message_id, reply_markup=kb)
         
-    elif 'history' in call.data:
-        x=call.data.split(' ')
-        x=x[1]
-        try:
-           bot.send_message(call.from_user.id,history[x])
-        except:
-           bot.send_message(call.chat.id, call.from_user.first_name+', произошла ошибка. Либо вы не написали боту в личку, либо '+
-                           'история этой игры больше не доступна.')
 
             
             
