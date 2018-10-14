@@ -457,6 +457,7 @@ def inline(call):
         if 'pistol' in player['items']:
             player['destroycamera']=1
             player['ready']=1
+            player['lastloc']=player['location']
             testturn(player['chatid'])
             medit('Выбрано действие: уничтожение вражеских камер.', call.message.chat.id, call.message.message_id)
             
@@ -528,6 +529,7 @@ def inline(call):
             games[player['chatid']]['texttohistory']+='Охранник '+player['name']+' установил мину-шокер в локации '+loctoname(player['location'])+'!\n\n'
             medit('Вы устанавливаете мину-шокер.', call.message.chat.id, call.message.message_id)
             player['ready']=1
+            player['lastloc']=player['location']
             testturn(player['chatid'])
             games[player['chatid']]['shockminelocs'].append(player['location'])
             
