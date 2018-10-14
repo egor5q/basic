@@ -425,7 +425,7 @@ def inline(call):
     elif call.data=='flash':
         if 'flash' in player['items']:
             locs=nearlocs[player['location']]
-            locs.append(player['location']
+            locs.append(player['location'])
             for ids in locs:
                 if ids!=player['location']:
                     kb.add(types.InlineKeyboardButton(text=loctoname(ids), callback_data='flash '+ids))
