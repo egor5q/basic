@@ -17,10 +17,10 @@ bot = telebot.TeleBot(token)
 
 games={}
 history={}
-#client1=os.environ['database']
-#client=MongoClient(client1)
-#db=client.spyvssecurity
-#users=db.users
+
+client=MongoClient(os.environ['database'])
+db=client.spyvssecurity
+stats=db.stats
 
 
 symbollist=['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
@@ -37,6 +37,13 @@ nearlocs={'spystart':['leftcorridor','rightcorridor','midcorridor'],
           'midcorridor':['spystart','treasure'],
           'stock':['rightpass','leftpass','treasure']
 }
+
+
+@bot.message_handler(commands=['stats'])
+def stats(m):
+    x=stats.find_one({})
+    text='Общая статистика:\nШпионы выигрывали: '+str(x['spywins'])+' раз(а)\nОхранники выигрывали: '+str(x['securitywins'])+' раз(а)'
+    bot.send_message(m.chat.id, text)
 
 
 @bot.message_handler(commands=['creategame'])
@@ -306,8 +313,10 @@ def endturn(id):
     else:
         if winner=='security':
             bot.send_message(id, 'Победа охраны!')
+            stats.update_one({},{'$inc':{'securitywins':1}})
         else:
             bot.send_message(id, 'Победа шпионов!')
+            stats.update_one({},{'$inc':{'spywins':1}})
         try:
             del games[id]
         except:
