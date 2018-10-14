@@ -153,8 +153,8 @@ def endturn(id):
             g='шпиона'
         else:
             g='охранника'
-        games[id]['texttohistory']+='Перемещение '+g+' '+games[id]['players'][ids]['name']+': '+loctoname(games[id]['players'][ids]['lastloc'])+\
-        '\n|\n'+'v\n'+loctoname(games[id]['players'][ids]['location'])+'\n\n'
+        games[id]['texttohistory']+='Перемещение '+g+' '+games[id]['players'][ids]['name']+':\n'+loctoname(games[id]['players'][ids]['lastloc'])+\
+        '\n |\n'+'v\n'+loctoname(games[id]['players'][ids]['location'])+'\n\n'
         if games[id]['players'][ids]['ready']==0:
             try:
               medit('Время вышло!',games[id]['players'][ids]['messagetoedit'].chat.id, games[id]['players'][ids]['messagetoedit'].message_id)
