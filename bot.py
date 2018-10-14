@@ -259,6 +259,7 @@ def endturn(id):
     if endgame==0:
         for ids in games[id]['players']:
             if games[id]['players'][ids]['flashed']==0 and games[id]['players'][ids]['shocked']==0:
+                bot.send_photo(games[id]['players'][ids]['id'], 'AgADAgAD06sxG7wwGEqukXmiDU8iF5zPtw4ABCn0Y60xUVfWDfgEAAEC')
                 sendacts(games[id]['players'][ids])
             else:
                 games[id]['players'][ids]['lastloc']=games[id]['players'][ids]['location']
