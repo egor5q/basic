@@ -203,7 +203,6 @@ def endturn(id):
             if idss!=player['location']:
                 locs+=loctoname(idss)+'\n'
         hearinfo='Прослушиваемые вами локации в данный момент:\n'+locs+'\n' 
-        print(locs)
         for idss in games[id]['players']:
             if games[id]['players'][idss]['location'] in loclist and \
             games[id]['players'][idss]['location']!=games[id]['players'][idss]['lastloc'] and \
