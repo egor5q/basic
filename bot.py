@@ -89,8 +89,8 @@ def testturn(id):
            endturn(id)
             
 def begin(id):
-    securityitems=['glasses','pistol','tizer', 'glasses']
-    spyitems=['camera','camera','camera','flash','costume', 'flash']
+    securityitems=['glasses','pistol','tizer', 'glasses','shockmine']
+    spyitems=['camera','camera','camera','flash','costume', 'flash','mineremover']
     for ids in games[id]['players']:
         if games[id]['spies']>games[id]['security']:
             games[id]['players'][ids]['role']='security'
@@ -147,6 +147,9 @@ def endturn(id):
             except:
                  pass
             games[id]['players'][ids]['lastloc']=games[id]['players'][ids]['location']
+    for ids in games[id]['players']:
+        if games[id]['players'][ids]['moving']==0:
+            games[id]['players'][ids]['lastloc']=games[id]['players'][ids]['location']
     text=''        
     for ids in games[id]['players']:
         player=games[id]['players'][ids]
@@ -157,6 +160,14 @@ def endturn(id):
             player['flashed']=1  
             games[id]['texttohistory']+='Охранник '+player['name']+' был ослеплен флэшкой!\n\n'
             bot.send_message(player['id'],'Вы были ослеплены флэшкой! В следующий ход вы не сможете действовать.')
+        if player['role']=='spy' and player['removemine']==0 and player['location'] in games[id]['shockminelocs']:
+            player['shocked']=1
+            games[id]['texttohistory']+='Шпион '+player['name']+' наступил на мину-шокер в локации '+loctoname(player['location'])+'!\n\n'
+            bot.send_message(player['id'],'Вы наступили на мину-шокер! В следующий ход вы не сможете действовать.')
+            try:
+                games[id]['shockminelocs'].remove(player['location'])
+            except:
+                pass
         if player['destroycamera']==1:
             if player['flashed']!=1:
                 for idss in games[id]['players']:
@@ -242,7 +253,7 @@ def endturn(id):
         winner='spy'
     if endgame==0:
         for ids in games[id]['players']:
-            if games[id]['players'][ids]['flashed']==0:
+            if games[id]['players'][ids]['flashed']==0 and games[id]['players'][ids]['shocked']==0:
                 sendacts(games[id]['players'][ids])
             else:
                 games[id]['players'][ids]['lastloc']=games[id]['players'][ids]['location']
@@ -259,10 +270,14 @@ def endturn(id):
             if games[id]['players'][ids]['glasses']>0:
                 games[id]['players'][ids]['glasses']-=1
             games[id]['players'][ids]['setupcamera']=0
+            games[id]['players'][ids]['moving']=0
             games[id]['players'][ids]['destroycamera']=0
             games[id]['players'][ids]['silent']=0
             if games[id]['players'][ids]['flashed']>0:
                 games[id]['players'][ids]['flashed']-=1
+            if games[id]['players'][ids]['shocked']>0:
+                games[id]['players'][ids]['shocked']-=1
+            games[id]['players'][ids]['removemine']=0
     else:
         if winner=='security':
             bot.send_message(id, 'Победа охраны!')
@@ -392,6 +407,7 @@ def inline(call):
             medit('Вы перемещаетесь в локацию: '+loctoname(x)+'.',call.message.chat.id, call.message.message_id)
             player['location']=x
             player['ready']=1
+            player['moving']=1
             if player['role']=='spy' and player['location']=='treasure':
                 player['stealing']=1
             testturn(player['chatid'])
@@ -478,6 +494,33 @@ def inline(call):
             msg=bot.send_message(player['id'],'Выберите действие.', reply_markup=kb)
             player['currentmessage']=msg
             player['messagetoedit']=msg
+        
+    elif call.data=='shockmine':
+        if 'shockmine' in player['items']:
+            kb=types.InlineKeyboardMarkup()
+            player['items'].remove('shockmine')
+            games[player['chatid']]['texttohistory']+='Охранник '+player['name']+' установил мину-шокер в локации '+loctoname(player['location'])+'!\n\n'
+            medit('Вы устанавливаете мину-шокер.', call.message.chat.id, call.message.message_id)
+            player['ready']=1
+            game[player['chatid']]['shockminelocs'].append(player['location'])
+            
+    elif call.data=='mineremover':
+        if 'mineremover' in player['items']:
+            kb=types.InlineKeyboardMarkup()
+            player['items'].remove('mineremover')
+            player['removemine']=1
+            games[player['chatid']]['texttohistory']+='Шпион '+player['name']+' готовится обезвреживать мину-шокер.\n\n'
+            medit('Вы готовитесь обезвредить мину-шокер в своей следующей локации.', call.message.chat.id, call.message.message_id)
+            kb=types.InlineKeyboardMarkup()
+            kb.add(types.InlineKeyboardButton(text='Перемещение', callback_data='move'),types.InlineKeyboardButton(text='Предметы', callback_data='items'))
+            if player['role']=='spy':
+                kb.add(types.InlineKeyboardButton(text='Инфо с камер', callback_data='camerainfo'))
+            if player['role']=='security':
+                kb.add(types.InlineKeyboardButton(text='Камера в сокровищнице', callback_data='treasureinfo'))
+            kb.add(types.InlineKeyboardButton(text='Ожидать', callback_data='wait'))
+            msg=bot.send_message(player['id'],'Выберите действие.', reply_markup=kb)
+            player['currentmessage']=msg
+            player['messagetoedit']=msg
             
     elif call.data=='back':
         kb=types.InlineKeyboardMarkup()
@@ -538,6 +581,10 @@ def itemtoname(x):
         return 'Пистолет'
     elif x=='camera':
         return 'Камера'
+    elif x=='shockmine':
+        return 'Мина-шокер'
+    elif x=='mineremover':
+        return 'Водяная бомба'
     else:
         return None
         
@@ -558,7 +605,8 @@ def creategame(id):
         'treasurestealed':0,
         'gametimer':None,
         'started':0,
-        'texttohistory':''
+        'texttohistory':'',
+        'shockminelocs':[]
           }
      }
     
@@ -583,7 +631,10 @@ def createplayer(id,name,chatid):
         'flashed':0,
         'lastloc':None,
         'treasure':0,
-        'disarmed':0
+        'disarmed':0,
+        'moving':0,
+        'shocked':0,
+        'removemine':0
           }
     }
 
