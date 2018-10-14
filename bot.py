@@ -342,6 +342,7 @@ def medit(message_text,chat_id, message_id,reply_markup=None,parse_mode='Markdow
 
 @bot.callback_query_handler(func=lambda call:True)
 def inline(call):
+ try:
   if 'history' in call.data:
     x=call.data.split(' ')
     x=x[1]
@@ -553,7 +554,8 @@ def inline(call):
         else:
             text+='Сокровище на месте.'
         bot.answer_callback_query(call.id,text, show_alert=True)         
-            
+ except:
+    pass
             
             
 def loctoname(x):
