@@ -47,7 +47,22 @@ def creategamee(m):
         t=threading.Timer(300,cancelgame,args=[m.chat.id])
         t.start()
         games[m.chat.id]['timer']=t
-        
+ 
+
+@bot.message_handler(commands=['surrender'])
+def surrender(m):
+    if m.chat.id in games:
+        player=None
+        for ids in games[m.chat.id]['players']:
+            if games[m.chat.id]['players'][ids]['id']==m.from_user.id:
+                player=games[m.chat.id]['players'][ids]
+        if player!=None:
+            player['disarmed']=1
+            if player['role']=='spy':
+                text='В шпионе '+player['name']+' проснулась совесть, и он сдался.'
+            else:
+                text=player['name']+' сдался!'
+            bot.send_message(m.chat.id, text)
      
 @bot.message_handler(commands=['map'])
 def map(m):
@@ -139,7 +154,7 @@ def endturn(id):
         else:
             g='охранника'
         games[id]['texttohistory']+='Перемещение '+g+' '+games[id]['players'][ids]['name']+': '+loctoname(games[id]['players'][ids]['lastloc'])+\
-        '|\n'+'v\n'+loctoname(games[id]['players'][ids]['location'])+'\n\n'
+        '\n|\n'+'v\n'+loctoname(games[id]['players'][ids]['location'])+'\n\n'
         if games[id]['players'][ids]['ready']==0:
             try:
               medit('Время вышло!',games[id]['players'][ids]['messagetoedit'].chat.id, games[id]['players'][ids]['messagetoedit'].message_id)
