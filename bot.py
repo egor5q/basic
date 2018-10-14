@@ -526,7 +526,7 @@ def inline(call):
             games[player['chatid']]['texttohistory']+='Охранник '+player['name']+' установил мину-шокер в локации '+loctoname(player['location'])+'!\n\n'
             medit('Вы устанавливаете мину-шокер.', call.message.chat.id, call.message.message_id)
             player['ready']=1
-            game[player['chatid']]['shockminelocs'].append(player['location'])
+            games[player['chatid']]['shockminelocs'].append(player['location'])
             
     elif call.data=='back':
         kb=types.InlineKeyboardMarkup()
