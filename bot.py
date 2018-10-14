@@ -156,10 +156,14 @@ def endturn(id):
         if player['setupcamera']==1:
             player['cameras'].append(player['location'])
             games[id]['texttohistory']+='Шпион '+player['name']+' устанавливает камеру в локацию '+loctoname(player['location'])+'!\n\n'
-        if player['role']=='security' and player['glasses']<=0 and player['location'] in games[id]['flashed']:
+        if player['role']=='security' and player['location'] in games[id]['flashed']:
+          if player['glasses']<=0:
             player['flashed']=1  
             games[id]['texttohistory']+='Охранник '+player['name']+' был ослеплен флэшкой!\n\n'
             bot.send_message(player['id'],'Вы были ослеплены флэшкой! В следующий ход вы не сможете действовать.')
+          else:
+            games[id]['texttohistory']+='Охранник '+player['name']+' избежал ослепления!\n\n'
+            bot.send_message(player['id'],'Очки спасли вас от флэшки!')
         if player['role']=='spy' and player['location'] in games[id]['shockminelocs']:
           if player['removemine']==0:
             player['shocked']=1
@@ -178,7 +182,7 @@ def endturn(id):
                 for idss in games[id]['players']:
                     if player['location'] in games[id]['players'][idss]['cameras']:
                         games[id]['players'][idss]['cameras'].remove(player['location'])
-                        text+='Охранник уничтожил камеру шпиона в локации: '+player['location']+'!\n'
+                        text+='Охранник уничтожил камеру шпиона в локации: '+loctoname(player['location'])+'!\n'
                         games[id]['texttohistory']+='Охранник '+player['name']+' уничтожил камеру в локации '+loctoname(player['location'])+'!\n\n'
             else:
                 bot.send_message(player['id'],'Вы были ослеплены! Камеры шпионов обнаружить не удалось.')
