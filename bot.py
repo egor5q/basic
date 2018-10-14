@@ -192,9 +192,10 @@ def endturn(id):
                     games[id]['texttohistory']+='Охранник '+player['name']+' нейтрализовал шпиона по пути в локацию '+loctoname(player['location'])+'!\n\n'
                     bot.send_message(player['id'],'Вы нейтрализовали шпиона!')
                     games[id]['players'][idss]['disarmed']=1
-         
+        
         loclist=nearlocs[player['location']]
-        print(loclist)
+        print('Локация игрока '+player['name']+': '+player['location'])
+        print('Ближайшие локации игрока '+player['name']+': 'loclist)
         loclist.append(player['location'])
         print(loclist)
             
