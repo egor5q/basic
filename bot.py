@@ -200,7 +200,8 @@ def endturn(id):
             
         locs=''
         for idss in loclist:
-            locs+=loctoname(idss)+'\n'
+            if idss!=player['location']:
+                locs+=loctoname(idss)+'\n'
         hearinfo='Прослушиваемые вами локации в данный момент:\n'+locs+'\n' 
         print(locs)
         for idss in games[id]['players']:
@@ -427,7 +428,9 @@ def inline(call):
             
     elif call.data=='flash':
         if 'flash' in player['items']:
-            locs=nearlocs[player['location']]
+            locs=[]
+            for ids in nearlocs[player['location']]:
+                locs.append(ids)
             locs.append(player['location'])
             for ids in locs:
                 if ids!=player['location']:
