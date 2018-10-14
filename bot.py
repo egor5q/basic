@@ -40,7 +40,7 @@ nearlocs={'spystart':['leftcorridor','rightcorridor','midcorridor'],
 
 
 @bot.message_handler(commands=['stats'])
-def stats(m):
+def statsss(m):
     x=stats.find_one({})
     text='Общая статистика:\nШпионы выигрывали: '+str(x['spywins'])+' раз(а)\nОхранники выигрывали: '+str(x['securitywins'])+' раз(а)'
     bot.send_message(m.chat.id, text)
