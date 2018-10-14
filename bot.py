@@ -32,7 +32,7 @@ nearlocs={'spystart':['leftcorridor','rightcorridor','midcorridor'],
           'rightcorridor':['spystart','treasure', 'rightpass'],
           'rightpass':['rightcorridor','stock'],
           'leftpass':['stock','leftcorridor'],
-          'treasure':['leftcorridor','rightcorridor','stock'],
+          'treasure':['leftcorridor','rightcorridor','stock','midcorridor'],
           'spystart':['leftcorridor','rightcorridor','midcorridor'],
           'midcorridor':['spystart','treasure'],
           'stock':['rightpass','leftpass','treasure']
@@ -194,12 +194,15 @@ def endturn(id):
                     games[id]['players'][idss]['disarmed']=1
          
         loclist=nearlocs[player['location']]
+        print(loclist)
         loclist.append(player['location'])
+        print(loclist)
             
         locs=''
         for idss in loclist:
             locs+=loctoname(idss)+'\n'
-        hearinfo='Прослушиваемые вами локации в данный момент:\n'+locs+'\n'    
+        hearinfo='Прослушиваемые вами локации в данный момент:\n'+locs+'\n' 
+        print(locs)
         for idss in games[id]['players']:
             if games[id]['players'][idss]['location'] in loclist and \
             games[id]['players'][idss]['location']!=games[id]['players'][idss]['lastloc'] and \
