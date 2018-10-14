@@ -203,7 +203,7 @@ def endturn(id):
         for idss in games[id]['players']:
             if games[id]['players'][idss]['location'] in loclist and \
             games[id]['players'][idss]['location']!=games[id]['players'][idss]['lastloc'] and \
-            games[id]['players'][idss]['silent']!=1:
+            games[id]['players'][idss]['silent']!=1 and player['id']!=games[id]['players'][idss]['id']:
                 if games[id]['players'][idss]['location']!=player['location']:
                     hearinfo+='Вы слышите движение в локации: '+loctoname(games[id]['players'][idss]['location'])+'!\n'
                 else:
