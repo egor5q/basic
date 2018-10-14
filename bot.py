@@ -384,9 +384,7 @@ def inline(call):
     elif 'move' in call.data:
         x=call.data.split(' ')
         x=x[1]
-        print(x)
-        print(nearlocs[player['location']])
-        if x[1] in nearlocs[player['location']]:
+        if x in nearlocs[player['location']]:
             player['lastloc']=player['location']
             medit('Вы перемещаетесь в локацию: '+loctoname(x)+'.',call.message.chat.id, call.message.message_id)
             player['location']=x
