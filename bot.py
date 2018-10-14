@@ -392,6 +392,8 @@ def inline(call):
             medit('Вы перемещаетесь в локацию: '+loctoname(x)+'.',call.message.chat.id, call.message.message_id)
             player['location']=x
             player['ready']=1
+            if player['role']=='spy' and player['location']=='treasure':
+                player['stealing']=1
             testturn(player['chatid'])
             
             
