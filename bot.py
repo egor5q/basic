@@ -160,14 +160,19 @@ def endturn(id):
             player['flashed']=1  
             games[id]['texttohistory']+='Охранник '+player['name']+' был ослеплен флэшкой!\n\n'
             bot.send_message(player['id'],'Вы были ослеплены флэшкой! В следующий ход вы не сможете действовать.')
-        if player['role']=='spy' and player['removemine']==0 and player['location'] in games[id]['shockminelocs']:
+        if player['role']=='spy' and player['location'] in games[id]['shockminelocs']:
+          if player['removemine']==0:
             player['shocked']=1
             games[id]['texttohistory']+='Шпион '+player['name']+' наступил на мину-шокер в локации '+loctoname(player['location'])+'!\n\n'
             bot.send_message(player['id'],'Вы наступили на мину-шокер! В следующий ход вы не сможете действовать.')
-            try:
-                games[id]['shockminelocs'].remove(player['location'])
-            except:
-                pass
+          else:
+            games[id]['texttohistory']+='Шпион '+player['name']+' обезвредил мину-шокер в локации '+loctoname(player['location'])+'!\n\n'
+            bot.send_message(player['id'],'Вы обезвредили мину-шокер!')
+          try:
+              games[id]['shockminelocs'].remove(player['location'])
+          except:
+              pass
+            
         if player['destroycamera']==1:
             if player['flashed']!=1:
                 for idss in games[id]['players']:
@@ -399,6 +404,25 @@ def inline(call):
         player['lastloc']=player['location']
         testturn(player['chatid'])
         
+    elif call.data=='mineremover':
+        if 'mineremover' in player['items']:
+            kb=types.InlineKeyboardMarkup()
+            player['items'].remove('mineremover')
+            player['removemine']=1
+            games[player['chatid']]['texttohistory']+='Шпион '+player['name']+' готовится обезвреживать мину-шокер.\n\n'
+            medit('Вы готовитесь обезвредить мину-шокер в своей следующей локации.', call.message.chat.id, call.message.message_id)
+            kb=types.InlineKeyboardMarkup()
+            kb.add(types.InlineKeyboardButton(text='Перемещение', callback_data='move'),types.InlineKeyboardButton(text='Предметы', callback_data='items'))
+            if player['role']=='spy':
+                kb.add(types.InlineKeyboardButton(text='Инфо с камер', callback_data='camerainfo'))
+            if player['role']=='security':
+                kb.add(types.InlineKeyboardButton(text='Камера в сокровищнице', callback_data='treasureinfo'))
+            kb.add(types.InlineKeyboardButton(text='Ожидать', callback_data='wait'))
+            msg=bot.send_message(player['id'],'Выберите действие.', reply_markup=kb)
+            player['currentmessage']=msg
+            player['messagetoedit']=msg     
+        
+        
     elif 'move' in call.data:
         x=call.data.split(' ')
         x=x[1]
@@ -503,24 +527,6 @@ def inline(call):
             medit('Вы устанавливаете мину-шокер.', call.message.chat.id, call.message.message_id)
             player['ready']=1
             game[player['chatid']]['shockminelocs'].append(player['location'])
-            
-    elif call.data=='mineremover':
-        if 'mineremover' in player['items']:
-            kb=types.InlineKeyboardMarkup()
-            player['items'].remove('mineremover')
-            player['removemine']=1
-            games[player['chatid']]['texttohistory']+='Шпион '+player['name']+' готовится обезвреживать мину-шокер.\n\n'
-            medit('Вы готовитесь обезвредить мину-шокер в своей следующей локации.', call.message.chat.id, call.message.message_id)
-            kb=types.InlineKeyboardMarkup()
-            kb.add(types.InlineKeyboardButton(text='Перемещение', callback_data='move'),types.InlineKeyboardButton(text='Предметы', callback_data='items'))
-            if player['role']=='spy':
-                kb.add(types.InlineKeyboardButton(text='Инфо с камер', callback_data='camerainfo'))
-            if player['role']=='security':
-                kb.add(types.InlineKeyboardButton(text='Камера в сокровищнице', callback_data='treasureinfo'))
-            kb.add(types.InlineKeyboardButton(text='Ожидать', callback_data='wait'))
-            msg=bot.send_message(player['id'],'Выберите действие.', reply_markup=kb)
-            player['currentmessage']=msg
-            player['messagetoedit']=msg
             
     elif call.data=='back':
         kb=types.InlineKeyboardMarkup()
