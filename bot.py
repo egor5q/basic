@@ -195,7 +195,7 @@ def endturn(id):
         
         loclist=nearlocs[player['location']]
         print('Локация игрока '+player['name']+': '+player['location'])
-        print('Ближайшие локации игрока '+player['name']+': 'loclist)
+        print('Ближайшие локации игрока '+player['name']+': '+loclist)
         loclist.append(player['location'])
         print(loclist)
             
