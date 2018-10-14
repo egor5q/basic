@@ -111,7 +111,7 @@ def begin(id):
                              'Не попадитесь на глаза охраннику и сделайте всё меньше, чем за 26 ходов, иначе проиграете!')
             elif x=='security':
                 games[id]['security']+=1
-                bot.send_message(games[id]['players'][ids]['id'], 'Вы - охранник! Ваша цель - не дать шпионам украсть сокровище!'+\
+                bot.send_message(games[id]['players'][ids]['id'], 'Вы - охранник! Ваша цель - не дать шпионам украсть сокровище! '+\
                              'Если продержитесь 25 ходов - вам на помощь приедет спецназ, и вы победите!')
                 
     for ids in games[id]['players']:
@@ -138,8 +138,8 @@ def endturn(id):
             g='шпиона'
         else:
             g='охранника'
-        games[id]['texttohistory']+='Начальная локация '+g+' '+games[id]['players'][ids]['name']+': '+loctoname(games[id]['players'][ids]['lastloc'])+'\n\n'
-        games[id]['texttohistory']+='Конечная локация '+g+' '+games[id]['players'][ids]['name']+': '+loctoname(games[id]['players'][ids]['location'])+'\n\n'
+        games[id]['texttohistory']+='Перемещение '+g+' '+games[id]['players'][ids]['name']+': '+loctoname(games[id]['players'][ids]['lastloc'])+\
+        '|\n'+'v\n'+loctoname(games[id]['players'][ids]['location'])+'\n\n'
         if games[id]['players'][ids]['ready']==0:
             try:
               medit('Время вышло!',games[id]['players'][ids]['messagetoedit'].chat.id, games[id]['players'][ids]['messagetoedit'].message_id)
