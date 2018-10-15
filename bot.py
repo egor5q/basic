@@ -211,7 +211,7 @@ def endturn(id):
                 games[id]['texttohistory']+='Охранник '+player['name']+' был ослеплён! Ему не удалось обнаружить камеры.\n\n'
                                                                                                                         
                 
-        if player['stealing']==1:
+        if player['stealing']==1 and player['treasure']==0:
             player['treasure']=1
             games[id]['texttohistory']+='Шпион '+player['name']+' украл сокровище!\n\n'
             bot.send_message(player['id'],'Вы успешно украли сокровище! Теперь выберитесь отсюда (Выход в той же локации, где вы начинали игру).')
@@ -538,8 +538,8 @@ def inline(call):
             kb=types.InlineKeyboardMarkup()
             player['items'].remove('costume')
             player['silent']=1
-            games[player['chatid']]['texttohistory']+='Шпион '+player['name']+' надел маскировочный костюм!\n\n'
-            medit('Вы надели маскировочный костюм! На этом ходу ваши передвижения не будут услышаны.', call.message.chat.id, call.message.message_id)
+            games[player['chatid']]['texttohistory']+='Шпион '+player['name']+' надел сапоги ниндзя!\n\n'
+            medit('Вы надели сапоги ниндзя! На этом ходу ваши передвижения не будут услышаны.', call.message.chat.id, call.message.message_id)
             kb.add(types.InlineKeyboardButton(text='Перемещение', callback_data='move'),types.InlineKeyboardButton(text='Предметы', callback_data='items'))
             if player['role']=='spy':
                 kb.add(types.InlineKeyboardButton(text='Инфо с камер', callback_data='camerainfo'))
@@ -614,7 +614,7 @@ def itemtoname(x):
     if x=='flash':
         return 'Флэшка'
     elif x=='costume':
-        return 'Маскировочный костюм'
+        return 'Сапоги ниндзя'
     elif x=='glasses':
         return 'Защитные очки'
     elif x=='pistol':
