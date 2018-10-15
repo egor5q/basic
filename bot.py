@@ -245,7 +245,7 @@ def endturn(id):
         if player['role']=='security':
             for idss in games[id]['players']:
                 if player['location']==games[id]['players'][idss]['location'] and games[id]['players'][idss]['role']!='security':
-                  if player['flashed']==0:
+                  if player['flashed']==0 and games[id]['players'][idss]['disarmed']==0:
                     games[id]['players'][idss]['disarmed']=1
                     text+='Охранник нейтрализовал шпиона в локации: '+loctoname(player['location'])+'!\n'
                     games[id]['texttohistory']+='Охранник '+player['name']+' нейтрализовал шпиона в локации '+loctoname(player['location'])+'!\n\n'
@@ -255,7 +255,8 @@ def endturn(id):
                      
         if player['role']=='security' and player['flashed']==0 and player['lastloc']!=player['location']:
             for idss in games[id]['players']: 
-                if games[id]['players'][idss]['lastloc']==player['location'] and games[id]['players'][idss]['location']==player['lastloc']:
+                if games[id]['players'][idss]['lastloc']==player['location'] and games[id]['players'][idss]['location']==player['lastloc'] and \
+                games[id]['players'][idss]['disarmed']==0:
                     text+='Шпион и охранник столкнулись в коридоре! Шпион нейтрализован!\n'
                     games[id]['texttohistory']+='Охранник '+player['name']+' нейтрализовал шпиона по пути в локацию '+loctoname(player['location'])+'!\n\n'
                     bot.send_message(player['id'],'Вы нейтрализовали шпиона!')
@@ -274,7 +275,7 @@ def endturn(id):
         for idss in games[id]['players']:
             if games[id]['players'][idss]['location'] in loclist and \
             games[id]['players'][idss]['location']!=games[id]['players'][idss]['lastloc'] and \
-            games[id]['players'][idss]['silent']!=1 and player['id']!=games[id]['players'][idss]['id']:
+            games[id]['players'][idss]['silent']!=1 and player['role']!=games[id]['players'][idss]['role']:
                 if games[id]['players'][idss]['location']!=player['location']:
                     hearinfo+='Вы слышите движение в локации: '+loctoname(games[id]['players'][idss]['location'])+'!\n'
                 else:
