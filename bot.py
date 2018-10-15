@@ -49,11 +49,30 @@ def statsss(m):
 @bot.message_handler(commands=['creategame'])
 def creategamee(m):
     if m.chat.id not in games:
-        games.update(creategame(m.chat.id))
-        bot.send_message(m.chat.id, 'Жмите /join, чтобы присоединиться! До отмены игры 5 минут.')
+        games.update(creategame(m.chat.id, 2))
+        bot.send_message(m.chat.id, 'Игра в режиме 1х1 началась! Жмите /join, чтобы присоединиться! До отмены игры 5 минут.')
         t=threading.Timer(300,cancelgame,args=[m.chat.id])
         t.start()
         games[m.chat.id]['timer']=t
+
+
+@bot.message_handler(commands=['creategame2x2'])
+def creategamee(m):
+    if m.chat.id not in games:
+        games.update(creategame(m.chat.id, 4))
+        bot.send_message(m.chat.id, 'Игра в режиме 2х2 началась! Жмите /join, чтобы присоединиться! До отмены игры 5 минут.')
+        t=threading.Timer(300,cancelgame,args=[m.chat.id])
+        t.start()
+        games[m.chat.id]['timer']=t
+
+
+@bot.message_handler(commands=['cancel'])
+def cancelgamee(m):
+    if m.chat.id in games:
+        games[m.chat.id]['timer'].cancel()
+        del games[m.chat.id]
+        bot.send_message(m.chat.id, 'Игра была удалена.')
+       
  
 
 @bot.message_handler(commands=['surrender'])
@@ -79,10 +98,12 @@ def map(m):
 def startg(m):
     if m.chat.id in games:
       if games[m.chat.id]['started']==0:
-        if len(games[m.chat.id]['players'])==2:
+        if len(games[m.chat.id]['players'])==games[m.chat.id]['maxplayers']:
             games[m.chat.id]['started']=1
             games[m.chat.id]['timer'].cancel()
             begin(m.chat.id)
+        else:
+            bot.send_message(m.chat.id, 'Недостаточно игроков!')
     
 @bot.message_handler(commands=['join'])
 def join(m):
@@ -92,13 +113,18 @@ def join(m):
         for ids in games[m.chat.id]['players']:
             if games[m.chat.id]['players'][ids]['id']==m.from_user.id:
                 no=1
-    if no==0 and len(games[m.chat.id]['players'])<2:
+    if len(games[m.chat.id]['players'])<games[m.chat.id]['maxplayers']:
+      if no==0:
         try:
             bot.send_message(m.from_user.id, 'Вы успешно присоединились!')
             games[m.chat.id]['players'].update(createplayer(m.from_user.id, m.from_user.first_name, m.chat.id))
             bot.send_message(m.chat.id, m.from_user.first_name+' присоединился!')
         except:
             bot.send_message(m.chat.id, 'Для начала напишите боту @Spy_VS_Security_Bot что-нибудь!')
+      else:
+           bot.send_message(m.chat.id, 'Вы уже в игре!')
+    else:
+        bot.send_message(m.chat.id, 'Достигнуто максимальное число игроков!')
     
  
 def testturn(id):
@@ -632,7 +658,7 @@ def itemtoname(x):
 
             
             
-def creategame(id):
+def creategame(id, x):
     return{id:{
         'chatid':id,
         'players':{},
@@ -646,7 +672,8 @@ def creategame(id):
         'gametimer':None,
         'started':0,
         'texttohistory':'',
-        'shockminelocs':[]
+        'shockminelocs':[],
+        'maxplayers':x
           }
      }
     
