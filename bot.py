@@ -545,7 +545,7 @@ def inline(call):
         if 'camera' in player['items']:
             player['items'].remove('camera')
             player['cameras'].append(player['location'])
-            games[id]['texttohistory']+='Шпион '+player['name']+' устанавливает камеру в локацию '+loctoname(player['location'])+'!\n\n'
+            games[player['chatid']]['texttohistory']+='Шпион '+player['name']+' устанавливает камеру в локацию '+loctoname(player['location'])+'!\n\n'
             medit('Вы установили камеру в вашей текущей локации ('+loctoname(player['location'])+')!', call.message.chat.id, call.message.message_id)
             kb=types.InlineKeyboardMarkup()
             kb.add(types.InlineKeyboardButton(text='Перемещение', callback_data='move'),types.InlineKeyboardButton(text='Предметы', callback_data='items'))
