@@ -84,6 +84,7 @@ def begin(id):
             if i==0:
                 player['role']='x'
                 i=1
+                player['myturn']=1
             else:
                 player['role']='o'
                 i=0
@@ -92,9 +93,18 @@ def begin(id):
 
                         
 def xod(id):
+    for ids in games[id]['players']:
+        player=games[id]['players'][ids]
+        if player['myturn']==1:
+            if player['isbot']==1:
+                selectact(player)
+            else:
+                kb=types.InlineKeyboardMarkup()
+           
 
     
-    
+def selectact(player):
+    pass
     
     
     
