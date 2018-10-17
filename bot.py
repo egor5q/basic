@@ -77,15 +77,33 @@ def startii(m):
 
     
 def begin(id):
-    pass
+    if id in games:
+        i=random.randint(0,1)
+        for ids in games[id]['players']:
+            player=games[id]['players'][ids]
+            if i==0:
+                player['role']='x'
+                i=1
+            else:
+                player['role']='o'
+                i=0
+        xod(id)
     
 
+                        
+def xod(id):
+
+    
+    
+    
+    
+    
 def creategame(id):
     return{id:{'id':id,
                'players':{},
                'currentposition':[],
-               'alllocs':['1','2','3','4','5','6','7','8','9'],
-               'emptylocs':['1','2','3','4','5','6','7','8','9']
+               'alllocs':[1,2,3,4,5,6,7,8,9],
+               'emptylocs':[1,2,3,4,5,6,7,8,9]
               }
           }
        
@@ -94,8 +112,10 @@ def createplayer(id,name,username,bott):
     return{id:{'name':name,
                'id':id,
                'username':username,
-               'dots':[],
-               'isbot':bott
+               'locs':[],
+               'isbot':bott,
+               'role':None,
+               'myturn':0
               }
           }
                
