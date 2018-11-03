@@ -20,7 +20,7 @@ db=client.survivals
 users=db.users
 
 symbollist=['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
-           '1','2','3','4','5','6','7','8','9','0']
+           'а','б','в','г','д','е','ё','ж','з','и','й','к','л','м','н','о','п','р','с','т','у','ф','х','ц','ч','ш','щ','ъ','ы','ь','э','ю','я', ' ']
 
 
 
@@ -47,7 +47,16 @@ def allmessages(m):
                                 'понадобится оружие. На, держи!')
                 bot.send_message(m.chat.id, 'Получено: *пистолет*')
                 users.update_one({'id':user['id']},{'$push':{'inventory':'pistol'}})
-                
+                time.sleep(2)
+                bot.send_message(m.chat.id, 'Со всей нашей командой ты можешь познакомиться здесь: @неизветно. Ладно, хватит '+
+                                'слов - зомби наступают! Пошли, будешь помогать обороняться.')#@Survivalschat. ')
+                t=threading.Timer(2,defcamp,args=[user])
+                t.start()
+                      
+       
+def defcamp(user):
+    pass
+    
 
 def createuser(id,name,username):
     return {'id':{
