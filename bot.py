@@ -2,9 +2,7 @@
 import os
 import telebot
 import time
-import telebot
 import random
-import info
 import threading
 from emoji import emojize
 from telebot import types
