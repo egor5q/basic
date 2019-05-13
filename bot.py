@@ -18,12 +18,9 @@ db=client.
 users=db.users
 
 
-try:
-    pass
-
-except Exception as e:
-    print('Ошибка:\n', traceback.format_exc())
-    bot.send_message(441399484, traceback.format_exc())
+def medit(message_text,chat_id, message_id,reply_markup=None,parse_mode=None):
+    return bot.edit_message_text(chat_id=chat_id,message_id=message_id,text=message_text,reply_markup=reply_markup,
+                                 parse_mode=parse_mode)   
 
 print('7777')
 bot.polling(none_stop=True,timeout=600)
