@@ -1,3 +1,21 @@
+import random
+import traceback
+from telebot import types, TeleBot
+import time
+import threading
+import config
+import telebot
+import os
+import config
+
+bot = TeleBot(os.environ['botname'])
+
+client=MongoClient(os.environ['database'])
+db=client.
+users=db.users
+
+games = {}
+
 def createplayer(user):
     return {user.id:{
         'id':user.id,
