@@ -49,7 +49,20 @@ def mee(m):
     bot.send_message(m.chat.id, text)
     
         
-
+@bot.message_handler(commands=['join'])
+def join(m):
+    if m.chat.id not in games:
+        bot.send_message(m.chat.id, 'Игра ещё не была создана!')
+        return
+    game = games[m.chat.id]
+    if game['started'] == True:
+        bot.send_message(m.chat.id, 'Игра уже в процессе!')
+        return
+    if m.from_user.id in game['players']:
+        bot.send_message(m.chat.id, 'Вы уже в игре!')
+        return
+    game['players'].update(createplayer(m.from_user))
+    bot.send_message(m.chat.id, m.from_user.first_name+' присоединился к игре!') 
     
 @bot.message_handler(commands=['startgame'])
 def startgame(m):
